@@ -4385,32 +4385,32 @@ export namespace BrandStyleguideResponse {
     /**
      * Primary colors used on the website
      */
-    colors?: Styleguide.Colors;
+    colors: Styleguide.Colors;
 
     /**
      * UI component styles
      */
-    components?: Styleguide.Components;
+    components: Styleguide.Components;
 
     /**
      * Spacing system used on the website
      */
-    elementSpacing?: Styleguide.ElementSpacing;
+    elementSpacing: Styleguide.ElementSpacing;
 
     /**
      * The primary color mode of the website design
      */
-    mode?: 'light' | 'dark';
+    mode: 'light' | 'dark';
 
     /**
      * Shadow styles used on the website
      */
-    shadows?: Styleguide.Shadows;
+    shadows: Styleguide.Shadows;
 
     /**
      * Typography styles used on the website
      */
-    typography?: Styleguide.Typography;
+    typography: Styleguide.Typography;
   }
 
   export namespace Styleguide {
@@ -4419,19 +4419,19 @@ export namespace BrandStyleguideResponse {
      */
     export interface Colors {
       /**
-       * Accent color of the website (hex format)
+       * Accent color (hex format)
        */
-      accent?: string;
+      accent: string;
 
       /**
-       * Background color of the website (hex format)
+       * Background color (hex format)
        */
-      background?: string;
+      background: string;
 
       /**
-       * Text color of the website (hex format)
+       * Text color (hex format)
        */
-      text?: string;
+      text: string;
     }
 
     /**
@@ -4441,7 +4441,7 @@ export namespace BrandStyleguideResponse {
       /**
        * Button component styles
        */
-      button?: Components.Button;
+      button: Components.Button;
 
       /**
        * Card component style
@@ -4454,102 +4454,195 @@ export namespace BrandStyleguideResponse {
        * Button component styles
        */
       export interface Button {
-        /**
-         * Link button style
-         */
         link?: Button.Link;
 
-        /**
-         * Primary button style
-         */
         primary?: Button.Primary;
 
-        /**
-         * Secondary button style
-         */
         secondary?: Button.Secondary;
       }
 
       export namespace Button {
-        /**
-         * Link button style
-         */
         export interface Link {
-          backgroundColor?: string;
+          backgroundColor: string;
 
-          borderColor?: string;
+          /**
+           * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
+           * alpha)
+           */
+          borderColor: string;
 
-          borderRadius?: string;
+          borderRadius: string;
 
-          borderStyle?: string;
+          borderStyle: string;
 
-          borderWidth?: string;
+          borderWidth: string;
 
-          boxShadow?: string;
+          /**
+           * Computed box-shadow (comma-separated layers when present)
+           */
+          boxShadow: string;
 
-          color?: string;
+          color: string;
 
-          fontSize?: string;
+          /**
+           * Ready-to-use CSS declaration block for this component style
+           */
+          css: string;
 
-          fontWeight?: number;
+          fontSize: string;
 
-          padding?: string;
+          fontWeight: number;
 
-          textDecoration?: string;
+          /**
+           * Sampled minimum height of the button box (typically px)
+           */
+          minHeight: string;
+
+          /**
+           * Sampled minimum width of the button box (typically px)
+           */
+          minWidth: string;
+
+          padding: string;
+
+          textDecoration: string;
+
+          /**
+           * Full ordered font list from computed font-family
+           */
+          fontFallbacks?: Array<string>;
+
+          /**
+           * Primary button typeface (first in fontFallbacks)
+           */
+          fontFamily?: string;
+
+          /**
+           * Hex color of the underline when it differs from the text color
+           */
+          textDecorationColor?: string;
         }
 
-        /**
-         * Primary button style
-         */
         export interface Primary {
-          backgroundColor?: string;
+          backgroundColor: string;
 
-          borderColor?: string;
+          /**
+           * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
+           * alpha)
+           */
+          borderColor: string;
 
-          borderRadius?: string;
+          borderRadius: string;
 
-          borderStyle?: string;
+          borderStyle: string;
 
-          borderWidth?: string;
+          borderWidth: string;
 
-          boxShadow?: string;
+          /**
+           * Computed box-shadow (comma-separated layers when present)
+           */
+          boxShadow: string;
 
-          color?: string;
+          color: string;
 
-          fontSize?: string;
+          /**
+           * Ready-to-use CSS declaration block for this component style
+           */
+          css: string;
 
-          fontWeight?: number;
+          fontSize: string;
 
-          padding?: string;
+          fontWeight: number;
 
-          textDecoration?: string;
+          /**
+           * Sampled minimum height of the button box (typically px)
+           */
+          minHeight: string;
+
+          /**
+           * Sampled minimum width of the button box (typically px)
+           */
+          minWidth: string;
+
+          padding: string;
+
+          textDecoration: string;
+
+          /**
+           * Full ordered font list from computed font-family
+           */
+          fontFallbacks?: Array<string>;
+
+          /**
+           * Primary button typeface (first in fontFallbacks)
+           */
+          fontFamily?: string;
+
+          /**
+           * Hex color of the underline when it differs from the text color
+           */
+          textDecorationColor?: string;
         }
 
-        /**
-         * Secondary button style
-         */
         export interface Secondary {
-          backgroundColor?: string;
+          backgroundColor: string;
 
-          borderColor?: string;
+          /**
+           * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
+           * alpha)
+           */
+          borderColor: string;
 
-          borderRadius?: string;
+          borderRadius: string;
 
-          borderStyle?: string;
+          borderStyle: string;
 
-          borderWidth?: string;
+          borderWidth: string;
 
-          boxShadow?: string;
+          /**
+           * Computed box-shadow (comma-separated layers when present)
+           */
+          boxShadow: string;
 
-          color?: string;
+          color: string;
 
-          fontSize?: string;
+          /**
+           * Ready-to-use CSS declaration block for this component style
+           */
+          css: string;
 
-          fontWeight?: number;
+          fontSize: string;
 
-          padding?: string;
+          fontWeight: number;
 
-          textDecoration?: string;
+          /**
+           * Sampled minimum height of the button box (typically px)
+           */
+          minHeight: string;
+
+          /**
+           * Sampled minimum width of the button box (typically px)
+           */
+          minWidth: string;
+
+          padding: string;
+
+          textDecoration: string;
+
+          /**
+           * Full ordered font list from computed font-family
+           */
+          fontFallbacks?: Array<string>;
+
+          /**
+           * Primary button typeface (first in fontFallbacks)
+           */
+          fontFamily?: string;
+
+          /**
+           * Hex color of the underline when it differs from the text color
+           */
+          textDecorationColor?: string;
         }
       }
 
@@ -4557,21 +4650,30 @@ export namespace BrandStyleguideResponse {
        * Card component style
        */
       export interface Card {
-        backgroundColor?: string;
+        backgroundColor: string;
 
-        borderColor?: string;
+        /**
+         * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
+         * alpha)
+         */
+        borderColor: string;
 
-        borderRadius?: string;
+        borderRadius: string;
 
-        borderStyle?: string;
+        borderStyle: string;
 
-        borderWidth?: string;
+        borderWidth: string;
 
-        boxShadow?: string;
+        boxShadow: string;
 
-        padding?: string;
+        /**
+         * Ready-to-use CSS declaration block for this component style
+         */
+        css: string;
 
-        textColor?: string;
+        padding: string;
+
+        textColor: string;
       }
     }
 
@@ -4579,60 +4681,30 @@ export namespace BrandStyleguideResponse {
      * Spacing system used on the website
      */
     export interface ElementSpacing {
-      /**
-       * Large spacing value
-       */
-      lg?: string;
+      lg: string;
 
-      /**
-       * Medium spacing value
-       */
-      md?: string;
+      md: string;
 
-      /**
-       * Small spacing value
-       */
-      sm?: string;
+      sm: string;
 
-      /**
-       * Extra large spacing value
-       */
-      xl?: string;
+      xl: string;
 
-      /**
-       * Extra small spacing value
-       */
-      xs?: string;
+      xs: string;
     }
 
     /**
      * Shadow styles used on the website
      */
     export interface Shadows {
-      /**
-       * Inner shadow value
-       */
-      inner?: string;
+      inner: string;
 
-      /**
-       * Large shadow value
-       */
-      lg?: string;
+      lg: string;
 
-      /**
-       * Medium shadow value
-       */
-      md?: string;
+      md: string;
 
-      /**
-       * Small shadow value
-       */
-      sm?: string;
+      sm: string;
 
-      /**
-       * Extra large shadow value
-       */
-      xl?: string;
+      xl: string;
     }
 
     /**
@@ -4642,11 +4714,8 @@ export namespace BrandStyleguideResponse {
       /**
        * Heading styles
        */
-      headings?: Typography.Headings;
+      headings: Typography.Headings;
 
-      /**
-       * Paragraph text styles
-       */
       p?: Typography.P;
     }
 
@@ -4666,67 +4735,104 @@ export namespace BrandStyleguideResponse {
 
       export namespace Headings {
         export interface H1 {
-          fontFamily?: string;
+          /**
+           * Full ordered font list from resolved computed font-family
+           */
+          fontFallbacks: Array<string>;
 
-          fontSize?: string;
+          /**
+           * Primary face (first family in the computed stack)
+           */
+          fontFamily: string;
 
-          fontWeight?: number;
+          fontSize: string;
 
-          letterSpacing?: string;
+          fontWeight: number;
 
-          lineHeight?: string;
+          letterSpacing: string;
+
+          lineHeight: string;
         }
 
         export interface H2 {
-          fontFamily?: string;
+          /**
+           * Full ordered font list from resolved computed font-family
+           */
+          fontFallbacks: Array<string>;
 
-          fontSize?: string;
+          /**
+           * Primary face (first family in the computed stack)
+           */
+          fontFamily: string;
 
-          fontWeight?: number;
+          fontSize: string;
 
-          letterSpacing?: string;
+          fontWeight: number;
 
-          lineHeight?: string;
+          letterSpacing: string;
+
+          lineHeight: string;
         }
 
         export interface H3 {
-          fontFamily?: string;
+          /**
+           * Full ordered font list from resolved computed font-family
+           */
+          fontFallbacks: Array<string>;
 
-          fontSize?: string;
+          /**
+           * Primary face (first family in the computed stack)
+           */
+          fontFamily: string;
 
-          fontWeight?: number;
+          fontSize: string;
 
-          letterSpacing?: string;
+          fontWeight: number;
 
-          lineHeight?: string;
+          letterSpacing: string;
+
+          lineHeight: string;
         }
 
         export interface H4 {
-          fontFamily?: string;
+          /**
+           * Full ordered font list from resolved computed font-family
+           */
+          fontFallbacks: Array<string>;
 
-          fontSize?: string;
+          /**
+           * Primary face (first family in the computed stack)
+           */
+          fontFamily: string;
 
-          fontWeight?: number;
+          fontSize: string;
 
-          letterSpacing?: string;
+          fontWeight: number;
 
-          lineHeight?: string;
+          letterSpacing: string;
+
+          lineHeight: string;
         }
       }
 
-      /**
-       * Paragraph text styles
-       */
       export interface P {
-        fontFamily?: string;
+        /**
+         * Full ordered font list from resolved computed font-family
+         */
+        fontFallbacks: Array<string>;
 
-        fontSize?: string;
+        /**
+         * Primary face (first family in the computed stack)
+         */
+        fontFamily: string;
 
-        fontWeight?: number;
+        fontSize: string;
 
-        letterSpacing?: string;
+        fontWeight: number;
 
-        lineHeight?: string;
+        letterSpacing: string;
+
+        lineHeight: string;
       }
     }
   }
@@ -6232,14 +6338,6 @@ export interface BrandStyleguideParams {
    * domain will be automatically normalized and validated.
    */
   domain?: string;
-
-  /**
-   * Optional parameter to prioritize screenshot capture for styleguide extraction.
-   * If 'speed', optimizes for faster capture with basic quality. If 'quality',
-   * optimizes for higher quality with longer wait times. Defaults to 'quality' if
-   * not provided.
-   */
-  prioritize?: 'speed' | 'quality';
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer

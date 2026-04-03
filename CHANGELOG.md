@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.34.0 (2026-04-03)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/compare/v0.33.0...v0.34.0)
+
+### Features
+
+* **api:** api update ([59aae4a](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/59aae4a6b3d964ed135f656c676cc22e313c1ef3))
+
+
+### Bug Fixes
+
+* **internal:** gitignore generated `oidc` dir ([c6c53f4](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/c6c53f48dc834542501ad6dc82845e049fee78d9))
+
+
+### Chores
+
+* **internal:** fix MCP docker image builds in yarn projects ([34246a8](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/34246a8ff061383e981710e0a18339f70ee42d1c))
+* **internal:** improve local docs search for MCP servers ([04593ba](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/04593ba0a81083f5e112923cb1a60088563ba28f))
+* **internal:** improve local docs search for MCP servers ([cac740e](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/cac740ed32872bf8927e9f864a027db01e32a410))
+* **internal:** support type annotations when running MCP in local execution mode ([20e5504](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/20e55048858edb842855bb53d8923cd5ca8293de))
+* **internal:** use link instead of file in MCP server package.json files ([f0ea21d](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/f0ea21d488e583b81d09cc97efff21cfd9161cc2))
+* **mcp-server:** add support for session id, forward client info ([8874d82](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/8874d827b17680748babf5f0c627ab091bf225ef))
+* **mcp-server:** log client info ([152e36d](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/152e36dc0293be8bb879b88128fa6f31c789c3b3))
+
 ## 0.33.0 (2026-03-28)
 
 Full Changelog: [v0.32.0...v0.33.0](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/compare/v0.32.0...v0.33.0)
