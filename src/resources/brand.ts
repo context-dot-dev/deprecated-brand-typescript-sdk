@@ -917,9 +917,40 @@ export namespace BrandRetrieveResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -1906,9 +1937,40 @@ export namespace BrandIdentifyFromTransactionResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -2666,9 +2728,40 @@ export namespace BrandRetrieveByEmailResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -3392,9 +3485,40 @@ export namespace BrandRetrieveByIsinResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -4118,9 +4242,40 @@ export namespace BrandRetrieveByNameResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -4844,9 +4999,40 @@ export namespace BrandRetrieveByTickerResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
