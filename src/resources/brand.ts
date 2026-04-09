@@ -156,10 +156,14 @@ export class Brand extends APIResource {
   /**
    * Capture a screenshot of a website. Supports both viewport (standard browser
    * view) and full-page screenshots. Can also screenshot specific page types (login,
-   * pricing, etc.) by using heuristics to find the appropriate URL. Returns a URL to
-   * the uploaded screenshot image hosted on our CDN.
+   * pricing, etc.) by using heuristics to find the appropriate URL. Either 'domain'
+   * or 'directUrl' must be provided as a query parameter, but not both. Returns a
+   * URL to the uploaded screenshot image hosted on our CDN.
    */
-  screenshot(query: BrandScreenshotParams, options?: RequestOptions): APIPromise<BrandScreenshotResponse> {
+  screenshot(
+    query: BrandScreenshotParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BrandScreenshotResponse> {
     return this._client.get('/brand/screenshot', { query, ...options });
   }
 
@@ -7635,10 +7639,17 @@ export interface BrandRetrieveSimplifiedParams {
 
 export interface BrandScreenshotParams {
   /**
+   * A specific URL to screenshot directly, bypassing domain resolution (e.g.,
+   * 'https://example.com/pricing'). When provided, the screenshot is taken of this
+   * exact URL.
+   */
+  directUrl?: string;
+
+  /**
    * Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
    * domain will be automatically normalized and validated.
    */
-  domain: string;
+  domain?: string;
 
   /**
    * Optional parameter to determine screenshot type. If 'true', takes a full page
@@ -7651,7 +7662,8 @@ export interface BrandScreenshotParams {
    * Optional parameter to specify which page type to screenshot. If provided, the
    * system will scrape the domain's links and use heuristics to find the most
    * appropriate URL for the specified page type (30 supported languages). If not
-   * provided, screenshots the main domain landing page.
+   * provided, screenshots the main domain landing page. Only applicable when using
+   * 'domain', not 'directUrl'.
    */
   page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact';
 
