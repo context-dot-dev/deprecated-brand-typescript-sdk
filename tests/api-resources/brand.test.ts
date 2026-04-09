@@ -327,8 +327,8 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('screenshot: only required params', async () => {
-    const responsePromise = client.brand.screenshot({ domain: 'domain' });
+  test.skip('screenshot', async () => {
+    const responsePromise = client.brand.screenshot();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -339,13 +339,20 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('screenshot: required and optional params', async () => {
-    const response = await client.brand.screenshot({
-      domain: 'domain',
-      fullScreenshot: 'true',
-      page: 'login',
-      prioritize: 'speed',
-    });
+  test.skip('screenshot: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.brand.screenshot(
+        {
+          directUrl: 'https://example.com',
+          domain: 'domain',
+          fullScreenshot: 'true',
+          page: 'login',
+          prioritize: 'speed',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(BrandDev.NotFoundError);
   });
 
   // Mock server tests are disabled
