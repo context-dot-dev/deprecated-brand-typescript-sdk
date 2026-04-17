@@ -824,7 +824,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     name: 'web_scrape_images',
     endpoint: '/web/scrape/images',
     httpMethod: 'get',
-    summary: 'Scrape images from a URL',
+    summary: 'Scrape Images',
     description:
       'Scrapes all images from the given URL. Extracts images from img, svg, picture/source, link, and video elements including inline SVGs, base64 data URIs, and standard URLs.',
     stainlessPath: '(resource) brand > (method) web_scrape_images',
