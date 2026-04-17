@@ -613,47 +613,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
-    name: 'fonts',
-    endpoint: '/brand/fonts',
-    httpMethod: 'get',
-    summary: 'Extract fonts from website',
-    description:
-      "Extract font information from a brand's website including font families, usage statistics, fallbacks, and element/word counts.",
-    stainlessPath: '(resource) brand > (method) fonts',
-    qualified: 'client.brand.fonts',
-    params: ['domain: string;', 'timeoutMS?: number;'],
-    response:
-      '{ code: number; domain: string; fonts: { fallbacks: string[]; font: string; num_elements: number; num_words: number; percent_elements: number; percent_words: number; uses: string[]; }[]; status: string; }',
-    markdown:
-      "## fonts\n\n`client.brand.fonts(domain: string, timeoutMS?: number): { code: number; domain: string; fonts: object[]; status: string; }`\n\n**get** `/brand/fonts`\n\nExtract font information from a brand's website including font families, usage statistics, fallbacks, and element/word counts.\n\n### Parameters\n\n- `domain: string`\n  Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The domain will be automatically normalized and validated.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ code: number; domain: string; fonts: { fallbacks: string[]; font: string; num_elements: number; num_words: number; percent_elements: number; percent_words: number; uses: string[]; }[]; status: string; }`\n\n  - `code: number`\n  - `domain: string`\n  - `fonts: { fallbacks: string[]; font: string; num_elements: number; num_words: number; percent_elements: number; percent_words: number; uses: string[]; }[]`\n  - `status: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.fonts({ domain: 'domain' });\n\nconsole.log(response);\n```",
-    perLanguage: {
-      http: {
-        example:
-          'curl https://api.brand.dev/v1/brand/fonts \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().fonts',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandFontsParams;\nimport com.branddev.api.models.brand.BrandFontsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandFontsParams params = BrandFontsParams.builder()\n            .domain("domain")\n            .build();\n        BrandFontsResponse response = client.brand().fonts(params);\n    }\n}',
-      },
-      python: {
-        method: 'brand.fonts',
-        example:
-          'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.fonts(\n    domain="domain",\n)\nprint(response.code)',
-      },
-      ruby: {
-        method: 'brand.fonts',
-        example:
-          'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.fonts(domain: "domain")\n\nputs(response)',
-      },
-      typescript: {
-        method: 'client.brand.fonts',
-        example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.fonts({ domain: 'domain' });\n\nconsole.log(response.code);",
-      },
-    },
-  },
-  {
     name: 'ai_products',
     endpoint: '/brand/ai/products',
     httpMethod: 'post',

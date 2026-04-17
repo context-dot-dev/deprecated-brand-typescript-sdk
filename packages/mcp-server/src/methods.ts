@@ -35,12 +35,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/brand/ai/query',
   },
   {
-    clientCallName: 'client.brand.fonts',
-    fullyQualifiedName: 'brand.fonts',
-    httpMethod: 'get',
-    httpPath: '/brand/fonts',
-  },
-  {
     clientCallName: 'client.brand.identifyFromTransaction',
     fullyQualifiedName: 'brand.identifyFromTransaction',
     httpMethod: 'get',
