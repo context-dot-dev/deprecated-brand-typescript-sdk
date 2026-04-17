@@ -146,20 +146,6 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Capture a screenshot of a website. Supports both viewport (standard browser
-   * view) and full-page screenshots. Can also screenshot specific page types (login,
-   * pricing, etc.) by using heuristics to find the appropriate URL. Either 'domain'
-   * or 'directUrl' must be provided as a query parameter, but not both. Returns a
-   * URL to the uploaded screenshot image hosted on our CDN.
-   */
-  screenshot(
-    query: BrandScreenshotParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<BrandScreenshotResponse> {
-    return this._client.get('/brand/screenshot', { query, ...options });
-  }
-
-  /**
    * Automatically extract comprehensive design system information from a brand's
    * website including colors, typography, spacing, shadows, and UI components.
    * Either 'domain' or 'directUrl' must be provided as a query parameter, but not
@@ -5208,33 +5194,6 @@ export namespace BrandRetrieveSimplifiedResponse {
   }
 }
 
-export interface BrandScreenshotResponse {
-  /**
-   * HTTP status code
-   */
-  code?: number;
-
-  /**
-   * The normalized domain that was processed
-   */
-  domain?: string;
-
-  /**
-   * Public URL of the uploaded screenshot image
-   */
-  screenshot?: string;
-
-  /**
-   * Type of screenshot that was captured
-   */
-  screenshotType?: 'viewport' | 'fullPage';
-
-  /**
-   * Status of the response, e.g., 'ok'
-   */
-  status?: string;
-}
-
 export interface BrandStyleguideResponse {
   /**
    * HTTP status code
@@ -7580,44 +7539,6 @@ export interface BrandRetrieveSimplifiedParams {
   timeoutMS?: number;
 }
 
-export interface BrandScreenshotParams {
-  /**
-   * A specific URL to screenshot directly, bypassing domain resolution (e.g.,
-   * 'https://example.com/pricing'). When provided, the screenshot is taken of this
-   * exact URL.
-   */
-  directUrl?: string;
-
-  /**
-   * Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
-   * domain will be automatically normalized and validated.
-   */
-  domain?: string;
-
-  /**
-   * Optional parameter to determine screenshot type. If 'true', takes a full page
-   * screenshot capturing all content. If 'false' or not provided, takes a viewport
-   * screenshot (standard browser view).
-   */
-  fullScreenshot?: 'true' | 'false';
-
-  /**
-   * Optional parameter to specify which page type to screenshot. If provided, the
-   * system will scrape the domain's links and use heuristics to find the most
-   * appropriate URL for the specified page type (30 supported languages). If not
-   * provided, screenshots the main domain landing page. Only applicable when using
-   * 'domain', not 'directUrl'.
-   */
-  page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact';
-
-  /**
-   * Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
-   * faster capture with basic quality. If 'quality', optimizes for higher quality
-   * with longer wait times. Defaults to 'quality' if not provided.
-   */
-  prioritize?: 'speed' | 'quality';
-}
-
 export interface BrandStyleguideParams {
   /**
    * A specific URL to fetch the styleguide from directly, bypassing domain
@@ -7724,7 +7645,6 @@ export declare namespace Brand {
     type BrandRetrieveByTickerResponse as BrandRetrieveByTickerResponse,
     type BrandRetrieveNaicsResponse as BrandRetrieveNaicsResponse,
     type BrandRetrieveSimplifiedResponse as BrandRetrieveSimplifiedResponse,
-    type BrandScreenshotResponse as BrandScreenshotResponse,
     type BrandStyleguideResponse as BrandStyleguideResponse,
     type BrandWebScrapeHTMLResponse as BrandWebScrapeHTMLResponse,
     type BrandWebScrapeImagesResponse as BrandWebScrapeImagesResponse,
@@ -7743,7 +7663,6 @@ export declare namespace Brand {
     type BrandRetrieveByTickerParams as BrandRetrieveByTickerParams,
     type BrandRetrieveNaicsParams as BrandRetrieveNaicsParams,
     type BrandRetrieveSimplifiedParams as BrandRetrieveSimplifiedParams,
-    type BrandScreenshotParams as BrandScreenshotParams,
     type BrandStyleguideParams as BrandStyleguideParams,
     type BrandWebScrapeHTMLParams as BrandWebScrapeHTMLParams,
     type BrandWebScrapeImagesParams as BrandWebScrapeImagesParams,

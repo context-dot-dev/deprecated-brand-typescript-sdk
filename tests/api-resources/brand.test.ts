@@ -310,35 +310,6 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('screenshot', async () => {
-    const responsePromise = client.brand.screenshot();
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('screenshot: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.brand.screenshot(
-        {
-          directUrl: 'https://example.com',
-          domain: 'domain',
-          fullScreenshot: 'true',
-          page: 'login',
-          prioritize: 'speed',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(BrandDev.NotFoundError);
-  });
-
-  // Mock server tests are disabled
   test.skip('styleguide', async () => {
     const responsePromise = client.brand.styleguide();
     const rawResponse = await responsePromise.asResponse();

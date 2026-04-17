@@ -566,53 +566,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
-    name: 'screenshot',
-    endpoint: '/brand/screenshot',
-    httpMethod: 'get',
-    summary: 'Take screenshot of website',
-    description:
-      "Capture a screenshot of a website. Supports both viewport (standard browser view) and full-page screenshots. Can also screenshot specific page types (login, pricing, etc.) by using heuristics to find the appropriate URL. Either 'domain' or 'directUrl' must be provided as a query parameter, but not both. Returns a URL to the uploaded screenshot image hosted on our CDN.",
-    stainlessPath: '(resource) brand > (method) screenshot',
-    qualified: 'client.brand.screenshot',
-    params: [
-      'directUrl?: string;',
-      'domain?: string;',
-      "fullScreenshot?: 'true' | 'false';",
-      "page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact';",
-      "prioritize?: 'speed' | 'quality';",
-    ],
-    response:
-      "{ code?: number; domain?: string; screenshot?: string; screenshotType?: 'viewport' | 'fullPage'; status?: string; }",
-    markdown:
-      "## screenshot\n\n`client.brand.screenshot(directUrl?: string, domain?: string, fullScreenshot?: 'true' | 'false', page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact', prioritize?: 'speed' | 'quality'): { code?: number; domain?: string; screenshot?: string; screenshotType?: 'viewport' | 'fullPage'; status?: string; }`\n\n**get** `/brand/screenshot`\n\nCapture a screenshot of a website. Supports both viewport (standard browser view) and full-page screenshots. Can also screenshot specific page types (login, pricing, etc.) by using heuristics to find the appropriate URL. Either 'domain' or 'directUrl' must be provided as a query parameter, but not both. Returns a URL to the uploaded screenshot image hosted on our CDN.\n\n### Parameters\n\n- `directUrl?: string`\n  A specific URL to screenshot directly, bypassing domain resolution (e.g., 'https://example.com/pricing'). When provided, the screenshot is taken of this exact URL.\n\n- `domain?: string`\n  Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The domain will be automatically normalized and validated.\n\n- `fullScreenshot?: 'true' | 'false'`\n  Optional parameter to determine screenshot type. If 'true', takes a full page screenshot capturing all content. If 'false' or not provided, takes a viewport screenshot (standard browser view).\n\n- `page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact'`\n  Optional parameter to specify which page type to screenshot. If provided, the system will scrape the domain's links and use heuristics to find the most appropriate URL for the specified page type (30 supported languages). If not provided, screenshots the main domain landing page. Only applicable when using 'domain', not 'directUrl'.\n\n- `prioritize?: 'speed' | 'quality'`\n  Optional parameter to prioritize screenshot capture. If 'speed', optimizes for faster capture with basic quality. If 'quality', optimizes for higher quality with longer wait times. Defaults to 'quality' if not provided.\n\n### Returns\n\n- `{ code?: number; domain?: string; screenshot?: string; screenshotType?: 'viewport' | 'fullPage'; status?: string; }`\n\n  - `code?: number`\n  - `domain?: string`\n  - `screenshot?: string`\n  - `screenshotType?: 'viewport' | 'fullPage'`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.screenshot();\n\nconsole.log(response);\n```",
-    perLanguage: {
-      http: {
-        example:
-          'curl https://api.brand.dev/v1/brand/screenshot \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().screenshot',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandScreenshotParams;\nimport com.branddev.api.models.brand.BrandScreenshotResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandScreenshotResponse response = client.brand().screenshot();\n    }\n}',
-      },
-      python: {
-        method: 'brand.screenshot',
-        example:
-          'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.screenshot()\nprint(response.code)',
-      },
-      ruby: {
-        method: 'brand.screenshot',
-        example:
-          'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.screenshot\n\nputs(response)',
-      },
-      typescript: {
-        method: 'client.brand.screenshot',
-        example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.screenshot();\n\nconsole.log(response.code);",
-      },
-    },
-  },
-  {
     name: 'ai_products',
     endpoint: '/brand/ai/products',
     httpMethod: 'post',
