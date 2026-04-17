@@ -7731,6 +7731,13 @@ export interface BrandWebScrapeHTMLParams {
    * Full URL to scrape (must include http:// or https:// protocol)
    */
   url: string;
+
+  /**
+   * Return a cached result if a prior scrape for the same parameters exists and is
+   * younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+   * omitted. Set to 0 to always scrape fresh.
+   */
+  maxAgeMs?: number;
 }
 
 export interface BrandWebScrapeImagesParams {
@@ -7756,6 +7763,13 @@ export interface BrandWebScrapeMdParams {
    * Preserve hyperlinks in Markdown output
    */
   includeLinks?: boolean;
+
+  /**
+   * Return a cached result if a prior scrape for the same parameters exists and is
+   * younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+   * omitted. Set to 0 to always scrape fresh.
+   */
+  maxAgeMs?: number;
 
   /**
    * Shorten base64-encoded image data in the Markdown output
