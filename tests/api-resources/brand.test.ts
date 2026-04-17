@@ -120,23 +120,6 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('fonts: only required params', async () => {
-    const responsePromise = client.brand.fonts({ domain: 'domain' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('fonts: required and optional params', async () => {
-    const response = await client.brand.fonts({ domain: 'domain', timeoutMS: 1000 });
-  });
-
-  // Mock server tests are disabled
   test.skip('identifyFromTransaction: only required params', async () => {
     const responsePromise = client.brand.identifyFromTransaction({ transaction_info: 'transaction_info' });
     const rawResponse = await responsePromise.asResponse();

@@ -111,7 +111,6 @@ const fuse = new Fuse(
     'client.brand.aiProduct',
     'client.brand.aiProducts',
     'client.brand.aiQuery',
-    'client.brand.fonts',
     'client.brand.identifyFromTransaction',
     'client.brand.prefetch',
     'client.brand.prefetchByEmail',
