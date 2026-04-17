@@ -78,9 +78,8 @@ export class Brand extends APIResource {
 
   /**
    * Retrieve brand information using an email address while detecting disposable and
-   * free email addresses. This endpoint extracts the domain from the email address
-   * and returns brand data for that domain. Disposable and free email addresses
-   * (like gmail.com, yahoo.com) will throw a 422 error.
+   * free email addresses. Disposable and free email addresses (like gmail.com,
+   * yahoo.com) will throw a 422 error.
    */
   retrieveByEmail(
     query: BrandRetrieveByEmailParams,
@@ -91,8 +90,7 @@ export class Brand extends APIResource {
 
   /**
    * Retrieve brand information using an ISIN (International Securities
-   * Identification Number). This endpoint looks up the company associated with the
-   * ISIN and returns its brand data.
+   * Identification Number).
    */
   retrieveByIsin(
     query: BrandRetrieveByIsinParams,
@@ -102,8 +100,7 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Retrieve brand information using a company name. This endpoint searches for the
-   * company by name and returns its brand data.
+   * Retrieve brand information using a company name.
    */
   retrieveByName(
     query: BrandRetrieveByNameParams,
@@ -113,8 +110,7 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Retrieve brand information using a stock ticker symbol. This endpoint looks up
-   * the company associated with the ticker and returns its brand data.
+   * Retrieve brand information using a stock ticker symbol.
    */
   retrieveByTicker(
     query: BrandRetrieveByTickerParams,
@@ -135,8 +131,8 @@ export class Brand extends APIResource {
 
   /**
    * Returns a simplified version of brand data containing only essential
-   * information: domain, title, colors, logos, and backdrops. This endpoint is
-   * optimized for faster responses and reduced data transfer.
+   * information: domain, title, colors, logos, and backdrops. Optimized for faster
+   * responses and reduced data transfer.
    */
   retrieveSimplified(
     query: BrandRetrieveSimplifiedParams,
@@ -175,7 +171,7 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Crawl an entire website's sitemap and return all discovered page URLs
+   * Crawl an entire website's sitemap and return all discovered page URLs.
    */
   webScrapeSitemap(
     query: BrandWebScrapeSitemapParams,
@@ -6000,7 +5996,6 @@ export interface BrandIdentifyFromTransactionParams {
   /**
    * When set to true, the API will perform an additional verification steps to
    * ensure the identified brand matches the transaction with high confidence.
-   * Defaults to false.
    */
   high_confidence_only?: boolean;
 
@@ -6364,8 +6359,8 @@ export interface BrandRetrieveByNameParams {
   name: string;
 
   /**
-   * Optional country code (GL parameter) to specify the country. This affects the
-   * geographic location used for search queries.
+   * Optional country code hint (GL parameter) to specify the country for the company
+   * name.
    */
   country_gl?:
     | 'ad'
