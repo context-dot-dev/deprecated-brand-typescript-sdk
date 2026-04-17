@@ -525,47 +525,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
-    name: 'styleguide',
-    endpoint: '/brand/styleguide',
-    httpMethod: 'get',
-    summary: 'Extract design system and styleguide from website',
-    description:
-      "Automatically extract comprehensive design system information from a brand's website including colors, typography, spacing, shadows, and UI components. Either 'domain' or 'directUrl' must be provided as a query parameter, but not both.",
-    stainlessPath: '(resource) brand > (method) styleguide',
-    qualified: 'client.brand.styleguide',
-    params: ['directUrl?: string;', 'domain?: string;', 'timeoutMS?: number;'],
-    response:
-      "{ code?: number; domain?: string; status?: string; styleguide?: { colors: { accent: string; background: string; text: string; }; components: { button: object; card?: object; }; elementSpacing: { lg: string; md: string; sm: string; xl: string; xs: string; }; fontLinks: object; mode: 'light' | 'dark'; shadows: { inner: string; lg: string; md: string; sm: string; xl: string; }; typography: { headings: object; p?: object; }; }; }",
-    markdown:
-      "## styleguide\n\n`client.brand.styleguide(directUrl?: string, domain?: string, timeoutMS?: number): { code?: number; domain?: string; status?: string; styleguide?: object; }`\n\n**get** `/brand/styleguide`\n\nAutomatically extract comprehensive design system information from a brand's website including colors, typography, spacing, shadows, and UI components. Either 'domain' or 'directUrl' must be provided as a query parameter, but not both.\n\n### Parameters\n\n- `directUrl?: string`\n  A specific URL to fetch the styleguide from directly, bypassing domain resolution (e.g., 'https://example.com/design-system').\n\n- `domain?: string`\n  Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The domain will be automatically normalized and validated.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ code?: number; domain?: string; status?: string; styleguide?: { colors: { accent: string; background: string; text: string; }; components: { button: object; card?: object; }; elementSpacing: { lg: string; md: string; sm: string; xl: string; xs: string; }; fontLinks: object; mode: 'light' | 'dark'; shadows: { inner: string; lg: string; md: string; sm: string; xl: string; }; typography: { headings: object; p?: object; }; }; }`\n\n  - `code?: number`\n  - `domain?: string`\n  - `status?: string`\n  - `styleguide?: { colors: { accent: string; background: string; text: string; }; components: { button: { link?: { backgroundColor: string; borderColor: string; borderRadius: string; borderStyle: string; borderWidth: string; boxShadow: string; color: string; css: string; fontSize: string; fontWeight: number; minHeight: string; minWidth: string; padding: string; textDecoration: string; fontFallbacks?: string[]; fontFamily?: string; textDecorationColor?: string; }; primary?: { backgroundColor: string; borderColor: string; borderRadius: string; borderStyle: string; borderWidth: string; boxShadow: string; color: string; css: string; fontSize: string; fontWeight: number; minHeight: string; minWidth: string; padding: string; textDecoration: string; fontFallbacks?: string[]; fontFamily?: string; textDecorationColor?: string; }; secondary?: { backgroundColor: string; borderColor: string; borderRadius: string; borderStyle: string; borderWidth: string; boxShadow: string; color: string; css: string; fontSize: string; fontWeight: number; minHeight: string; minWidth: string; padding: string; textDecoration: string; fontFallbacks?: string[]; fontFamily?: string; textDecorationColor?: string; }; }; card?: { backgroundColor: string; borderColor: string; borderRadius: string; borderStyle: string; borderWidth: string; boxShadow: string; css: string; padding: string; textColor: string; }; }; elementSpacing: { lg: string; md: string; sm: string; xl: string; xs: string; }; fontLinks: object; mode: 'light' | 'dark'; shadows: { inner: string; lg: string; md: string; sm: string; xl: string; }; typography: { headings: { h1?: { fontFallbacks: string[]; fontFamily: string; fontSize: string; fontWeight: number; letterSpacing: string; lineHeight: string; }; h2?: { fontFallbacks: string[]; fontFamily: string; fontSize: string; fontWeight: number; letterSpacing: string; lineHeight: string; }; h3?: { fontFallbacks: string[]; fontFamily: string; fontSize: string; fontWeight: number; letterSpacing: string; lineHeight: string; }; h4?: { fontFallbacks: string[]; fontFamily: string; fontSize: string; fontWeight: number; letterSpacing: string; lineHeight: string; }; }; p?: { fontFallbacks: string[]; fontFamily: string; fontSize: string; fontWeight: number; letterSpacing: string; lineHeight: string; }; }; }`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.styleguide();\n\nconsole.log(response);\n```",
-    perLanguage: {
-      http: {
-        example:
-          'curl https://api.brand.dev/v1/brand/styleguide \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().styleguide',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandStyleguideParams;\nimport com.branddev.api.models.brand.BrandStyleguideResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandStyleguideResponse response = client.brand().styleguide();\n    }\n}',
-      },
-      python: {
-        method: 'brand.styleguide',
-        example:
-          'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.styleguide()\nprint(response.styleguide)',
-      },
-      ruby: {
-        method: 'brand.styleguide',
-        example:
-          'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.styleguide\n\nputs(response)',
-      },
-      typescript: {
-        method: 'client.brand.styleguide',
-        example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.styleguide();\n\nconsole.log(response.styleguide);",
-      },
-    },
-  },
-  {
     name: 'ai_products',
     endpoint: '/brand/ai/products',
     httpMethod: 'post',

@@ -121,7 +121,6 @@ const fuse = new Fuse(
     'client.brand.retrieveByTicker',
     'client.brand.retrieveNaics',
     'client.brand.retrieveSimplified',
-    'client.brand.styleguide',
     'client.brand.webScrapeHTML',
     'client.brand.webScrapeImages',
     'client.brand.webScrapeMd',
