@@ -310,33 +310,6 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('styleguide', async () => {
-    const responsePromise = client.brand.styleguide();
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('styleguide: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.brand.styleguide(
-        {
-          directUrl: 'https://example.com',
-          domain: 'domain',
-          timeoutMS: 1000,
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(BrandDev.NotFoundError);
-  });
-
-  // Mock server tests are disabled
   test.skip('webScrapeHTML: only required params', async () => {
     const responsePromise = client.brand.webScrapeHTML({ url: 'https://example.com' });
     const rawResponse = await responsePromise.asResponse();

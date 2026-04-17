@@ -89,12 +89,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/brand/retrieve-simplified',
   },
   {
-    clientCallName: 'client.brand.styleguide',
-    fullyQualifiedName: 'brand.styleguide',
-    httpMethod: 'get',
-    httpPath: '/brand/styleguide',
-  },
-  {
     clientCallName: 'client.brand.webScrapeHTML',
     fullyQualifiedName: 'brand.webScrapeHTML',
     httpMethod: 'get',
