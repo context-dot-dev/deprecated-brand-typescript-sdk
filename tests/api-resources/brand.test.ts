@@ -271,28 +271,6 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieveNaics: only required params', async () => {
-    const responsePromise = client.brand.retrieveNaics({ input: 'input' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('retrieveNaics: required and optional params', async () => {
-    const response = await client.brand.retrieveNaics({
-      input: 'input',
-      maxResults: 1,
-      minResults: 1,
-      timeoutMS: 1000,
-    });
-  });
-
-  // Mock server tests are disabled
   test.skip('retrieveSimplified: only required params', async () => {
     const responsePromise = client.brand.retrieveSimplified({ domain: 'domain' });
     const rawResponse = await responsePromise.asResponse();

@@ -119,7 +119,6 @@ const fuse = new Fuse(
     'client.brand.retrieveByIsin',
     'client.brand.retrieveByName',
     'client.brand.retrieveByTicker',
-    'client.brand.retrieveNaics',
     'client.brand.retrieveSimplified',
     'client.brand.webScrapeHTML',
     'client.brand.webScrapeImages',

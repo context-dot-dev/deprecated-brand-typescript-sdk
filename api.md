@@ -13,7 +13,6 @@ Types:
 - <code><a href="./src/resources/brand.ts">BrandRetrieveByIsinResponse</a></code>
 - <code><a href="./src/resources/brand.ts">BrandRetrieveByNameResponse</a></code>
 - <code><a href="./src/resources/brand.ts">BrandRetrieveByTickerResponse</a></code>
-- <code><a href="./src/resources/brand.ts">BrandRetrieveNaicsResponse</a></code>
 - <code><a href="./src/resources/brand.ts">BrandRetrieveSimplifiedResponse</a></code>
 - <code><a href="./src/resources/brand.ts">BrandWebScrapeHTMLResponse</a></code>
 - <code><a href="./src/resources/brand.ts">BrandWebScrapeImagesResponse</a></code>
@@ -33,7 +32,6 @@ Methods:
 - <code title="get /brand/retrieve-by-isin">client.brand.<a href="./src/resources/brand.ts">retrieveByIsin</a>({ ...params }) -> BrandRetrieveByIsinResponse</code>
 - <code title="get /brand/retrieve-by-name">client.brand.<a href="./src/resources/brand.ts">retrieveByName</a>({ ...params }) -> BrandRetrieveByNameResponse</code>
 - <code title="get /brand/retrieve-by-ticker">client.brand.<a href="./src/resources/brand.ts">retrieveByTicker</a>({ ...params }) -> BrandRetrieveByTickerResponse</code>
-- <code title="get /brand/naics">client.brand.<a href="./src/resources/brand.ts">retrieveNaics</a>({ ...params }) -> BrandRetrieveNaicsResponse</code>
 - <code title="get /brand/retrieve-simplified">client.brand.<a href="./src/resources/brand.ts">retrieveSimplified</a>({ ...params }) -> BrandRetrieveSimplifiedResponse</code>
 - <code title="get /web/scrape/html">client.brand.<a href="./src/resources/brand.ts">webScrapeHTML</a>({ ...params }) -> BrandWebScrapeHTMLResponse</code>
 - <code title="get /web/scrape/images">client.brand.<a href="./src/resources/brand.ts">webScrapeImages</a>({ ...params }) -> BrandWebScrapeImagesResponse</code>
