@@ -120,16 +120,6 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Endpoint to classify any brand into a 2022 NAICS code.
-   */
-  retrieveNaics(
-    query: BrandRetrieveNaicsParams,
-    options?: RequestOptions,
-  ): APIPromise<BrandRetrieveNaicsResponse> {
-    return this._client.get('/brand/naics', { query, ...options });
-  }
-
-  /**
    * Returns a simplified version of brand data containing only essential
    * information: domain, title, colors, logos, and backdrops. Optimized for faster
    * responses and reduced data transfer.
@@ -4959,47 +4949,6 @@ export namespace BrandRetrieveByTickerResponse {
   }
 }
 
-export interface BrandRetrieveNaicsResponse {
-  /**
-   * Array of NAICS codes and titles.
-   */
-  codes?: Array<BrandRetrieveNaicsResponse.Code>;
-
-  /**
-   * Domain found for the brand
-   */
-  domain?: string;
-
-  /**
-   * Status of the response, e.g., 'ok'
-   */
-  status?: string;
-
-  /**
-   * Industry classification type, for naics api it will be `naics`
-   */
-  type?: string;
-}
-
-export namespace BrandRetrieveNaicsResponse {
-  export interface Code {
-    /**
-     * NAICS code
-     */
-    code: string;
-
-    /**
-     * Confidence level for how well this NAICS code matches the company description
-     */
-    confidence: 'high' | 'medium' | 'low';
-
-    /**
-     * NAICS title
-     */
-    name: string;
-  }
-}
-
 export interface BrandRetrieveSimplifiedResponse {
   /**
    * Simplified brand information
@@ -6967,33 +6916,6 @@ export interface BrandRetrieveByTickerParams {
   timeoutMS?: number;
 }
 
-export interface BrandRetrieveNaicsParams {
-  /**
-   * Brand domain or title to retrieve NAICS code for. If a valid domain is provided
-   * in `input`, it will be used for classification, otherwise, we will search for
-   * the brand using the provided title.
-   */
-  input: string;
-
-  /**
-   * Maximum number of NAICS codes to return. Must be between 1 and 10. Defaults
-   * to 5.
-   */
-  maxResults?: number;
-
-  /**
-   * Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
-   */
-  minResults?: number;
-
-  /**
-   * Optional timeout in milliseconds for the request. If the request takes longer
-   * than this value, it will be aborted with a 408 status code. Maximum allowed
-   * value is 300000ms (5 minutes).
-   */
-  timeoutMS?: number;
-}
-
 export interface BrandRetrieveSimplifiedParams {
   /**
    * Domain name to retrieve simplified brand data for
@@ -7091,7 +7013,6 @@ export declare namespace Brand {
     type BrandRetrieveByIsinResponse as BrandRetrieveByIsinResponse,
     type BrandRetrieveByNameResponse as BrandRetrieveByNameResponse,
     type BrandRetrieveByTickerResponse as BrandRetrieveByTickerResponse,
-    type BrandRetrieveNaicsResponse as BrandRetrieveNaicsResponse,
     type BrandRetrieveSimplifiedResponse as BrandRetrieveSimplifiedResponse,
     type BrandWebScrapeHTMLResponse as BrandWebScrapeHTMLResponse,
     type BrandWebScrapeImagesResponse as BrandWebScrapeImagesResponse,
@@ -7108,7 +7029,6 @@ export declare namespace Brand {
     type BrandRetrieveByIsinParams as BrandRetrieveByIsinParams,
     type BrandRetrieveByNameParams as BrandRetrieveByNameParams,
     type BrandRetrieveByTickerParams as BrandRetrieveByTickerParams,
-    type BrandRetrieveNaicsParams as BrandRetrieveNaicsParams,
     type BrandRetrieveSimplifiedParams as BrandRetrieveSimplifiedParams,
     type BrandWebScrapeHTMLParams as BrandWebScrapeHTMLParams,
     type BrandWebScrapeImagesParams as BrandWebScrapeImagesParams,

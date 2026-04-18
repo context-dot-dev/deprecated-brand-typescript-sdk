@@ -77,12 +77,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/brand/retrieve-by-ticker',
   },
   {
-    clientCallName: 'client.brand.retrieveNaics',
-    fullyQualifiedName: 'brand.retrieveNaics',
-    httpMethod: 'get',
-    httpPath: '/brand/naics',
-  },
-  {
     clientCallName: 'client.brand.retrieveSimplified',
     fullyQualifiedName: 'brand.retrieveSimplified',
     httpMethod: 'get',

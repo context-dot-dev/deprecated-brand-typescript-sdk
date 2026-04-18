@@ -316,46 +316,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
-    name: 'retrieve_naics',
-    endpoint: '/brand/naics',
-    httpMethod: 'get',
-    summary: 'Retrieve NAICS code for any brand',
-    description: 'Endpoint to classify any brand into a 2022 NAICS code.',
-    stainlessPath: '(resource) brand > (method) retrieve_naics',
-    qualified: 'client.brand.retrieveNaics',
-    params: ['input: string;', 'maxResults?: number;', 'minResults?: number;', 'timeoutMS?: number;'],
-    response:
-      "{ codes?: { code: string; confidence: 'high' | 'medium' | 'low'; name: string; }[]; domain?: string; status?: string; type?: string; }",
-    markdown:
-      "## retrieve_naics\n\n`client.brand.retrieveNaics(input: string, maxResults?: number, minResults?: number, timeoutMS?: number): { codes?: object[]; domain?: string; status?: string; type?: string; }`\n\n**get** `/brand/naics`\n\nEndpoint to classify any brand into a 2022 NAICS code.\n\n### Parameters\n\n- `input: string`\n  Brand domain or title to retrieve NAICS code for. If a valid domain is provided in `input`, it will be used for classification, otherwise, we will search for the brand using the provided title.\n\n- `maxResults?: number`\n  Maximum number of NAICS codes to return. Must be between 1 and 10. Defaults to 5.\n\n- `minResults?: number`\n  Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ codes?: { code: string; confidence: 'high' | 'medium' | 'low'; name: string; }[]; domain?: string; status?: string; type?: string; }`\n\n  - `codes?: { code: string; confidence: 'high' | 'medium' | 'low'; name: string; }[]`\n  - `domain?: string`\n  - `status?: string`\n  - `type?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.retrieveNaics({ input: 'input' });\n\nconsole.log(response);\n```",
-    perLanguage: {
-      http: {
-        example:
-          'curl https://api.brand.dev/v1/brand/naics \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().retrieveNaics',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveNaicsParams;\nimport com.branddev.api.models.brand.BrandRetrieveNaicsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveNaicsParams params = BrandRetrieveNaicsParams.builder()\n            .input("input")\n            .build();\n        BrandRetrieveNaicsResponse response = client.brand().retrieveNaics(params);\n    }\n}',
-      },
-      python: {
-        method: 'brand.retrieve_naics',
-        example:
-          'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.retrieve_naics(\n    input="input",\n)\nprint(response.codes)',
-      },
-      ruby: {
-        method: 'brand.retrieve_naics',
-        example:
-          'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.retrieve_naics(input: "input")\n\nputs(response)',
-      },
-      typescript: {
-        method: 'client.brand.retrieveNaics',
-        example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveNaics({ input: 'input' });\n\nconsole.log(response.codes);",
-      },
-    },
-  },
-  {
     name: 'ai_query',
     endpoint: '/brand/ai/query',
     httpMethod: 'post',
