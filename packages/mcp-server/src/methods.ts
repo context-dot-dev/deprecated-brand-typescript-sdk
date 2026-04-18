@@ -35,12 +35,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/brand/ai/query',
   },
   {
-    clientCallName: 'client.brand.fonts',
-    fullyQualifiedName: 'brand.fonts',
-    httpMethod: 'get',
-    httpPath: '/brand/fonts',
-  },
-  {
     clientCallName: 'client.brand.identifyFromTransaction',
     fullyQualifiedName: 'brand.identifyFromTransaction',
     httpMethod: 'get',
@@ -83,28 +77,10 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/brand/retrieve-by-ticker',
   },
   {
-    clientCallName: 'client.brand.retrieveNaics',
-    fullyQualifiedName: 'brand.retrieveNaics',
-    httpMethod: 'get',
-    httpPath: '/brand/naics',
-  },
-  {
     clientCallName: 'client.brand.retrieveSimplified',
     fullyQualifiedName: 'brand.retrieveSimplified',
     httpMethod: 'get',
     httpPath: '/brand/retrieve-simplified',
-  },
-  {
-    clientCallName: 'client.brand.screenshot',
-    fullyQualifiedName: 'brand.screenshot',
-    httpMethod: 'get',
-    httpPath: '/brand/screenshot',
-  },
-  {
-    clientCallName: 'client.brand.styleguide',
-    fullyQualifiedName: 'brand.styleguide',
-    httpMethod: 'get',
-    httpPath: '/brand/styleguide',
   },
   {
     clientCallName: 'client.brand.webScrapeHTML',
