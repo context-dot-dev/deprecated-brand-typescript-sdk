@@ -359,6 +359,10 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('webScrapeSitemap: required and optional params', async () => {
-    const response = await client.brand.webScrapeSitemap({ domain: 'domain', maxLinks: 1 });
+    const response = await client.brand.webScrapeSitemap({
+      domain: 'domain',
+      maxLinks: 1,
+      urlRegex: '^https?://[^/]+/blog/',
+    });
   });
 });
