@@ -6998,6 +6998,12 @@ export interface BrandWebScrapeSitemapParams {
    * Minimum is 1, maximum is 100,000.
    */
   maxLinks?: number;
+
+  /**
+   * Optional RE2-compatible regex pattern. Only URLs matching this pattern are
+   * returned and counted against maxLinks.
+   */
+  urlRegex?: string;
 }
 
 export declare namespace Brand {
