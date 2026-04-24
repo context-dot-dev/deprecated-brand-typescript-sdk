@@ -971,10 +971,7 @@ export namespace BrandAIProductResponse {
     name: string;
 
     /**
-     * Stock Keeping Unit (product identifier). Extracted from structured data (JSON-LD
-     * Product.sku), microdata, meta tags, platform-specific identifiers (e.g. Amazon
-     * ASIN, Etsy listing ID), or visible SKU/Model/Item # text. Null if no identifier
-     * is found.
+     * Stock Keeping Unit (product identifier). Null if no identifier is found.
      */
     sku: string | null;
 
@@ -1055,10 +1052,7 @@ export namespace BrandAIProductsResponse {
     name: string;
 
     /**
-     * Stock Keeping Unit (product identifier). Extracted from structured data (JSON-LD
-     * Product.sku), microdata, meta tags, platform-specific identifiers (e.g. Amazon
-     * ASIN, Etsy listing ID), or visible SKU/Model/Item # text. Null if no identifier
-     * is found.
+     * Stock Keeping Unit (product identifier). Null if no identifier is found.
      */
     sku: string | null;
 
