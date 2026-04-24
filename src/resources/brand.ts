@@ -6942,6 +6942,13 @@ export interface BrandWebScrapeHTMLParams {
    * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
    */
   maxAgeMs?: number;
+
+  /**
+   * When true (default), PDF URLs are fetched and their text layer is extracted and
+   * returned wrapped in <html><pdf>…</pdf></html>. When false, PDF URLs are skipped
+   * and a 400 WEBSITE_ACCESS_ERROR is returned.
+   */
+  parsePDF?: boolean;
 }
 
 export interface BrandWebScrapeImagesParams {
@@ -6974,6 +6981,13 @@ export interface BrandWebScrapeMdParams {
    * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
    */
   maxAgeMs?: number;
+
+  /**
+   * When true (default), PDF URLs are fetched and their text layer is extracted and
+   * converted to Markdown. When false, PDF URLs are skipped and a 400
+   * WEBSITE_ACCESS_ERROR is returned.
+   */
+  parsePDF?: boolean;
 
   /**
    * Shorten base64-encoded image data in the Markdown output
