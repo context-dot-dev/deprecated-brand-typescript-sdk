@@ -301,7 +301,11 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('webScrapeHTML: required and optional params', async () => {
-    const response = await client.brand.webScrapeHTML({ url: 'https://example.com', maxAgeMs: 0 });
+    const response = await client.brand.webScrapeHTML({
+      url: 'https://example.com',
+      maxAgeMs: 0,
+      parsePDF: true,
+    });
   });
 
   // Mock server tests are disabled
@@ -340,6 +344,7 @@ describe('resource brand', () => {
       includeImages: true,
       includeLinks: true,
       maxAgeMs: 0,
+      parsePDF: true,
       shortenBase64Images: true,
       useMainContentOnly: true,
     });
