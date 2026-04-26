@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.35.0 (2026-04-26)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/compare/v0.34.0...v0.35.0)
+
+### Features
+
+* **api:** api update ([0a31d83](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/0a31d83edb235c2b212c6d4ca1491791f5f3bd4f))
+* **api:** api update ([54a32bf](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/54a32bf4e75bf1794b277eb4ce167004ad70d026))
+* **api:** api update ([a83efa1](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/a83efa13afc3f4f6b564dcba1eebf34e1308d388))
+* **api:** api update ([0617a88](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/0617a88b23443ea0bc13498ef589ee400ef432a1))
+* **api:** api update ([65b0a20](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/65b0a202fddb6cc91d6af6c3baa02ef48fd8085b))
+* **api:** api update ([3f941ed](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/3f941edf853250925cf0b5d314affb2dad20ea8f))
+* **api:** api update ([96f634a](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/96f634afd283dfdb24186d77fd89e6d7db7654e1))
+* **api:** api update ([f774c88](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/f774c883e3a05276669b94690517703447ddff9a))
+* **api:** api update ([634a8ee](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/634a8eeec0cc6cf55fa66468c4e12edadfc8c222))
+* **api:** api update ([7fae62a](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/7fae62af58b8ebc012fd23e39d09ab939b1bd309))
+* **api:** api update ([85a4fad](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/85a4faddcc76130685e7d683999dc2712ce388a9))
+* **api:** api update ([d702889](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/d7028891158c4821acd11093fc69172b9f591db3))
+* **api:** api update ([5819866](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/5819866293d5d87b22457a7d0f2412a726788e97))
+* **api:** api update ([4b26b87](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/4b26b8765fbe347c55159e6a3b98cd26c1f2a478))
+* **api:** api update ([eddea3f](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/eddea3f1a05a07b311c01ba7d63c5ea8006a6007))
+* **api:** api update ([d3ddae8](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/d3ddae876866735ed1d74b606b13e3904aaaea73))
+* **api:** api update ([fbf3885](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/fbf38850134f41f8c5c3ffb7688654ca4c01b72e))
+* **api:** api update ([9c5127f](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/9c5127f56d1a7cecd870ed28f39299ad07435f84))
+* **api:** api update ([2951a65](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/2951a65b2f64fff438a445501b8faa095023d48b))
+* **api:** api update ([5a8b6f2](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/5a8b6f230ddf475be3a1b9d2c2e05a930a1724b8))
+
+
+### Chores
+
+* **internal:** codegen related update ([54a4dc6](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/54a4dc6a834ee5801f0bcc326a0446598121d844))
+* **internal:** fix MCP server import ordering ([18990e2](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/18990e28444884c123f8cff50c7763ff5f3562cf))
+* **internal:** more robust bootstrap script ([6b1838d](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/6b1838d94014d4ff073c38392820cfb868d2ee28))
+* **internal:** show error causes in MCP servers when running in local mode ([bdc3563](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/bdc35636b0866d6daecd3be434a46989776fe53f))
+* **internal:** update docs ordering ([3084086](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/3084086cb5f62d71f1be21a5d4ef07aca2fc7523))
+* **mcp-server:** increase local docs search result count from 5 to 10 ([39503b6](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/commit/39503b60104352275076fefa2b821ee1a7f9a2d5))
+
 ## 0.34.0 (2026-04-03)
 
 Full Changelog: [v0.33.0...v0.34.0](https://github.com/context-dot-dev/deprecated-brand-typescript-sdk/compare/v0.33.0...v0.34.0)
