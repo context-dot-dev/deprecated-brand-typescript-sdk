@@ -14,18 +14,17 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Beta feature: Given a single URL, determines if it is a product detail page,
-   * classifies the platform/product type, and extracts the product information.
-   * Supports Amazon, TikTok Shop, Etsy, and generic ecommerce sites.
+   * Given a single URL, determines if it is a product page and extracts the product
+   * information.
    */
   aiProduct(body: BrandAIProductParams, options?: RequestOptions): APIPromise<BrandAIProductResponse> {
     return this._client.post('/brand/ai/product', { body, ...options });
   }
 
   /**
-   * Beta feature: Extract product information from a brand's website. We will
-   * analyze the website and return a list of products with details such as name,
-   * description, image, pricing, features, and more.
+   * Extract product information from a brand's website. We will analyze the website
+   * and return a list of products with details such as name, description, image,
+   * pricing, features, and more.
    */
   aiProducts(body: BrandAIProductsParams, options?: RequestOptions): APIPromise<BrandAIProductsResponse> {
     return this._client.post('/brand/ai/products', { body, ...options });
@@ -53,9 +52,7 @@ export class Brand extends APIResource {
 
   /**
    * Signal that you may fetch brand data for a particular domain soon to improve
-   * latency. This endpoint does not charge credits and is available for paid
-   * customers to optimize future requests. [You must be on a paid plan to use this
-   * endpoint]
+   * latency.
    */
   prefetch(body: BrandPrefetchParams, options?: RequestOptions): APIPromise<BrandPrefetchResponse> {
     return this._client.post('/brand/prefetch', { body, ...options });
@@ -65,9 +62,7 @@ export class Brand extends APIResource {
    * Signal that you may fetch brand data for a particular domain soon to improve
    * latency. This endpoint accepts an email address, extracts the domain from it,
    * validates that it's not a disposable or free email provider, and queues the
-   * domain for prefetching. This endpoint does not charge credits and is available
-   * for paid customers to optimize future requests. [You must be on a paid plan to
-   * use this endpoint]
+   * domain for prefetching.
    */
   prefetchByEmail(
     body: BrandPrefetchByEmailParams,
