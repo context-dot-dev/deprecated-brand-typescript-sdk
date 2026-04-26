@@ -44,7 +44,11 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('aiProduct: required and optional params', async () => {
-    const response = await client.brand.aiProduct({ url: 'https://example.com', timeoutMS: 1000 });
+    const response = await client.brand.aiProduct({
+      url: 'https://example.com',
+      maxAgeMs: 0,
+      timeoutMS: 1000,
+    });
   });
 
   // Mock server tests are disabled
@@ -63,6 +67,7 @@ describe('resource brand', () => {
   test.skip('aiProducts: required and optional params', async () => {
     const response = await client.brand.aiProducts({
       domain: 'domain',
+      maxAgeMs: 0,
       maxProducts: 1,
       timeoutMS: 1000,
     });
