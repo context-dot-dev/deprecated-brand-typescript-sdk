@@ -64,29 +64,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.brand.retrieve(domain: string, force_language?: string, maxSpeed?: boolean, timeoutMS?: number): { brand?: object; code?: number; status?: string; }`\n\n**get** `/brand/retrieve`\n\nRetrieve logos, backdrops, colors, industry, description, and more from any domain\n\n### Parameters\n\n- `domain: string`\n  Domain name to retrieve brand data for (e.g., 'example.com', 'google.com'). Cannot be used with name or ticker parameters.\n\n- `force_language?: string`\n  Optional parameter to force the language of the retrieved brand data.\n\n- `maxSpeed?: boolean`\n  Optional parameter to optimize the API call for maximum speed. When set to true, the API will skip time-consuming operations for faster response at the cost of less comprehensive data. Works with all three lookup methods.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: object[]; resolution?: object; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: object[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: object[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: object; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }; code?: number; status?: string; }`\n\n  - `brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: { hex?: string; name?: string; }[]; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: { industry: string; subindustry: string; }[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: { hex?: string; name?: string; }[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }`\n  - `code?: number`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst brand = await client.brand.retrieve({ domain: 'domain' });\n\nconsole.log(brand);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.retrieve',
         example:
-          'curl https://api.brand.dev/v1/brand/retrieve \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().retrieve',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveParams;\nimport com.branddev.api.models.brand.BrandRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveParams params = BrandRetrieveParams.builder()\n            .domain("domain")\n            .build();\n        BrandRetrieveResponse brand = client.brand().retrieve(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst brand = await client.brand.retrieve({ domain: 'domain' });\n\nconsole.log(brand.brand);",
       },
       python: {
         method: 'brand.retrieve',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nbrand = client.brand.retrieve(\n    domain="domain",\n)\nprint(brand.brand)',
       },
+      java: {
+        method: 'brand().retrieve',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveParams;\nimport com.branddev.api.models.brand.BrandRetrieveResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveParams params = BrandRetrieveParams.builder()\n            .domain("domain")\n            .build();\n        BrandRetrieveResponse brand = client.brand().retrieve(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.retrieve',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nbrand = brand_dev.brand.retrieve(domain: "domain")\n\nputs(brand)',
       },
-      typescript: {
-        method: 'client.brand.retrieve',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst brand = await client.brand.retrieve({ domain: 'domain' });\n\nconsole.log(brand.brand);",
+          'curl https://api.brand.dev/v1/brand/retrieve \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
@@ -110,29 +110,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve_by_ticker\n\n`client.brand.retrieveByTicker(ticker: string, force_language?: string, maxSpeed?: boolean, ticker_exchange?: string, timeoutMS?: number): { brand?: object; code?: number; status?: string; }`\n\n**get** `/brand/retrieve-by-ticker`\n\nRetrieve brand information using a stock ticker symbol.\n\n### Parameters\n\n- `ticker: string`\n  Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A'). Must be 1-15 characters, letters/numbers/dots only.\n\n- `force_language?: string`\n  Optional parameter to force the language of the retrieved brand data.\n\n- `maxSpeed?: boolean`\n  Optional parameter to optimize the API call for maximum speed. When set to true, the API will skip time-consuming operations for faster response at the cost of less comprehensive data.\n\n- `ticker_exchange?: string`\n  Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: object[]; resolution?: object; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: object[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: object[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: object; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }; code?: number; status?: string; }`\n\n  - `brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: { hex?: string; name?: string; }[]; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: { industry: string; subindustry: string; }[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: { hex?: string; name?: string; }[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }`\n  - `code?: number`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.retrieveByTicker({ ticker: 'ticker' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.retrieveByTicker',
         example:
-          'curl https://api.brand.dev/v1/brand/retrieve-by-ticker \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().retrieveByTicker',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveByTickerParams;\nimport com.branddev.api.models.brand.BrandRetrieveByTickerResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveByTickerParams params = BrandRetrieveByTickerParams.builder()\n            .ticker("ticker")\n            .build();\n        BrandRetrieveByTickerResponse response = client.brand().retrieveByTicker(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveByTicker({ ticker: 'ticker' });\n\nconsole.log(response.brand);",
       },
       python: {
         method: 'brand.retrieve_by_ticker',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.retrieve_by_ticker(\n    ticker="ticker",\n)\nprint(response.brand)',
       },
+      java: {
+        method: 'brand().retrieveByTicker',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveByTickerParams;\nimport com.branddev.api.models.brand.BrandRetrieveByTickerResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveByTickerParams params = BrandRetrieveByTickerParams.builder()\n            .ticker("ticker")\n            .build();\n        BrandRetrieveByTickerResponse response = client.brand().retrieveByTicker(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.retrieve_by_ticker',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.retrieve_by_ticker(ticker: "ticker")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.retrieveByTicker',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveByTicker({ ticker: 'ticker' });\n\nconsole.log(response.brand);",
+          'curl https://api.brand.dev/v1/brand/retrieve-by-ticker \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
@@ -151,29 +151,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve_by_isin\n\n`client.brand.retrieveByIsin(isin: string, force_language?: string, maxSpeed?: boolean, timeoutMS?: number): { brand?: object; code?: number; status?: string; }`\n\n**get** `/brand/retrieve-by-isin`\n\nRetrieve brand information using an ISIN (International Securities Identification Number). \n\n### Parameters\n\n- `isin: string`\n  ISIN (International Securities Identification Number) to retrieve brand data for (e.g., 'AU000000IMD5', 'US0378331005'). Must be exactly 12 characters: 2 letters followed by 9 alphanumeric characters and ending with a digit.\n\n- `force_language?: string`\n  Optional parameter to force the language of the retrieved brand data.\n\n- `maxSpeed?: boolean`\n  Optional parameter to optimize the API call for maximum speed. When set to true, the API will skip time-consuming operations for faster response at the cost of less comprehensive data.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: object[]; resolution?: object; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: object[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: object[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: object; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }; code?: number; status?: string; }`\n\n  - `brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: { hex?: string; name?: string; }[]; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: { industry: string; subindustry: string; }[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: { hex?: string; name?: string; }[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }`\n  - `code?: number`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.retrieveByIsin({ isin: 'SE60513A9993' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.retrieveByIsin',
         example:
-          'curl https://api.brand.dev/v1/brand/retrieve-by-isin \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().retrieveByIsin',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveByIsinParams;\nimport com.branddev.api.models.brand.BrandRetrieveByIsinResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveByIsinParams params = BrandRetrieveByIsinParams.builder()\n            .isin("SE60513A9993")\n            .build();\n        BrandRetrieveByIsinResponse response = client.brand().retrieveByIsin(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveByIsin({ isin: 'SE60513A9993' });\n\nconsole.log(response.brand);",
       },
       python: {
         method: 'brand.retrieve_by_isin',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.retrieve_by_isin(\n    isin="SE60513A9993",\n)\nprint(response.brand)',
       },
+      java: {
+        method: 'brand().retrieveByIsin',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveByIsinParams;\nimport com.branddev.api.models.brand.BrandRetrieveByIsinResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveByIsinParams params = BrandRetrieveByIsinParams.builder()\n            .isin("SE60513A9993")\n            .build();\n        BrandRetrieveByIsinResponse response = client.brand().retrieveByIsin(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.retrieve_by_isin',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.retrieve_by_isin(isin: "SE60513A9993")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.retrieveByIsin',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveByIsin({ isin: 'SE60513A9993' });\n\nconsole.log(response.brand);",
+          'curl https://api.brand.dev/v1/brand/retrieve-by-isin \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
@@ -197,29 +197,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve_by_name\n\n`client.brand.retrieveByName(name: string, country_gl?: string, force_language?: string, maxSpeed?: boolean, timeoutMS?: number): { brand?: object; code?: number; status?: string; }`\n\n**get** `/brand/retrieve-by-name`\n\nRetrieve brand information using a company name.\n\n### Parameters\n\n- `name: string`\n  Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft Corporation'). Must be 3-30 characters.\n\n- `country_gl?: string`\n  Optional country code hint (GL parameter) to specify the country for the company name.\n\n- `force_language?: string`\n  Optional parameter to force the language of the retrieved brand data.\n\n- `maxSpeed?: boolean`\n  Optional parameter to optimize the API call for maximum speed. When set to true, the API will skip time-consuming operations for faster response at the cost of less comprehensive data.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: object[]; resolution?: object; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: object[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: object[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: object; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }; code?: number; status?: string; }`\n\n  - `brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: { hex?: string; name?: string; }[]; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: { industry: string; subindustry: string; }[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: { hex?: string; name?: string; }[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }`\n  - `code?: number`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.retrieveByName({ name: 'xxx' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.retrieveByName',
         example:
-          'curl https://api.brand.dev/v1/brand/retrieve-by-name \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().retrieveByName',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveByNameParams;\nimport com.branddev.api.models.brand.BrandRetrieveByNameResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveByNameParams params = BrandRetrieveByNameParams.builder()\n            .name("xxx")\n            .build();\n        BrandRetrieveByNameResponse response = client.brand().retrieveByName(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveByName({ name: 'xxx' });\n\nconsole.log(response.brand);",
       },
       python: {
         method: 'brand.retrieve_by_name',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.retrieve_by_name(\n    name="xxx",\n)\nprint(response.brand)',
       },
+      java: {
+        method: 'brand().retrieveByName',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveByNameParams;\nimport com.branddev.api.models.brand.BrandRetrieveByNameResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveByNameParams params = BrandRetrieveByNameParams.builder()\n            .name("xxx")\n            .build();\n        BrandRetrieveByNameResponse response = client.brand().retrieveByName(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.retrieve_by_name',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.retrieve_by_name(name: "xxx")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.retrieveByName',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveByName({ name: 'xxx' });\n\nconsole.log(response.brand);",
+          'curl https://api.brand.dev/v1/brand/retrieve-by-name \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
@@ -238,29 +238,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve_by_email\n\n`client.brand.retrieveByEmail(email: string, force_language?: string, maxSpeed?: boolean, timeoutMS?: number): { brand?: object; code?: number; status?: string; }`\n\n**get** `/brand/retrieve-by-email`\n\nRetrieve brand information using an email address while detecting disposable and free email addresses. Disposable and free email addresses (like gmail.com, yahoo.com) will throw a 422 error.\n\n### Parameters\n\n- `email: string`\n  Email address to retrieve brand data for (e.g., 'contact@example.com'). The domain will be extracted from the email. Free email providers (gmail.com, yahoo.com, etc.) and disposable email addresses are not allowed.\n\n- `force_language?: string`\n  Optional parameter to force the language of the retrieved brand data.\n\n- `maxSpeed?: boolean`\n  Optional parameter to optimize the API call for maximum speed. When set to true, the API will skip time-consuming operations for faster response at the cost of less comprehensive data.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: object[]; resolution?: object; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: object[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: object[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: object; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }; code?: number; status?: string; }`\n\n  - `brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: { hex?: string; name?: string; }[]; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: { industry: string; subindustry: string; }[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: { hex?: string; name?: string; }[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }`\n  - `code?: number`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.retrieveByEmail({ email: 'dev@stainless.com' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.retrieveByEmail',
         example:
-          'curl https://api.brand.dev/v1/brand/retrieve-by-email \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().retrieveByEmail',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveByEmailParams;\nimport com.branddev.api.models.brand.BrandRetrieveByEmailResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveByEmailParams params = BrandRetrieveByEmailParams.builder()\n            .email("dev@stainless.com")\n            .build();\n        BrandRetrieveByEmailResponse response = client.brand().retrieveByEmail(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveByEmail({ email: 'dev@stainless.com' });\n\nconsole.log(response.brand);",
       },
       python: {
         method: 'brand.retrieve_by_email',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.retrieve_by_email(\n    email="dev@stainless.com",\n)\nprint(response.brand)',
       },
+      java: {
+        method: 'brand().retrieveByEmail',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveByEmailParams;\nimport com.branddev.api.models.brand.BrandRetrieveByEmailResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveByEmailParams params = BrandRetrieveByEmailParams.builder()\n            .email("dev@stainless.com")\n            .build();\n        BrandRetrieveByEmailResponse response = client.brand().retrieveByEmail(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.retrieve_by_email',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.retrieve_by_email(email: "dev@stainless.com")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.retrieveByEmail',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveByEmail({ email: 'dev@stainless.com' });\n\nconsole.log(response.brand);",
+          'curl https://api.brand.dev/v1/brand/retrieve-by-email \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
@@ -289,29 +289,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## identify_from_transaction\n\n`client.brand.identifyFromTransaction(transaction_info: string, city?: string, country_gl?: string, force_language?: string, high_confidence_only?: boolean, maxSpeed?: boolean, mcc?: string, phone?: number, timeoutMS?: number): { brand?: object; code?: number; status?: string; }`\n\n**get** `/brand/transaction_identifier`\n\nEndpoint specially designed for platforms that want to identify transaction data by the transaction title.\n\n### Parameters\n\n- `transaction_info: string`\n  Transaction information to identify the brand\n\n- `city?: string`\n  Optional city name to prioritize when searching for the brand.\n\n- `country_gl?: string`\n  Optional country code (GL parameter) to specify the country. This affects the geographic location used for search queries.\n\n- `force_language?: string`\n  Optional parameter to force the language of the retrieved brand data.\n\n- `high_confidence_only?: boolean`\n  When set to true, the API will perform an additional verification steps to ensure the identified brand matches the transaction with high confidence.\n\n- `maxSpeed?: boolean`\n  Optional parameter to optimize the API call for maximum speed. When set to true, the API will skip time-consuming operations for faster response at the cost of less comprehensive data.\n\n- `mcc?: string`\n  Optional Merchant Category Code (MCC) to help identify the business category/industry. \n\n- `phone?: number`\n  Optional phone number from the transaction to help verify brand match.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: object[]; resolution?: object; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: object[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: object[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: object; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }; code?: number; status?: string; }`\n\n  - `brand?: { address?: { city?: string; country?: string; country_code?: string; postal_code?: string; state_code?: string; state_province?: string; street?: string; }; backdrops?: { colors?: { hex?: string; name?: string; }[]; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; description?: string; domain?: string; email?: string; industries?: { eic?: { industry: string; subindustry: string; }[]; }; is_nsfw?: boolean; links?: { blog?: string; careers?: string; contact?: string; pricing?: string; privacy?: string; terms?: string; }; logos?: { colors?: { hex?: string; name?: string; }[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; type?: 'icon' | 'logo'; url?: string; }[]; phone?: string; primary_language?: string; slogan?: string; socials?: { type?: string; url?: string; }[]; stock?: { exchange?: string; ticker?: string; }; title?: string; }`\n  - `code?: number`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.identifyFromTransaction({ transaction_info: 'transaction_info' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.identifyFromTransaction',
         example:
-          'curl https://api.brand.dev/v1/brand/transaction_identifier \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().identifyFromTransaction',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandIdentifyFromTransactionParams;\nimport com.branddev.api.models.brand.BrandIdentifyFromTransactionResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandIdentifyFromTransactionParams params = BrandIdentifyFromTransactionParams.builder()\n            .transactionInfo("transaction_info")\n            .build();\n        BrandIdentifyFromTransactionResponse response = client.brand().identifyFromTransaction(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.identifyFromTransaction({\n  transaction_info: 'transaction_info',\n});\n\nconsole.log(response.brand);",
       },
       python: {
         method: 'brand.identify_from_transaction',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.identify_from_transaction(\n    transaction_info="transaction_info",\n)\nprint(response.brand)',
       },
+      java: {
+        method: 'brand().identifyFromTransaction',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandIdentifyFromTransactionParams;\nimport com.branddev.api.models.brand.BrandIdentifyFromTransactionResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandIdentifyFromTransactionParams params = BrandIdentifyFromTransactionParams.builder()\n            .transactionInfo("transaction_info")\n            .build();\n        BrandIdentifyFromTransactionResponse response = client.brand().identifyFromTransaction(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.identify_from_transaction',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.identify_from_transaction(transaction_info: "transaction_info")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.identifyFromTransaction',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.identifyFromTransaction({\n  transaction_info: 'transaction_info',\n});\n\nconsole.log(response.brand);",
+          'curl https://api.brand.dev/v1/brand/transaction_identifier \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
@@ -335,29 +335,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## ai_query\n\n`client.brand.aiQuery(data_to_extract: { datapoint_description: string; datapoint_example: string; datapoint_name: string; datapoint_type: 'text' | 'number' | 'date' | 'boolean' | 'list' | 'url'; datapoint_list_type?: 'string' | 'text' | 'number' | 'date' | 'boolean' | 'list' | 'url' | 'object'; datapoint_object_schema?: object; }[], domain: string, specific_pages?: { about_us?: boolean; blog?: boolean; careers?: boolean; contact_us?: boolean; faq?: boolean; home_page?: boolean; pricing?: boolean; privacy_policy?: boolean; terms_and_conditions?: boolean; }, timeoutMS?: number): { data_extracted?: object[]; domain?: string; status?: string; urls_analyzed?: string[]; }`\n\n**post** `/brand/ai/query`\n\nUse AI to extract specific data points from a brand's website. The AI will crawl the website and extract the requested information based on the provided data points.\n\n### Parameters\n\n- `data_to_extract: { datapoint_description: string; datapoint_example: string; datapoint_name: string; datapoint_type: 'text' | 'number' | 'date' | 'boolean' | 'list' | 'url'; datapoint_list_type?: 'string' | 'text' | 'number' | 'date' | 'boolean' | 'list' | 'url' | 'object'; datapoint_object_schema?: object; }[]`\n  Array of data points to extract from the website\n\n- `domain: string`\n  The domain name to analyze\n\n- `specific_pages?: { about_us?: boolean; blog?: boolean; careers?: boolean; contact_us?: boolean; faq?: boolean; home_page?: boolean; pricing?: boolean; privacy_policy?: boolean; terms_and_conditions?: boolean; }`\n  Optional object specifying which pages to analyze\n  - `about_us?: boolean`\n    Whether to analyze the about us page\n  - `blog?: boolean`\n    Whether to analyze the blog\n  - `careers?: boolean`\n    Whether to analyze the careers page\n  - `contact_us?: boolean`\n    Whether to analyze the contact us page\n  - `faq?: boolean`\n    Whether to analyze the FAQ page\n  - `home_page?: boolean`\n    Whether to analyze the home page\n  - `pricing?: boolean`\n    Whether to analyze the pricing page\n  - `privacy_policy?: boolean`\n    Whether to analyze the privacy policy page\n  - `terms_and_conditions?: boolean`\n    Whether to analyze the terms and conditions page\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ data_extracted?: { datapoint_name?: string; datapoint_value?: string | number | boolean | string[] | number[] | object[]; }[]; domain?: string; status?: string; urls_analyzed?: string[]; }`\n\n  - `data_extracted?: { datapoint_name?: string; datapoint_value?: string | number | boolean | string[] | number[] | object[]; }[]`\n  - `domain?: string`\n  - `status?: string`\n  - `urls_analyzed?: string[]`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.aiQuery({ data_to_extract: [{\n  datapoint_description: 'datapoint_description',\n  datapoint_example: 'datapoint_example',\n  datapoint_name: 'datapoint_name',\n  datapoint_type: 'text',\n}], domain: 'domain' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.aiQuery',
         example:
-          'curl https://api.brand.dev/v1/brand/ai/query \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY" \\\n    -d \'{\n          "data_to_extract": [\n            {\n              "datapoint_description": "datapoint_description",\n              "datapoint_example": "datapoint_example",\n              "datapoint_name": "datapoint_name",\n              "datapoint_type": "text"\n            }\n          ],\n          "domain": "domain"\n        }\'',
-      },
-      java: {
-        method: 'brand().aiQuery',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandAiQueryParams;\nimport com.branddev.api.models.brand.BrandAiQueryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandAiQueryParams params = BrandAiQueryParams.builder()\n            .addDataToExtract(BrandAiQueryParams.DataToExtract.builder()\n                .datapointDescription("datapoint_description")\n                .datapointExample("datapoint_example")\n                .datapointName("datapoint_name")\n                .datapointType(BrandAiQueryParams.DataToExtract.DatapointType.TEXT)\n                .build())\n            .domain("domain")\n            .build();\n        BrandAiQueryResponse response = client.brand().aiQuery(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.aiQuery({\n  data_to_extract: [\n    {\n      datapoint_description: 'datapoint_description',\n      datapoint_example: 'datapoint_example',\n      datapoint_name: 'datapoint_name',\n      datapoint_type: 'text',\n    },\n  ],\n  domain: 'domain',\n});\n\nconsole.log(response.data_extracted);",
       },
       python: {
         method: 'brand.ai_query',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.ai_query(\n    data_to_extract=[{\n        "datapoint_description": "datapoint_description",\n        "datapoint_example": "datapoint_example",\n        "datapoint_name": "datapoint_name",\n        "datapoint_type": "text",\n    }],\n    domain="domain",\n)\nprint(response.data_extracted)',
       },
+      java: {
+        method: 'brand().aiQuery',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandAiQueryParams;\nimport com.branddev.api.models.brand.BrandAiQueryResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandAiQueryParams params = BrandAiQueryParams.builder()\n            .addDataToExtract(BrandAiQueryParams.DataToExtract.builder()\n                .datapointDescription("datapoint_description")\n                .datapointExample("datapoint_example")\n                .datapointName("datapoint_name")\n                .datapointType(BrandAiQueryParams.DataToExtract.DatapointType.TEXT)\n                .build())\n            .domain("domain")\n            .build();\n        BrandAiQueryResponse response = client.brand().aiQuery(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.ai_query',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.ai_query(\n  data_to_extract: [\n    {\n      datapoint_description: "datapoint_description",\n      datapoint_example: "datapoint_example",\n      datapoint_name: "datapoint_name",\n      datapoint_type: :text\n    }\n  ],\n  domain: "domain"\n)\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.aiQuery',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.aiQuery({\n  data_to_extract: [\n    {\n      datapoint_description: 'datapoint_description',\n      datapoint_example: 'datapoint_example',\n      datapoint_name: 'datapoint_name',\n      datapoint_type: 'text',\n    },\n  ],\n  domain: 'domain',\n});\n\nconsole.log(response.data_extracted);",
+          'curl https://api.brand.dev/v1/brand/ai/query \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY" \\\n    -d \'{\n          "data_to_extract": [\n            {\n              "datapoint_description": "datapoint_description",\n              "datapoint_example": "datapoint_example",\n              "datapoint_name": "datapoint_name",\n              "datapoint_type": "text"\n            }\n          ],\n          "domain": "domain"\n        }\'',
       },
     },
   },
@@ -374,29 +374,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## prefetch\n\n`client.brand.prefetch(domain: string, timeoutMS?: number): { domain?: string; message?: string; status?: string; }`\n\n**post** `/brand/prefetch`\n\nSignal that you may fetch brand data for a particular domain soon to improve latency.\n\n### Parameters\n\n- `domain: string`\n  Domain name to prefetch brand data for\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ domain?: string; message?: string; status?: string; }`\n\n  - `domain?: string`\n  - `message?: string`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.prefetch({ domain: 'domain' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.prefetch',
         example:
-          'curl https://api.brand.dev/v1/brand/prefetch \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY" \\\n    -d \'{\n          "domain": "domain"\n        }\'',
-      },
-      java: {
-        method: 'brand().prefetch',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandPrefetchParams;\nimport com.branddev.api.models.brand.BrandPrefetchResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandPrefetchParams params = BrandPrefetchParams.builder()\n            .domain("domain")\n            .build();\n        BrandPrefetchResponse response = client.brand().prefetch(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.prefetch({ domain: 'domain' });\n\nconsole.log(response.domain);",
       },
       python: {
         method: 'brand.prefetch',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.prefetch(\n    domain="domain",\n)\nprint(response.domain)',
       },
+      java: {
+        method: 'brand().prefetch',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandPrefetchParams;\nimport com.branddev.api.models.brand.BrandPrefetchResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandPrefetchParams params = BrandPrefetchParams.builder()\n            .domain("domain")\n            .build();\n        BrandPrefetchResponse response = client.brand().prefetch(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.prefetch',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.prefetch(domain: "domain")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.prefetch',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.prefetch({ domain: 'domain' });\n\nconsole.log(response.domain);",
+          'curl https://api.brand.dev/v1/brand/prefetch \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY" \\\n    -d \'{\n          "domain": "domain"\n        }\'',
       },
     },
   },
@@ -414,29 +414,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## prefetch_by_email\n\n`client.brand.prefetchByEmail(email: string, timeoutMS?: number): { domain?: string; message?: string; status?: string; }`\n\n**post** `/brand/prefetch-by-email`\n\nSignal that you may fetch brand data for a particular domain soon to improve latency. This endpoint accepts an email address, extracts the domain from it, validates that it's not a disposable or free email provider, and queues the domain for prefetching.\n\n### Parameters\n\n- `email: string`\n  Email address to prefetch brand data for. The domain will be extracted from the email. Free email providers (gmail.com, yahoo.com, etc.) and disposable email addresses are not allowed.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ domain?: string; message?: string; status?: string; }`\n\n  - `domain?: string`\n  - `message?: string`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.prefetchByEmail({ email: 'dev@stainless.com' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.prefetchByEmail',
         example:
-          'curl https://api.brand.dev/v1/brand/prefetch-by-email \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY" \\\n    -d \'{\n          "email": "dev@stainless.com"\n        }\'',
-      },
-      java: {
-        method: 'brand().prefetchByEmail',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandPrefetchByEmailParams;\nimport com.branddev.api.models.brand.BrandPrefetchByEmailResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandPrefetchByEmailParams params = BrandPrefetchByEmailParams.builder()\n            .email("dev@stainless.com")\n            .build();\n        BrandPrefetchByEmailResponse response = client.brand().prefetchByEmail(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.prefetchByEmail({ email: 'dev@stainless.com' });\n\nconsole.log(response.domain);",
       },
       python: {
         method: 'brand.prefetch_by_email',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.prefetch_by_email(\n    email="dev@stainless.com",\n)\nprint(response.domain)',
       },
+      java: {
+        method: 'brand().prefetchByEmail',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandPrefetchByEmailParams;\nimport com.branddev.api.models.brand.BrandPrefetchByEmailResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandPrefetchByEmailParams params = BrandPrefetchByEmailParams.builder()\n            .email("dev@stainless.com")\n            .build();\n        BrandPrefetchByEmailResponse response = client.brand().prefetchByEmail(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.prefetch_by_email',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.prefetch_by_email(email: "dev@stainless.com")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.prefetchByEmail',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.prefetchByEmail({ email: 'dev@stainless.com' });\n\nconsole.log(response.domain);",
+          'curl https://api.brand.dev/v1/brand/prefetch-by-email \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY" \\\n    -d \'{\n          "email": "dev@stainless.com"\n        }\'',
       },
     },
   },
@@ -455,29 +455,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve_simplified\n\n`client.brand.retrieveSimplified(domain: string, timeoutMS?: number): { brand?: object; code?: number; status?: string; }`\n\n**get** `/brand/retrieve-simplified`\n\nReturns a simplified version of brand data containing only essential information: domain, title, colors, logos, and backdrops. Optimized for faster responses and reduced data transfer.\n\n### Parameters\n\n- `domain: string`\n  Domain name to retrieve simplified brand data for\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ brand?: { backdrops?: { colors?: object[]; resolution?: object; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; domain?: string; logos?: { colors?: object[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: object; type?: 'icon' | 'logo'; url?: string; }[]; title?: string; }; code?: number; status?: string; }`\n\n  - `brand?: { backdrops?: { colors?: { hex?: string; name?: string; }[]; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; url?: string; }[]; colors?: { hex?: string; name?: string; }[]; domain?: string; logos?: { colors?: { hex?: string; name?: string; }[]; mode?: 'light' | 'dark' | 'has_opaque_background'; resolution?: { aspect_ratio?: number; height?: number; width?: number; }; type?: 'icon' | 'logo'; url?: string; }[]; title?: string; }`\n  - `code?: number`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.retrieveSimplified({ domain: 'domain' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.retrieveSimplified',
         example:
-          'curl https://api.brand.dev/v1/brand/retrieve-simplified \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().retrieveSimplified',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveSimplifiedParams;\nimport com.branddev.api.models.brand.BrandRetrieveSimplifiedResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveSimplifiedParams params = BrandRetrieveSimplifiedParams.builder()\n            .domain("domain")\n            .build();\n        BrandRetrieveSimplifiedResponse response = client.brand().retrieveSimplified(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveSimplified({ domain: 'domain' });\n\nconsole.log(response.brand);",
       },
       python: {
         method: 'brand.retrieve_simplified',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.retrieve_simplified(\n    domain="domain",\n)\nprint(response.brand)',
       },
+      java: {
+        method: 'brand().retrieveSimplified',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveSimplifiedParams;\nimport com.branddev.api.models.brand.BrandRetrieveSimplifiedResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveSimplifiedParams params = BrandRetrieveSimplifiedParams.builder()\n            .domain("domain")\n            .build();\n        BrandRetrieveSimplifiedResponse response = client.brand().retrieveSimplified(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.retrieve_simplified',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.retrieve_simplified(domain: "domain")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.retrieveSimplified',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveSimplified({ domain: 'domain' });\n\nconsole.log(response.brand);",
+          'curl https://api.brand.dev/v1/brand/retrieve-simplified \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
@@ -496,29 +496,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       "{ products?: { description: string; features: string[]; images: string[]; name: string; sku: string; tags: string[]; target_audience: string[]; billing_frequency?: 'monthly' | 'yearly' | 'one_time' | 'usage_based'; category?: string; currency?: string; image_url?: string; price?: number; pricing_model?: 'per_seat' | 'flat' | 'tiered' | 'freemium' | 'custom'; url?: string; }[]; }",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.aiProducts',
         example:
-          'curl https://api.brand.dev/v1/brand/ai/products \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY" \\\n    -d \'{\n          "domain": "domain"\n        }\'',
-      },
-      java: {
-        method: 'brand().aiProducts',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandAiProductsParams;\nimport com.branddev.api.models.brand.BrandAiProductsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandAiProductsParams.Body.ByDomain params = BrandAiProductsParams.Body.ByDomain.builder()\n            .domain("domain")\n            .build();\n        BrandAiProductsResponse response = client.brand().aiProducts(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.aiProducts({ domain: 'domain' });\n\nconsole.log(response.products);",
       },
       python: {
         method: 'brand.ai_products',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.ai_products(\n    domain="domain",\n)\nprint(response.products)',
       },
+      java: {
+        method: 'brand().aiProducts',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandAiProductsParams;\nimport com.branddev.api.models.brand.BrandAiProductsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandAiProductsParams.Body.ByDomain params = BrandAiProductsParams.Body.ByDomain.builder()\n            .domain("domain")\n            .build();\n        BrandAiProductsResponse response = client.brand().aiProducts(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.ai_products',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.ai_products(body: {domain: "domain"})\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.aiProducts',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.aiProducts({ domain: 'domain' });\n\nconsole.log(response.products);",
+          'curl https://api.brand.dev/v1/brand/ai/products \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY" \\\n    -d \'{\n          "domain": "domain"\n        }\'',
       },
     },
   },
@@ -537,29 +537,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## ai_product\n\n`client.brand.aiProduct(url: string, maxAgeMs?: number, timeoutMS?: number): { is_product_page?: boolean; platform?: 'amazon' | 'tiktok_shop' | 'etsy' | 'generic'; product?: object; }`\n\n**post** `/brand/ai/product`\n\nGiven a single URL, determines if it is a product page and extracts the product information.\n\n### Parameters\n\n- `url: string`\n  The product page URL to extract product data from.\n\n- `maxAgeMs?: number`\n  Return a cached result if a prior scrape for the same parameters exists and is younger than this many milliseconds. Defaults to 7 days (604800000 ms) when omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ is_product_page?: boolean; platform?: 'amazon' | 'tiktok_shop' | 'etsy' | 'generic'; product?: { description: string; features: string[]; images: string[]; name: string; sku: string; tags: string[]; target_audience: string[]; billing_frequency?: 'monthly' | 'yearly' | 'one_time' | 'usage_based'; category?: string; currency?: string; image_url?: string; price?: number; pricing_model?: 'per_seat' | 'flat' | 'tiered' | 'freemium' | 'custom'; url?: string; }; }`\n\n  - `is_product_page?: boolean`\n  - `platform?: 'amazon' | 'tiktok_shop' | 'etsy' | 'generic'`\n  - `product?: { description: string; features: string[]; images: string[]; name: string; sku: string; tags: string[]; target_audience: string[]; billing_frequency?: 'monthly' | 'yearly' | 'one_time' | 'usage_based'; category?: string; currency?: string; image_url?: string; price?: number; pricing_model?: 'per_seat' | 'flat' | 'tiered' | 'freemium' | 'custom'; url?: string; }`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.aiProduct({ url: 'https://example.com' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.aiProduct',
         example:
-          'curl https://api.brand.dev/v1/brand/ai/product \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY" \\\n    -d \'{\n          "url": "https://example.com"\n        }\'',
-      },
-      java: {
-        method: 'brand().aiProduct',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandAiProductParams;\nimport com.branddev.api.models.brand.BrandAiProductResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandAiProductParams params = BrandAiProductParams.builder()\n            .url("https://example.com")\n            .build();\n        BrandAiProductResponse response = client.brand().aiProduct(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.aiProduct({ url: 'https://example.com' });\n\nconsole.log(response.is_product_page);",
       },
       python: {
         method: 'brand.ai_product',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.ai_product(\n    url="https://example.com",\n)\nprint(response.is_product_page)',
       },
+      java: {
+        method: 'brand().aiProduct',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandAiProductParams;\nimport com.branddev.api.models.brand.BrandAiProductResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandAiProductParams params = BrandAiProductParams.builder()\n            .url("https://example.com")\n            .build();\n        BrandAiProductResponse response = client.brand().aiProduct(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.ai_product',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.ai_product(url: "https://example.com")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.aiProduct',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.aiProduct({ url: 'https://example.com' });\n\nconsole.log(response.is_product_page);",
+          'curl https://api.brand.dev/v1/brand/ai/product \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY" \\\n    -d \'{\n          "url": "https://example.com"\n        }\'',
       },
     },
   },
@@ -576,29 +576,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## web_scrape_html\n\n`client.brand.webScrapeHTML(url: string, maxAgeMs?: number, parsePDF?: boolean): { html: string; success: true; url: string; }`\n\n**get** `/web/scrape/html`\n\nScrapes the given URL and returns the raw HTML content of the page.\n\n### Parameters\n\n- `url: string`\n  Full URL to scrape (must include http:// or https:// protocol)\n\n- `maxAgeMs?: number`\n  Return a cached result if a prior scrape for the same parameters exists and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.\n\n- `parsePDF?: boolean`\n  When true (default), PDF URLs are fetched and their text layer is extracted and returned wrapped in <html><pdf>…</pdf></html>. When false, PDF URLs are skipped and a 400 WEBSITE_ACCESS_ERROR is returned.\n\n### Returns\n\n- `{ html: string; success: true; url: string; }`\n\n  - `html: string`\n  - `success: true`\n  - `url: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.webScrapeHTML({ url: 'https://example.com' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.webScrapeHTML',
         example:
-          'curl https://api.brand.dev/v1/web/scrape/html \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().webScrapeHtml',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandWebScrapeHtmlParams;\nimport com.branddev.api.models.brand.BrandWebScrapeHtmlResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandWebScrapeHtmlParams params = BrandWebScrapeHtmlParams.builder()\n            .url("https://example.com")\n            .build();\n        BrandWebScrapeHtmlResponse response = client.brand().webScrapeHtml(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.webScrapeHTML({ url: 'https://example.com' });\n\nconsole.log(response.html);",
       },
       python: {
         method: 'brand.web_scrape_html',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.web_scrape_html(\n    url="https://example.com",\n)\nprint(response.html)',
       },
+      java: {
+        method: 'brand().webScrapeHtml',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandWebScrapeHtmlParams;\nimport com.branddev.api.models.brand.BrandWebScrapeHtmlResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandWebScrapeHtmlParams params = BrandWebScrapeHtmlParams.builder()\n            .url("https://example.com")\n            .build();\n        BrandWebScrapeHtmlResponse response = client.brand().webScrapeHtml(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.web_scrape_html',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.web_scrape_html(url: "https://example.com")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.webScrapeHTML',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.webScrapeHTML({ url: 'https://example.com' });\n\nconsole.log(response.html);",
+          'curl https://api.brand.dev/v1/web/scrape/html \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
@@ -623,29 +623,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## web_scrape_md\n\n`client.brand.webScrapeMd(url: string, includeImages?: boolean, includeLinks?: boolean, maxAgeMs?: number, parsePDF?: boolean, shortenBase64Images?: boolean, useMainContentOnly?: boolean): { markdown: string; success: true; url: string; }`\n\n**get** `/web/scrape/markdown`\n\nScrapes the given URL into LLM usable Markdown.\n\n### Parameters\n\n- `url: string`\n  Full URL to scrape into LLM usable Markdown (must include http:// or https:// protocol)\n\n- `includeImages?: boolean`\n  Include image references in Markdown output\n\n- `includeLinks?: boolean`\n  Preserve hyperlinks in Markdown output\n\n- `maxAgeMs?: number`\n  Return a cached result if a prior scrape for the same parameters exists and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.\n\n- `parsePDF?: boolean`\n  When true (default), PDF URLs are fetched and their text layer is extracted and converted to Markdown. When false, PDF URLs are skipped and a 400 WEBSITE_ACCESS_ERROR is returned.\n\n- `shortenBase64Images?: boolean`\n  Shorten base64-encoded image data in the Markdown output\n\n- `useMainContentOnly?: boolean`\n  Extract only the main content of the page, excluding headers, footers, sidebars, and navigation\n\n### Returns\n\n- `{ markdown: string; success: true; url: string; }`\n\n  - `markdown: string`\n  - `success: true`\n  - `url: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.webScrapeMd({ url: 'https://example.com' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.webScrapeMd',
         example:
-          'curl https://api.brand.dev/v1/web/scrape/markdown \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().webScrapeMd',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandWebScrapeMdParams;\nimport com.branddev.api.models.brand.BrandWebScrapeMdResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandWebScrapeMdParams params = BrandWebScrapeMdParams.builder()\n            .url("https://example.com")\n            .build();\n        BrandWebScrapeMdResponse response = client.brand().webScrapeMd(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.webScrapeMd({ url: 'https://example.com' });\n\nconsole.log(response.markdown);",
       },
       python: {
         method: 'brand.web_scrape_md',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.web_scrape_md(\n    url="https://example.com",\n)\nprint(response.markdown)',
       },
+      java: {
+        method: 'brand().webScrapeMd',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandWebScrapeMdParams;\nimport com.branddev.api.models.brand.BrandWebScrapeMdResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandWebScrapeMdParams params = BrandWebScrapeMdParams.builder()\n            .url("https://example.com")\n            .build();\n        BrandWebScrapeMdResponse response = client.brand().webScrapeMd(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.web_scrape_md',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.web_scrape_md(url: "https://example.com")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.webScrapeMd',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.webScrapeMd({ url: 'https://example.com' });\n\nconsole.log(response.markdown);",
+          'curl https://api.brand.dev/v1/web/scrape/markdown \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
@@ -664,29 +664,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## web_scrape_images\n\n`client.brand.webScrapeImages(url: string): { images: object[]; success: true; url: string; }`\n\n**get** `/web/scrape/images`\n\nScrapes all images from the given URL. Extracts images from img, svg, picture/source, link, and video elements including inline SVGs, base64 data URIs, and standard URLs.\n\n### Parameters\n\n- `url: string`\n  Full URL to scrape images from (must include http:// or https:// protocol)\n\n### Returns\n\n- `{ images: { alt: string; element: 'img' | 'svg' | 'link' | 'source' | 'video' | 'css' | 'object' | 'meta' | 'background'; src: string; type: 'url' | 'html' | 'base64'; }[]; success: true; url: string; }`\n\n  - `images: { alt: string; element: 'img' | 'svg' | 'link' | 'source' | 'video' | 'css' | 'object' | 'meta' | 'background'; src: string; type: 'url' | 'html' | 'base64'; }[]`\n  - `success: true`\n  - `url: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.webScrapeImages({ url: 'https://example.com' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.webScrapeImages',
         example:
-          'curl https://api.brand.dev/v1/web/scrape/images \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().webScrapeImages',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandWebScrapeImagesParams;\nimport com.branddev.api.models.brand.BrandWebScrapeImagesResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandWebScrapeImagesParams params = BrandWebScrapeImagesParams.builder()\n            .url("https://example.com")\n            .build();\n        BrandWebScrapeImagesResponse response = client.brand().webScrapeImages(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.webScrapeImages({ url: 'https://example.com' });\n\nconsole.log(response.images);",
       },
       python: {
         method: 'brand.web_scrape_images',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.web_scrape_images(\n    url="https://example.com",\n)\nprint(response.images)',
       },
+      java: {
+        method: 'brand().webScrapeImages',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandWebScrapeImagesParams;\nimport com.branddev.api.models.brand.BrandWebScrapeImagesResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandWebScrapeImagesParams params = BrandWebScrapeImagesParams.builder()\n            .url("https://example.com")\n            .build();\n        BrandWebScrapeImagesResponse response = client.brand().webScrapeImages(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.web_scrape_images',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.web_scrape_images(url: "https://example.com")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.webScrapeImages',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.webScrapeImages({ url: 'https://example.com' });\n\nconsole.log(response.images);",
+          'curl https://api.brand.dev/v1/web/scrape/images \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
@@ -704,29 +704,29 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## web_scrape_sitemap\n\n`client.brand.webScrapeSitemap(domain: string, maxLinks?: number, urlRegex?: string): { domain: string; meta: object; success: true; urls: string[]; }`\n\n**get** `/web/scrape/sitemap`\n\nCrawl an entire website's sitemap and return all discovered page URLs.\n\n### Parameters\n\n- `domain: string`\n  Domain to build a sitemap for\n\n- `maxLinks?: number`\n  Maximum number of links to return from the sitemap crawl. Defaults to 10,000. Minimum is 1, maximum is 100,000.\n\n- `urlRegex?: string`\n  Optional RE2-compatible regex pattern. Only URLs matching this pattern are returned and counted against maxLinks.\n\n### Returns\n\n- `{ domain: string; meta: { errors: number; sitemapsDiscovered: number; sitemapsFetched: number; sitemapsSkipped: number; }; success: true; urls: string[]; }`\n\n  - `domain: string`\n  - `meta: { errors: number; sitemapsDiscovered: number; sitemapsFetched: number; sitemapsSkipped: number; }`\n  - `success: true`\n  - `urls: string[]`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.webScrapeSitemap({ domain: 'domain' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.brand.webScrapeSitemap',
         example:
-          'curl https://api.brand.dev/v1/web/scrape/sitemap \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
-      },
-      java: {
-        method: 'brand().webScrapeSitemap',
-        example:
-          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandWebScrapeSitemapParams;\nimport com.branddev.api.models.brand.BrandWebScrapeSitemapResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandWebScrapeSitemapParams params = BrandWebScrapeSitemapParams.builder()\n            .domain("domain")\n            .build();\n        BrandWebScrapeSitemapResponse response = client.brand().webScrapeSitemap(params);\n    }\n}',
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.webScrapeSitemap({ domain: 'domain' });\n\nconsole.log(response.domain);",
       },
       python: {
         method: 'brand.web_scrape_sitemap',
         example:
           'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.web_scrape_sitemap(\n    domain="domain",\n)\nprint(response.domain)',
       },
+      java: {
+        method: 'brand().webScrapeSitemap',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandWebScrapeSitemapParams;\nimport com.branddev.api.models.brand.BrandWebScrapeSitemapResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandWebScrapeSitemapParams params = BrandWebScrapeSitemapParams.builder()\n            .domain("domain")\n            .build();\n        BrandWebScrapeSitemapResponse response = client.brand().webScrapeSitemap(params);\n    }\n}',
+      },
       ruby: {
         method: 'brand.web_scrape_sitemap',
         example:
           'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.web_scrape_sitemap(domain: "domain")\n\nputs(response)',
       },
-      typescript: {
-        method: 'client.brand.webScrapeSitemap',
+      http: {
         example:
-          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.webScrapeSitemap({ domain: 'domain' });\n\nconsole.log(response.domain);",
+          'curl https://api.brand.dev/v1/web/scrape/sitemap \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
