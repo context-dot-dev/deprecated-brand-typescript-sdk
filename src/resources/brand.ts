@@ -6963,6 +6963,11 @@ export interface BrandWebScrapeHTMLParams {
   url: string;
 
   /**
+   * When true, iframes are rendered inline into the returned HTML.
+   */
+  includeFrames?: boolean;
+
+  /**
    * Return a cached result if a prior scrape for the same parameters exists and is
    * younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
    * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
@@ -6990,6 +6995,11 @@ export interface BrandWebScrapeMdParams {
    * protocol)
    */
   url: string;
+
+  /**
+   * When true, the contents of iframes are rendered to Markdown.
+   */
+  includeFrames?: boolean;
 
   /**
    * Include image references in Markdown output
