@@ -308,6 +308,7 @@ describe('resource brand', () => {
   test.skip('webScrapeHTML: required and optional params', async () => {
     const response = await client.brand.webScrapeHTML({
       url: 'https://example.com',
+      includeFrames: true,
       maxAgeMs: 0,
       parsePDF: true,
     });
@@ -346,6 +347,7 @@ describe('resource brand', () => {
   test.skip('webScrapeMd: required and optional params', async () => {
     const response = await client.brand.webScrapeMd({
       url: 'https://example.com',
+      includeFrames: true,
       includeImages: true,
       includeLinks: true,
       maxAgeMs: 0,
