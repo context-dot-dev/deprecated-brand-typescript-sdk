@@ -328,7 +328,16 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('webScrapeImages: required and optional params', async () => {
-    const response = await client.brand.webScrapeImages({ url: 'https://example.com' });
+    const response = await client.brand.webScrapeImages({
+      url: 'https://example.com',
+      enrichment: {
+        classification: true,
+        hostedUrl: true,
+        maxTimePerMs: 1,
+        resolution: true,
+      },
+      maxAgeMs: 0,
+    });
   });
 
   // Mock server tests are disabled
