@@ -320,6 +320,7 @@ describe('resource brand', () => {
       includeFrames: true,
       maxAgeMs: 0,
       parsePDF: true,
+      timeoutMS: 1000,
     });
   });
 
@@ -346,6 +347,7 @@ describe('resource brand', () => {
         resolution: true,
       },
       maxAgeMs: 0,
+      timeoutMS: 1000,
     });
   });
 
@@ -371,6 +373,7 @@ describe('resource brand', () => {
       maxAgeMs: 0,
       parsePDF: true,
       shortenBase64Images: true,
+      timeoutMS: 1000,
       useMainContentOnly: true,
     });
   });
@@ -392,6 +395,7 @@ describe('resource brand', () => {
     const response = await client.brand.webScrapeSitemap({
       domain: 'domain',
       maxLinks: 1,
+      timeoutMS: 1000,
       urlRegex: '^https?://[^/]+/blog/',
     });
   });
