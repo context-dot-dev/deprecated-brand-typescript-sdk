@@ -5462,8 +5462,9 @@ export interface BrandAIProductParams {
   maxAgeMs?: number;
 
   /**
-   * Optional timeout in milliseconds for the request. Maximum allowed value is
-   * 300000ms (5 minutes).
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
    */
   timeoutMS?: number;
 }
@@ -5490,8 +5491,9 @@ export declare namespace BrandAIProductsParams {
     maxProducts?: number;
 
     /**
-     * Optional timeout in milliseconds for the request. Maximum allowed value is
-     * 300000ms (5 minutes).
+     * Optional timeout in milliseconds for the request. If the request takes longer
+     * than this value, it will be aborted with a 408 status code. Maximum allowed
+     * value is 300000ms (5 minutes).
      */
     timeoutMS?: number;
   }
@@ -5516,8 +5518,9 @@ export declare namespace BrandAIProductsParams {
     maxProducts?: number;
 
     /**
-     * Optional timeout in milliseconds for the request. Maximum allowed value is
-     * 300000ms (5 minutes).
+     * Optional timeout in milliseconds for the request. If the request takes longer
+     * than this value, it will be aborted with a 408 status code. Maximum allowed
+     * value is 300000ms (5 minutes).
      */
     timeoutMS?: number;
   }
@@ -7066,6 +7069,13 @@ export interface BrandWebScrapeHTMLParams {
    * and a 400 WEBSITE_ACCESS_ERROR is returned.
    */
   parsePDF?: boolean;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
 }
 
 export interface BrandWebScrapeImagesParams {
@@ -7085,6 +7095,13 @@ export interface BrandWebScrapeImagesParams {
    * day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
    */
   maxAgeMs?: number;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
 }
 
 export namespace BrandWebScrapeImagesParams {
@@ -7158,6 +7175,13 @@ export interface BrandWebScrapeMdParams {
   shortenBase64Images?: boolean;
 
   /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+
+  /**
    * Extract only the main content of the page, excluding headers, footers, sidebars,
    * and navigation
    */
@@ -7175,6 +7199,13 @@ export interface BrandWebScrapeSitemapParams {
    * Minimum is 1, maximum is 100,000.
    */
   maxLinks?: number;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
 
   /**
    * Optional RE2-compatible regex pattern. Only URLs matching this pattern are
