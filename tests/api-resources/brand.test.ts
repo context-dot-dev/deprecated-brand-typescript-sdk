@@ -321,6 +321,7 @@ describe('resource brand', () => {
       maxAgeMs: 0,
       parsePDF: true,
       timeoutMS: 1000,
+      waitForMs: 0,
     });
   });
 
@@ -348,6 +349,7 @@ describe('resource brand', () => {
       },
       maxAgeMs: 0,
       timeoutMS: 1000,
+      waitForMs: 0,
     });
   });
 
@@ -375,6 +377,7 @@ describe('resource brand', () => {
       shortenBase64Images: true,
       timeoutMS: 1000,
       useMainContentOnly: true,
+      waitForMs: 0,
     });
   });
 
