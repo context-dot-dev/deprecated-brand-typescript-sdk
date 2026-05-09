@@ -7076,6 +7076,12 @@ export interface BrandWebScrapeHTMLParams {
    * value is 300000ms (5 minutes).
    */
   timeoutMS?: number;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
+   * 30000 (30 seconds).
+   */
+  waitForMs?: number;
 }
 
 export interface BrandWebScrapeImagesParams {
@@ -7102,6 +7108,12 @@ export interface BrandWebScrapeImagesParams {
    * value is 300000ms (5 minutes).
    */
   timeoutMS?: number;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load before
+   * collecting images. Min: 0. Max: 30000 (30 seconds).
+   */
+  waitForMs?: number;
 }
 
 export namespace BrandWebScrapeImagesParams {
@@ -7186,6 +7198,12 @@ export interface BrandWebScrapeMdParams {
    * and navigation
    */
   useMainContentOnly?: boolean;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load before
+   * converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
+   */
+  waitForMs?: number;
 }
 
 export interface BrandWebScrapeSitemapParams {
