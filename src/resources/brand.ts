@@ -7064,11 +7064,10 @@ export interface BrandWebScrapeHTMLParams {
   maxAgeMs?: number;
 
   /**
-   * When true (default), PDF URLs are fetched and their text layer is extracted and
-   * returned wrapped in <html><pdf>…</pdf></html>. When false, PDF URLs are skipped
-   * and a 400 WEBSITE_ACCESS_ERROR is returned.
+   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
+   * inclusive 1-based page range.
    */
-  parsePDF?: boolean;
+  pdf?: BrandWebScrapeHTMLParams.Pdf;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -7082,6 +7081,31 @@ export interface BrandWebScrapeHTMLParams {
    * 30000 (30 seconds).
    */
   waitForMs?: number;
+}
+
+export namespace BrandWebScrapeHTMLParams {
+  /**
+   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
+   * inclusive 1-based page range.
+   */
+  export interface Pdf {
+    /**
+     * Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
+     * Must be greater than or equal to start when both are provided.
+     */
+    end?: number;
+
+    /**
+     * When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+     * a 400 WEBSITE_ACCESS_ERROR is returned.
+     */
+    shouldParse?: boolean;
+
+    /**
+     * First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+     */
+    start?: number;
+  }
 }
 
 export interface BrandWebScrapeImagesParams {
@@ -7175,11 +7199,10 @@ export interface BrandWebScrapeMdParams {
   maxAgeMs?: number;
 
   /**
-   * When true (default), PDF URLs are fetched and their text layer is extracted and
-   * converted to Markdown. When false, PDF URLs are skipped and a 400
-   * WEBSITE_ACCESS_ERROR is returned.
+   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
+   * inclusive 1-based page range.
    */
-  parsePDF?: boolean;
+  pdf?: BrandWebScrapeMdParams.Pdf;
 
   /**
    * Shorten base64-encoded image data in the Markdown output
@@ -7204,6 +7227,31 @@ export interface BrandWebScrapeMdParams {
    * converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
    */
   waitForMs?: number;
+}
+
+export namespace BrandWebScrapeMdParams {
+  /**
+   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
+   * inclusive 1-based page range.
+   */
+  export interface Pdf {
+    /**
+     * Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
+     * Must be greater than or equal to start when both are provided.
+     */
+    end?: number;
+
+    /**
+     * When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+     * a 400 WEBSITE_ACCESS_ERROR is returned.
+     */
+    shouldParse?: boolean;
+
+    /**
+     * First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+     */
+    start?: number;
+  }
 }
 
 export interface BrandWebScrapeSitemapParams {

@@ -319,7 +319,11 @@ describe('resource brand', () => {
       url: 'https://example.com',
       includeFrames: true,
       maxAgeMs: 0,
-      parsePDF: true,
+      pdf: {
+        end: 1,
+        shouldParse: true,
+        start: 1,
+      },
       timeoutMS: 1000,
       waitForMs: 0,
     });
@@ -373,7 +377,11 @@ describe('resource brand', () => {
       includeImages: true,
       includeLinks: true,
       maxAgeMs: 0,
-      parsePDF: true,
+      pdf: {
+        end: 1,
+        shouldParse: true,
+        start: 1,
+      },
       shortenBase64Images: true,
       timeoutMS: 1000,
       useMainContentOnly: true,
