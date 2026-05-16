@@ -111,7 +111,6 @@ const fuse = new Fuse(
     'client.brand.aiProduct',
     'client.brand.aiProducts',
     'client.brand.aiQuery',
-    'client.brand.fonts',
     'client.brand.identifyFromTransaction',
     'client.brand.prefetch',
     'client.brand.prefetchByEmail',
@@ -120,10 +119,7 @@ const fuse = new Fuse(
     'client.brand.retrieveByIsin',
     'client.brand.retrieveByName',
     'client.brand.retrieveByTicker',
-    'client.brand.retrieveNaics',
     'client.brand.retrieveSimplified',
-    'client.brand.screenshot',
-    'client.brand.styleguide',
     'client.brand.webScrapeHTML',
     'client.brand.webScrapeImages',
     'client.brand.webScrapeMd',
@@ -204,7 +200,8 @@ function makeSdkProxy<T extends object>(obj: T, { path, isBelievedBad = false }:
 
 function parseError(code: string, error: unknown): string | undefined {
   if (!(error instanceof Error)) return;
-  const message = error.name ? `${error.name}: ${error.message}` : error.message;
+  const cause = error.cause instanceof Error ? `: ${error.cause.message}` : '';
+  const message = error.name ? `${error.name}: ${error.message}${cause}` : `${error.message}${cause}`;
   try {
     // Deno uses V8; the first "<anonymous>:LINE:COLUMN" is the top of stack.
     const lineNumber = error.stack?.match(/<anonymous>:([0-9]+):[0-9]+/)?.[1];

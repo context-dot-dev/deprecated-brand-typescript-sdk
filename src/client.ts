@@ -25,8 +25,6 @@ import {
   BrandAIProductsResponse,
   BrandAIQueryParams,
   BrandAIQueryResponse,
-  BrandFontsParams,
-  BrandFontsResponse,
   BrandIdentifyFromTransactionParams,
   BrandIdentifyFromTransactionResponse,
   BrandPrefetchByEmailParams,
@@ -41,16 +39,10 @@ import {
   BrandRetrieveByNameResponse,
   BrandRetrieveByTickerParams,
   BrandRetrieveByTickerResponse,
-  BrandRetrieveNaicsParams,
-  BrandRetrieveNaicsResponse,
   BrandRetrieveParams,
   BrandRetrieveResponse,
   BrandRetrieveSimplifiedParams,
   BrandRetrieveSimplifiedResponse,
-  BrandScreenshotParams,
-  BrandScreenshotResponse,
-  BrandStyleguideParams,
-  BrandStyleguideResponse,
   BrandWebScrapeHTMLParams,
   BrandWebScrapeHTMLResponse,
   BrandWebScrapeImagesParams,
@@ -210,6 +202,18 @@ export class BrandDev {
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
 
+    const customHeadersEnv = readEnv('BRAND_DEV_CUSTOM_HEADERS');
+    if (customHeadersEnv) {
+      const parsed: Record<string, string> = {};
+      for (const line of customHeadersEnv.split('\n')) {
+        const colon = line.indexOf(':');
+        if (colon >= 0) {
+          parsed[line.substring(0, colon).trim()] = line.substring(colon + 1).trim();
+        }
+      }
+      options.defaultHeaders = { ...parsed, ...options.defaultHeaders };
+    }
+
     this._options = options;
 
     this.apiKey = apiKey;
@@ -253,9 +257,6 @@ export class BrandDev {
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
-  /**
-   * Basic re-implementation of `qs.stringify` for primitive types.
-   */
   protected stringifyQuery(query: object | Record<string, unknown>): string {
     return stringifyQuery(query);
   }
@@ -774,7 +775,6 @@ export declare namespace BrandDev {
     type BrandAIProductResponse as BrandAIProductResponse,
     type BrandAIProductsResponse as BrandAIProductsResponse,
     type BrandAIQueryResponse as BrandAIQueryResponse,
-    type BrandFontsResponse as BrandFontsResponse,
     type BrandIdentifyFromTransactionResponse as BrandIdentifyFromTransactionResponse,
     type BrandPrefetchResponse as BrandPrefetchResponse,
     type BrandPrefetchByEmailResponse as BrandPrefetchByEmailResponse,
@@ -782,10 +782,7 @@ export declare namespace BrandDev {
     type BrandRetrieveByIsinResponse as BrandRetrieveByIsinResponse,
     type BrandRetrieveByNameResponse as BrandRetrieveByNameResponse,
     type BrandRetrieveByTickerResponse as BrandRetrieveByTickerResponse,
-    type BrandRetrieveNaicsResponse as BrandRetrieveNaicsResponse,
     type BrandRetrieveSimplifiedResponse as BrandRetrieveSimplifiedResponse,
-    type BrandScreenshotResponse as BrandScreenshotResponse,
-    type BrandStyleguideResponse as BrandStyleguideResponse,
     type BrandWebScrapeHTMLResponse as BrandWebScrapeHTMLResponse,
     type BrandWebScrapeImagesResponse as BrandWebScrapeImagesResponse,
     type BrandWebScrapeMdResponse as BrandWebScrapeMdResponse,
@@ -794,7 +791,6 @@ export declare namespace BrandDev {
     type BrandAIProductParams as BrandAIProductParams,
     type BrandAIProductsParams as BrandAIProductsParams,
     type BrandAIQueryParams as BrandAIQueryParams,
-    type BrandFontsParams as BrandFontsParams,
     type BrandIdentifyFromTransactionParams as BrandIdentifyFromTransactionParams,
     type BrandPrefetchParams as BrandPrefetchParams,
     type BrandPrefetchByEmailParams as BrandPrefetchByEmailParams,
@@ -802,10 +798,7 @@ export declare namespace BrandDev {
     type BrandRetrieveByIsinParams as BrandRetrieveByIsinParams,
     type BrandRetrieveByNameParams as BrandRetrieveByNameParams,
     type BrandRetrieveByTickerParams as BrandRetrieveByTickerParams,
-    type BrandRetrieveNaicsParams as BrandRetrieveNaicsParams,
     type BrandRetrieveSimplifiedParams as BrandRetrieveSimplifiedParams,
-    type BrandScreenshotParams as BrandScreenshotParams,
-    type BrandStyleguideParams as BrandStyleguideParams,
     type BrandWebScrapeHTMLParams as BrandWebScrapeHTMLParams,
     type BrandWebScrapeImagesParams as BrandWebScrapeImagesParams,
     type BrandWebScrapeMdParams as BrandWebScrapeMdParams,

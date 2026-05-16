@@ -14,18 +14,17 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Beta feature: Given a single URL, determines if it is a product detail page,
-   * classifies the platform/product type, and extracts the product information.
-   * Supports Amazon, TikTok Shop, Etsy, and generic ecommerce sites.
+   * Given a single URL, determines if it is a product page and extracts the product
+   * information.
    */
   aiProduct(body: BrandAIProductParams, options?: RequestOptions): APIPromise<BrandAIProductResponse> {
     return this._client.post('/brand/ai/product', { body, ...options });
   }
 
   /**
-   * Beta feature: Extract product information from a brand's website. We will
-   * analyze the website and return a list of products with details such as name,
-   * description, image, pricing, features, and more.
+   * Extract product information from a brand's website. We will analyze the website
+   * and return a list of products with details such as name, description, image,
+   * pricing, features, and more.
    */
   aiProducts(body: BrandAIProductsParams, options?: RequestOptions): APIPromise<BrandAIProductsResponse> {
     return this._client.post('/brand/ai/products', { body, ...options });
@@ -41,14 +40,6 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Extract font information from a brand's website including font families, usage
-   * statistics, fallbacks, and element/word counts.
-   */
-  fonts(query: BrandFontsParams, options?: RequestOptions): APIPromise<BrandFontsResponse> {
-    return this._client.get('/brand/fonts', { query, ...options });
-  }
-
-  /**
    * Endpoint specially designed for platforms that want to identify transaction data
    * by the transaction title.
    */
@@ -61,9 +52,7 @@ export class Brand extends APIResource {
 
   /**
    * Signal that you may fetch brand data for a particular domain soon to improve
-   * latency. This endpoint does not charge credits and is available for paid
-   * customers to optimize future requests. [You must be on a paid plan to use this
-   * endpoint]
+   * latency.
    */
   prefetch(body: BrandPrefetchParams, options?: RequestOptions): APIPromise<BrandPrefetchResponse> {
     return this._client.post('/brand/prefetch', { body, ...options });
@@ -73,9 +62,7 @@ export class Brand extends APIResource {
    * Signal that you may fetch brand data for a particular domain soon to improve
    * latency. This endpoint accepts an email address, extracts the domain from it,
    * validates that it's not a disposable or free email provider, and queues the
-   * domain for prefetching. This endpoint does not charge credits and is available
-   * for paid customers to optimize future requests. [You must be on a paid plan to
-   * use this endpoint]
+   * domain for prefetching.
    */
   prefetchByEmail(
     body: BrandPrefetchByEmailParams,
@@ -86,9 +73,8 @@ export class Brand extends APIResource {
 
   /**
    * Retrieve brand information using an email address while detecting disposable and
-   * free email addresses. This endpoint extracts the domain from the email address
-   * and returns brand data for that domain. Disposable and free email addresses
-   * (like gmail.com, yahoo.com) will throw a 422 error.
+   * free email addresses. Disposable and free email addresses (like gmail.com,
+   * yahoo.com) will throw a 422 error.
    */
   retrieveByEmail(
     query: BrandRetrieveByEmailParams,
@@ -99,8 +85,7 @@ export class Brand extends APIResource {
 
   /**
    * Retrieve brand information using an ISIN (International Securities
-   * Identification Number). This endpoint looks up the company associated with the
-   * ISIN and returns its brand data.
+   * Identification Number).
    */
   retrieveByIsin(
     query: BrandRetrieveByIsinParams,
@@ -110,8 +95,7 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Retrieve brand information using a company name. This endpoint searches for the
-   * company by name and returns its brand data.
+   * Retrieve brand information using a company name.
    */
   retrieveByName(
     query: BrandRetrieveByNameParams,
@@ -121,8 +105,7 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Retrieve brand information using a stock ticker symbol. This endpoint looks up
-   * the company associated with the ticker and returns its brand data.
+   * Retrieve brand information using a stock ticker symbol.
    */
   retrieveByTicker(
     query: BrandRetrieveByTickerParams,
@@ -132,48 +115,15 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Endpoint to classify any brand into a 2022 NAICS code.
-   */
-  retrieveNaics(
-    query: BrandRetrieveNaicsParams,
-    options?: RequestOptions,
-  ): APIPromise<BrandRetrieveNaicsResponse> {
-    return this._client.get('/brand/naics', { query, ...options });
-  }
-
-  /**
    * Returns a simplified version of brand data containing only essential
-   * information: domain, title, colors, logos, and backdrops. This endpoint is
-   * optimized for faster responses and reduced data transfer.
+   * information: domain, title, colors, logos, and backdrops. Optimized for faster
+   * responses and reduced data transfer.
    */
   retrieveSimplified(
     query: BrandRetrieveSimplifiedParams,
     options?: RequestOptions,
   ): APIPromise<BrandRetrieveSimplifiedResponse> {
     return this._client.get('/brand/retrieve-simplified', { query, ...options });
-  }
-
-  /**
-   * Capture a screenshot of a website. Supports both viewport (standard browser
-   * view) and full-page screenshots. Can also screenshot specific page types (login,
-   * pricing, etc.) by using heuristics to find the appropriate URL. Returns a URL to
-   * the uploaded screenshot image hosted on our CDN.
-   */
-  screenshot(query: BrandScreenshotParams, options?: RequestOptions): APIPromise<BrandScreenshotResponse> {
-    return this._client.get('/brand/screenshot', { query, ...options });
-  }
-
-  /**
-   * Automatically extract comprehensive design system information from a brand's
-   * website including colors, typography, spacing, shadows, and UI components.
-   * Either 'domain' or 'directUrl' must be provided as a query parameter, but not
-   * both.
-   */
-  styleguide(
-    query: BrandStyleguideParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<BrandStyleguideResponse> {
-    return this._client.get('/brand/styleguide', { query, ...options });
   }
 
   /**
@@ -187,9 +137,10 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Scrapes all images from the given URL. Extracts images from img, svg,
-   * picture/source, link, and video elements including inline SVGs, base64 data
-   * URIs, and standard URLs.
+   * Extract image assets from a web page, including standard URLs, inline SVGs, data
+   * URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
+   * embeds. The base request costs 1 credit; enrichment costs 1 credit per returned
+   * image.
    */
   webScrapeImages(
     query: BrandWebScrapeImagesParams,
@@ -199,17 +150,14 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Scrapes the given URL, converts the HTML content to Markdown, and returns the
-   * result.
+   * Scrapes the given URL into LLM usable Markdown.
    */
   webScrapeMd(query: BrandWebScrapeMdParams, options?: RequestOptions): APIPromise<BrandWebScrapeMdResponse> {
     return this._client.get('/web/scrape/markdown', { query, ...options });
   }
 
   /**
-   * Crawls the sitemap of the given domain and returns all discovered page URLs.
-   * Supports sitemap index files (recursive), parallel fetching with concurrency
-   * control, deduplication, and filters out non-page resources (images, PDFs, etc.).
+   * Crawl an entire website's sitemap and return all discovered page URLs.
    */
   webScrapeSitemap(
     query: BrandWebScrapeSitemapParams,
@@ -297,6 +245,133 @@ export namespace BrandRetrieveResponse {
     phone?: string;
 
     /**
+     * The primary language of the brand's website content. Detected from the HTML lang
+     * tag, page content analysis, or social media descriptions.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
+
+    /**
      * The brand's slogan
      */
     slogan?: string;
@@ -790,9 +865,40 @@ export namespace BrandRetrieveResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -859,6 +965,11 @@ export namespace BrandAIProductResponse {
      * Name of the product
      */
     name: string;
+
+    /**
+     * Stock Keeping Unit (product identifier). Null if no identifier is found.
+     */
+    sku: string | null;
 
     /**
      * Tags associated with the product
@@ -935,6 +1046,11 @@ export namespace BrandAIProductsResponse {
      * Name of the product
      */
     name: string;
+
+    /**
+     * Stock Keeping Unit (product identifier). Null if no identifier is found.
+     */
+    sku: string | null;
 
     /**
      * Tags associated with the product
@@ -1020,67 +1136,6 @@ export namespace BrandAIQueryResponse {
   }
 }
 
-export interface BrandFontsResponse {
-  /**
-   * HTTP status code, e.g., 200
-   */
-  code: number;
-
-  /**
-   * The normalized domain that was processed
-   */
-  domain: string;
-
-  /**
-   * Array of font usage information
-   */
-  fonts: Array<BrandFontsResponse.Font>;
-
-  /**
-   * Status of the response, e.g., 'ok'
-   */
-  status: string;
-}
-
-export namespace BrandFontsResponse {
-  export interface Font {
-    /**
-     * Array of fallback font families
-     */
-    fallbacks: Array<string>;
-
-    /**
-     * Font family name
-     */
-    font: string;
-
-    /**
-     * Number of elements using this font
-     */
-    num_elements: number;
-
-    /**
-     * Number of words using this font
-     */
-    num_words: number;
-
-    /**
-     * Percentage of elements using this font
-     */
-    percent_elements: number;
-
-    /**
-     * Percentage of words using this font
-     */
-    percent_words: number;
-
-    /**
-     * Array of CSS selectors or element types where this font is used
-     */
-    uses: Array<string>;
-  }
-}
-
 export interface BrandIdentifyFromTransactionResponse {
   /**
    * Detailed brand information
@@ -1157,6 +1212,133 @@ export namespace BrandIdentifyFromTransactionResponse {
      * Company phone number
      */
     phone?: string;
+
+    /**
+     * The primary language of the brand's website content. Detected from the HTML lang
+     * tag, page content analysis, or social media descriptions.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
 
     /**
      * The brand's slogan
@@ -1652,9 +1834,40 @@ export namespace BrandIdentifyFromTransactionResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -1792,6 +2005,133 @@ export namespace BrandRetrieveByEmailResponse {
     phone?: string;
 
     /**
+     * The primary language of the brand's website content. Detected from the HTML lang
+     * tag, page content analysis, or social media descriptions.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
+
+    /**
      * The brand's slogan
      */
     slogan?: string;
@@ -2285,9 +2625,40 @@ export namespace BrandRetrieveByEmailResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -2391,6 +2762,133 @@ export namespace BrandRetrieveByIsinResponse {
     phone?: string;
 
     /**
+     * The primary language of the brand's website content. Detected from the HTML lang
+     * tag, page content analysis, or social media descriptions.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
+
+    /**
      * The brand's slogan
      */
     slogan?: string;
@@ -2884,9 +3382,40 @@ export namespace BrandRetrieveByIsinResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -2990,6 +3519,133 @@ export namespace BrandRetrieveByNameResponse {
     phone?: string;
 
     /**
+     * The primary language of the brand's website content. Detected from the HTML lang
+     * tag, page content analysis, or social media descriptions.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
+
+    /**
      * The brand's slogan
      */
     slogan?: string;
@@ -3483,9 +4139,40 @@ export namespace BrandRetrieveByNameResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -3589,6 +4276,133 @@ export namespace BrandRetrieveByTickerResponse {
     phone?: string;
 
     /**
+     * The primary language of the brand's website content. Detected from the HTML lang
+     * tag, page content analysis, or social media descriptions.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
+
+    /**
      * The brand's slogan
      */
     slogan?: string;
@@ -4082,9 +4896,40 @@ export namespace BrandRetrieveByTickerResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -4107,47 +4952,6 @@ export namespace BrandRetrieveByTickerResponse {
        */
       ticker?: string;
     }
-  }
-}
-
-export interface BrandRetrieveNaicsResponse {
-  /**
-   * Array of NAICS codes and titles.
-   */
-  codes?: Array<BrandRetrieveNaicsResponse.Code>;
-
-  /**
-   * Domain found for the brand
-   */
-  domain?: string;
-
-  /**
-   * Status of the response, e.g., 'ok'
-   */
-  status?: string;
-
-  /**
-   * Industry classification type, for naics api it will be `naics`
-   */
-  type?: string;
-}
-
-export namespace BrandRetrieveNaicsResponse {
-  export interface Code {
-    /**
-     * NAICS code
-     */
-    code: string;
-
-    /**
-     * Confidence level for how well this NAICS code matches the company description
-     */
-    confidence: 'high' | 'medium' | 'low';
-
-    /**
-     * NAICS title
-     */
-    name: string;
   }
 }
 
@@ -4328,516 +5132,6 @@ export namespace BrandRetrieveSimplifiedResponse {
   }
 }
 
-export interface BrandScreenshotResponse {
-  /**
-   * HTTP status code
-   */
-  code?: number;
-
-  /**
-   * The normalized domain that was processed
-   */
-  domain?: string;
-
-  /**
-   * Public URL of the uploaded screenshot image
-   */
-  screenshot?: string;
-
-  /**
-   * Type of screenshot that was captured
-   */
-  screenshotType?: 'viewport' | 'fullPage';
-
-  /**
-   * Status of the response, e.g., 'ok'
-   */
-  status?: string;
-}
-
-export interface BrandStyleguideResponse {
-  /**
-   * HTTP status code
-   */
-  code?: number;
-
-  /**
-   * The normalized domain that was processed
-   */
-  domain?: string;
-
-  /**
-   * Status of the response, e.g., 'ok'
-   */
-  status?: string;
-
-  /**
-   * Comprehensive styleguide data extracted from the website
-   */
-  styleguide?: BrandStyleguideResponse.Styleguide;
-}
-
-export namespace BrandStyleguideResponse {
-  /**
-   * Comprehensive styleguide data extracted from the website
-   */
-  export interface Styleguide {
-    /**
-     * Primary colors used on the website
-     */
-    colors: Styleguide.Colors;
-
-    /**
-     * UI component styles
-     */
-    components: Styleguide.Components;
-
-    /**
-     * Spacing system used on the website
-     */
-    elementSpacing: Styleguide.ElementSpacing;
-
-    /**
-     * The primary color mode of the website design
-     */
-    mode: 'light' | 'dark';
-
-    /**
-     * Shadow styles used on the website
-     */
-    shadows: Styleguide.Shadows;
-
-    /**
-     * Typography styles used on the website
-     */
-    typography: Styleguide.Typography;
-  }
-
-  export namespace Styleguide {
-    /**
-     * Primary colors used on the website
-     */
-    export interface Colors {
-      /**
-       * Accent color (hex format)
-       */
-      accent: string;
-
-      /**
-       * Background color (hex format)
-       */
-      background: string;
-
-      /**
-       * Text color (hex format)
-       */
-      text: string;
-    }
-
-    /**
-     * UI component styles
-     */
-    export interface Components {
-      /**
-       * Button component styles
-       */
-      button: Components.Button;
-
-      /**
-       * Card component style
-       */
-      card?: Components.Card;
-    }
-
-    export namespace Components {
-      /**
-       * Button component styles
-       */
-      export interface Button {
-        link?: Button.Link;
-
-        primary?: Button.Primary;
-
-        secondary?: Button.Secondary;
-      }
-
-      export namespace Button {
-        export interface Link {
-          backgroundColor: string;
-
-          /**
-           * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
-           * alpha)
-           */
-          borderColor: string;
-
-          borderRadius: string;
-
-          borderStyle: string;
-
-          borderWidth: string;
-
-          /**
-           * Computed box-shadow (comma-separated layers when present)
-           */
-          boxShadow: string;
-
-          color: string;
-
-          /**
-           * Ready-to-use CSS declaration block for this component style
-           */
-          css: string;
-
-          fontSize: string;
-
-          fontWeight: number;
-
-          /**
-           * Sampled minimum height of the button box (typically px)
-           */
-          minHeight: string;
-
-          /**
-           * Sampled minimum width of the button box (typically px)
-           */
-          minWidth: string;
-
-          padding: string;
-
-          textDecoration: string;
-
-          /**
-           * Full ordered font list from computed font-family
-           */
-          fontFallbacks?: Array<string>;
-
-          /**
-           * Primary button typeface (first in fontFallbacks)
-           */
-          fontFamily?: string;
-
-          /**
-           * Hex color of the underline when it differs from the text color
-           */
-          textDecorationColor?: string;
-        }
-
-        export interface Primary {
-          backgroundColor: string;
-
-          /**
-           * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
-           * alpha)
-           */
-          borderColor: string;
-
-          borderRadius: string;
-
-          borderStyle: string;
-
-          borderWidth: string;
-
-          /**
-           * Computed box-shadow (comma-separated layers when present)
-           */
-          boxShadow: string;
-
-          color: string;
-
-          /**
-           * Ready-to-use CSS declaration block for this component style
-           */
-          css: string;
-
-          fontSize: string;
-
-          fontWeight: number;
-
-          /**
-           * Sampled minimum height of the button box (typically px)
-           */
-          minHeight: string;
-
-          /**
-           * Sampled minimum width of the button box (typically px)
-           */
-          minWidth: string;
-
-          padding: string;
-
-          textDecoration: string;
-
-          /**
-           * Full ordered font list from computed font-family
-           */
-          fontFallbacks?: Array<string>;
-
-          /**
-           * Primary button typeface (first in fontFallbacks)
-           */
-          fontFamily?: string;
-
-          /**
-           * Hex color of the underline when it differs from the text color
-           */
-          textDecorationColor?: string;
-        }
-
-        export interface Secondary {
-          backgroundColor: string;
-
-          /**
-           * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
-           * alpha)
-           */
-          borderColor: string;
-
-          borderRadius: string;
-
-          borderStyle: string;
-
-          borderWidth: string;
-
-          /**
-           * Computed box-shadow (comma-separated layers when present)
-           */
-          boxShadow: string;
-
-          color: string;
-
-          /**
-           * Ready-to-use CSS declaration block for this component style
-           */
-          css: string;
-
-          fontSize: string;
-
-          fontWeight: number;
-
-          /**
-           * Sampled minimum height of the button box (typically px)
-           */
-          minHeight: string;
-
-          /**
-           * Sampled minimum width of the button box (typically px)
-           */
-          minWidth: string;
-
-          padding: string;
-
-          textDecoration: string;
-
-          /**
-           * Full ordered font list from computed font-family
-           */
-          fontFallbacks?: Array<string>;
-
-          /**
-           * Primary button typeface (first in fontFallbacks)
-           */
-          fontFamily?: string;
-
-          /**
-           * Hex color of the underline when it differs from the text color
-           */
-          textDecorationColor?: string;
-        }
-      }
-
-      /**
-       * Card component style
-       */
-      export interface Card {
-        backgroundColor: string;
-
-        /**
-         * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
-         * alpha)
-         */
-        borderColor: string;
-
-        borderRadius: string;
-
-        borderStyle: string;
-
-        borderWidth: string;
-
-        boxShadow: string;
-
-        /**
-         * Ready-to-use CSS declaration block for this component style
-         */
-        css: string;
-
-        padding: string;
-
-        textColor: string;
-      }
-    }
-
-    /**
-     * Spacing system used on the website
-     */
-    export interface ElementSpacing {
-      lg: string;
-
-      md: string;
-
-      sm: string;
-
-      xl: string;
-
-      xs: string;
-    }
-
-    /**
-     * Shadow styles used on the website
-     */
-    export interface Shadows {
-      inner: string;
-
-      lg: string;
-
-      md: string;
-
-      sm: string;
-
-      xl: string;
-    }
-
-    /**
-     * Typography styles used on the website
-     */
-    export interface Typography {
-      /**
-       * Heading styles
-       */
-      headings: Typography.Headings;
-
-      p?: Typography.P;
-    }
-
-    export namespace Typography {
-      /**
-       * Heading styles
-       */
-      export interface Headings {
-        h1?: Headings.H1;
-
-        h2?: Headings.H2;
-
-        h3?: Headings.H3;
-
-        h4?: Headings.H4;
-      }
-
-      export namespace Headings {
-        export interface H1 {
-          /**
-           * Full ordered font list from resolved computed font-family
-           */
-          fontFallbacks: Array<string>;
-
-          /**
-           * Primary face (first family in the computed stack)
-           */
-          fontFamily: string;
-
-          fontSize: string;
-
-          fontWeight: number;
-
-          letterSpacing: string;
-
-          lineHeight: string;
-        }
-
-        export interface H2 {
-          /**
-           * Full ordered font list from resolved computed font-family
-           */
-          fontFallbacks: Array<string>;
-
-          /**
-           * Primary face (first family in the computed stack)
-           */
-          fontFamily: string;
-
-          fontSize: string;
-
-          fontWeight: number;
-
-          letterSpacing: string;
-
-          lineHeight: string;
-        }
-
-        export interface H3 {
-          /**
-           * Full ordered font list from resolved computed font-family
-           */
-          fontFallbacks: Array<string>;
-
-          /**
-           * Primary face (first family in the computed stack)
-           */
-          fontFamily: string;
-
-          fontSize: string;
-
-          fontWeight: number;
-
-          letterSpacing: string;
-
-          lineHeight: string;
-        }
-
-        export interface H4 {
-          /**
-           * Full ordered font list from resolved computed font-family
-           */
-          fontFallbacks: Array<string>;
-
-          /**
-           * Primary face (first family in the computed stack)
-           */
-          fontFamily: string;
-
-          fontSize: string;
-
-          fontWeight: number;
-
-          letterSpacing: string;
-
-          lineHeight: string;
-        }
-      }
-
-      export interface P {
-        /**
-         * Full ordered font list from resolved computed font-family
-         */
-        fontFallbacks: Array<string>;
-
-        /**
-         * Primary face (first family in the computed stack)
-         */
-        fontFamily: string;
-
-        fontSize: string;
-
-        fontWeight: number;
-
-        letterSpacing: string;
-
-        lineHeight: string;
-      }
-    }
-  }
-}
-
 export interface BrandWebScrapeHTMLResponse {
   /**
    * Raw HTML content of the page
@@ -4857,17 +5151,17 @@ export interface BrandWebScrapeHTMLResponse {
 
 export interface BrandWebScrapeImagesResponse {
   /**
-   * Array of scraped images
+   * Images found on the page.
    */
   images: Array<BrandWebScrapeImagesResponse.Image>;
 
   /**
-   * Indicates success
+   * Always true on success.
    */
   success: true;
 
   /**
-   * The URL that was scraped
+   * Page URL that was scraped.
    */
   url: string;
 }
@@ -4875,24 +5169,61 @@ export interface BrandWebScrapeImagesResponse {
 export namespace BrandWebScrapeImagesResponse {
   export interface Image {
     /**
-     * Alt text of the image, or null if not present
+     * Image alt text, or null when unavailable.
      */
     alt: string | null;
 
     /**
-     * The HTML element the image was found in
+     * Where the image was found.
      */
     element: 'img' | 'svg' | 'link' | 'source' | 'video' | 'css' | 'object' | 'meta' | 'background';
 
     /**
-     * The image source - can be a URL, inline HTML (for SVGs), or a base64 data URI
+     * Original image value: URL, inline SVG or HTML, or base64 data URI.
      */
     src: string;
 
     /**
-     * The type/format of the src value
+     * Format of src.
      */
     type: 'url' | 'html' | 'base64';
+
+    /**
+     * Requested metadata for images that could be processed.
+     */
+    enrichment?: Image.Enrichment;
+  }
+
+  export namespace Image {
+    /**
+     * Requested metadata for images that could be processed.
+     */
+    export interface Enrichment {
+      /**
+       * Image height in pixels, when measured.
+       */
+      height?: number;
+
+      /**
+       * Detected MIME type, when hosted.
+       */
+      mimetype?: string;
+
+      /**
+       * Visual asset category, when classified.
+       */
+      type?: 'photography' | 'illustration' | 'logo' | 'wordmark' | 'icon' | 'pattern' | 'graphic' | 'other';
+
+      /**
+       * Brand.dev CDN URL, when hosted.
+       */
+      url?: string;
+
+      /**
+       * Image width in pixels, when measured.
+       */
+      width?: number;
+    }
   }
 }
 
@@ -4970,65 +5301,137 @@ export interface BrandRetrieveParams {
   domain: string;
 
   /**
-   * Optional parameter to force the language of the retrieved brand data. Works with
-   * all three lookup methods.
+   * Optional parameter to force the language of the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu';
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
@@ -5052,8 +5455,16 @@ export interface BrandAIProductParams {
   url: string;
 
   /**
-   * Optional timeout in milliseconds for the request. Maximum allowed value is
-   * 300000ms (5 minutes).
+   * Return a cached result if a prior scrape for the same parameters exists and is
+   * younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+   * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+   */
+  maxAgeMs?: number;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
    */
   timeoutMS?: number;
 }
@@ -5068,13 +5479,21 @@ export declare namespace BrandAIProductsParams {
     domain: string;
 
     /**
+     * Return a cached result if a prior scrape for the same parameters exists and is
+     * younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+     * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+     */
+    maxAgeMs?: number;
+
+    /**
      * Maximum number of products to extract.
      */
     maxProducts?: number;
 
     /**
-     * Optional timeout in milliseconds for the request. Maximum allowed value is
-     * 300000ms (5 minutes).
+     * Optional timeout in milliseconds for the request. If the request takes longer
+     * than this value, it will be aborted with a 408 status code. Maximum allowed
+     * value is 300000ms (5 minutes).
      */
     timeoutMS?: number;
   }
@@ -5087,13 +5506,21 @@ export declare namespace BrandAIProductsParams {
     directUrl: string;
 
     /**
+     * Return a cached result if a prior scrape for the same parameters exists and is
+     * younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+     * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+     */
+    maxAgeMs?: number;
+
+    /**
      * Maximum number of products to extract.
      */
     maxProducts?: number;
 
     /**
-     * Optional timeout in milliseconds for the request. Maximum allowed value is
-     * 300000ms (5 minutes).
+     * Optional timeout in milliseconds for the request. If the request takes longer
+     * than this value, it will be aborted with a 408 status code. Maximum allowed
+     * value is 300000ms (5 minutes).
      */
     timeoutMS?: number;
   }
@@ -5207,21 +5634,6 @@ export namespace BrandAIQueryParams {
      */
     terms_and_conditions?: boolean;
   }
-}
-
-export interface BrandFontsParams {
-  /**
-   * Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
-   * domain will be automatically normalized and validated.
-   */
-  domain: string;
-
-  /**
-   * Optional timeout in milliseconds for the request. If the request takes longer
-   * than this value, it will be aborted with a 408 status code. Maximum allowed
-   * value is 300000ms (5 minutes).
-   */
-  timeoutMS?: number;
 }
 
 export interface BrandIdentifyFromTransactionParams {
@@ -5484,66 +5896,130 @@ export interface BrandIdentifyFromTransactionParams {
    * Optional parameter to force the language of the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu';
 
   /**
    * When set to true, the API will perform an additional verification steps to
    * ensure the identified brand matches the transaction with high confidence.
-   * Defaults to false.
    */
   high_confidence_only?: boolean;
 
@@ -5615,61 +6091,134 @@ export interface BrandRetrieveByEmailParams {
    * Optional parameter to force the language of the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu';
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
@@ -5698,61 +6247,134 @@ export interface BrandRetrieveByIsinParams {
    * Optional parameter to force the language of the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu';
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
@@ -5777,8 +6399,8 @@ export interface BrandRetrieveByNameParams {
   name: string;
 
   /**
-   * Optional country code (GL parameter) to specify the country. This affects the
-   * geographic location used for search queries.
+   * Optional country code hint (GL parameter) to specify the country for the company
+   * name.
    */
   country_gl?:
     | 'ad'
@@ -6025,61 +6647,134 @@ export interface BrandRetrieveByNameParams {
    * Optional parameter to force the language of the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu';
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
@@ -6107,61 +6802,134 @@ export interface BrandRetrieveByTickerParams {
    * Optional parameter to force the language of the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu';
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
@@ -6255,33 +7023,6 @@ export interface BrandRetrieveByTickerParams {
   timeoutMS?: number;
 }
 
-export interface BrandRetrieveNaicsParams {
-  /**
-   * Brand domain or title to retrieve NAICS code for. If a valid domain is provided
-   * in `input`, it will be used for classification, otherwise, we will search for
-   * the brand using the provided title.
-   */
-  input: string;
-
-  /**
-   * Maximum number of NAICS codes to return. Must be between 1 and 10. Defaults
-   * to 5.
-   */
-  maxResults?: number;
-
-  /**
-   * Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
-   */
-  minResults?: number;
-
-  /**
-   * Optional timeout in milliseconds for the request. If the request takes longer
-   * than this value, it will be aborted with a 408 status code. Maximum allowed
-   * value is 300000ms (5 minutes).
-   */
-  timeoutMS?: number;
-}
-
 export interface BrandRetrieveSimplifiedParams {
   /**
    * Domain name to retrieve simplified brand data for
@@ -6289,55 +7030,12 @@ export interface BrandRetrieveSimplifiedParams {
   domain: string;
 
   /**
-   * Optional timeout in milliseconds for the request. If the request takes longer
-   * than this value, it will be aborted with a 408 status code. Maximum allowed
-   * value is 300000ms (5 minutes).
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
    */
-  timeoutMS?: number;
-}
-
-export interface BrandScreenshotParams {
-  /**
-   * Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
-   * domain will be automatically normalized and validated.
-   */
-  domain: string;
-
-  /**
-   * Optional parameter to determine screenshot type. If 'true', takes a full page
-   * screenshot capturing all content. If 'false' or not provided, takes a viewport
-   * screenshot (standard browser view).
-   */
-  fullScreenshot?: 'true' | 'false';
-
-  /**
-   * Optional parameter to specify which page type to screenshot. If provided, the
-   * system will scrape the domain's links and use heuristics to find the most
-   * appropriate URL for the specified page type (30 supported languages). If not
-   * provided, screenshots the main domain landing page.
-   */
-  page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact';
-
-  /**
-   * Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
-   * faster capture with basic quality. If 'quality', optimizes for higher quality
-   * with longer wait times. Defaults to 'quality' if not provided.
-   */
-  prioritize?: 'speed' | 'quality';
-}
-
-export interface BrandStyleguideParams {
-  /**
-   * A specific URL to fetch the styleguide from directly, bypassing domain
-   * resolution (e.g., 'https://example.com/design-system').
-   */
-  directUrl?: string;
-
-  /**
-   * Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
-   * domain will be automatically normalized and validated.
-   */
-  domain?: string;
+  maxAgeMs?: number;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -6352,21 +7050,136 @@ export interface BrandWebScrapeHTMLParams {
    * Full URL to scrape (must include http:// or https:// protocol)
    */
   url: string;
+
+  /**
+   * When true, iframes are rendered inline into the returned HTML.
+   */
+  includeFrames?: boolean;
+
+  /**
+   * Return a cached result if a prior scrape for the same parameters exists and is
+   * younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+   * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+   */
+  maxAgeMs?: number;
+
+  /**
+   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
+   * inclusive 1-based page range.
+   */
+  pdf?: BrandWebScrapeHTMLParams.Pdf;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
+   * 30000 (30 seconds).
+   */
+  waitForMs?: number;
+}
+
+export namespace BrandWebScrapeHTMLParams {
+  /**
+   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
+   * inclusive 1-based page range.
+   */
+  export interface Pdf {
+    /**
+     * Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
+     * Must be greater than or equal to start when both are provided.
+     */
+    end?: number;
+
+    /**
+     * When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+     * a 400 WEBSITE_ACCESS_ERROR is returned.
+     */
+    shouldParse?: boolean;
+
+    /**
+     * First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+     */
+    start?: number;
+  }
 }
 
 export interface BrandWebScrapeImagesParams {
   /**
-   * Full URL to scrape images from (must include http:// or https:// protocol)
+   * Page URL to inspect. Must include http:// or https://.
    */
   url: string;
+
+  /**
+   * Optional per-image processing, sent as deep-object query params such as
+   * enrichment[resolution]=true.
+   */
+  enrichment?: BrandWebScrapeImagesParams.Enrichment;
+
+  /**
+   * Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
+   * day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
+   */
+  maxAgeMs?: number;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load before
+   * collecting images. Min: 0. Max: 30000 (30 seconds).
+   */
+  waitForMs?: number;
+}
+
+export namespace BrandWebScrapeImagesParams {
+  /**
+   * Optional per-image processing, sent as deep-object query params such as
+   * enrichment[resolution]=true.
+   */
+  export interface Enrichment {
+    /**
+     * Classify each image by visual asset type.
+     */
+    classification?: boolean;
+
+    /**
+     * Host materializable images on the Brand.dev CDN and return their URL and MIME
+     * type.
+     */
+    hostedUrl?: boolean;
+
+    /**
+     * Per-image enrichment timeout in milliseconds. Default: 30000. Maximum: 60000.
+     */
+    maxTimePerMs?: number;
+
+    /**
+     * Measure image width and height when possible.
+     */
+    resolution?: boolean;
+  }
 }
 
 export interface BrandWebScrapeMdParams {
   /**
-   * Full URL to scrape and convert to markdown (must include http:// or https://
+   * Full URL to scrape into LLM usable Markdown (must include http:// or https://
    * protocol)
    */
   url: string;
+
+  /**
+   * When true, the contents of iframes are rendered to Markdown.
+   */
+  includeFrames?: boolean;
 
   /**
    * Include image references in Markdown output
@@ -6379,21 +7192,71 @@ export interface BrandWebScrapeMdParams {
   includeLinks?: boolean;
 
   /**
+   * Return a cached result if a prior scrape for the same parameters exists and is
+   * younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+   * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+   */
+  maxAgeMs?: number;
+
+  /**
+   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
+   * inclusive 1-based page range.
+   */
+  pdf?: BrandWebScrapeMdParams.Pdf;
+
+  /**
    * Shorten base64-encoded image data in the Markdown output
    */
   shortenBase64Images?: boolean;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
 
   /**
    * Extract only the main content of the page, excluding headers, footers, sidebars,
    * and navigation
    */
   useMainContentOnly?: boolean;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load before
+   * converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
+   */
+  waitForMs?: number;
+}
+
+export namespace BrandWebScrapeMdParams {
+  /**
+   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
+   * inclusive 1-based page range.
+   */
+  export interface Pdf {
+    /**
+     * Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
+     * Must be greater than or equal to start when both are provided.
+     */
+    end?: number;
+
+    /**
+     * When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+     * a 400 WEBSITE_ACCESS_ERROR is returned.
+     */
+    shouldParse?: boolean;
+
+    /**
+     * First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+     */
+    start?: number;
+  }
 }
 
 export interface BrandWebScrapeSitemapParams {
   /**
-   * Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be
-   * automatically normalized and validated.
+   * Domain to build a sitemap for
    */
   domain: string;
 
@@ -6402,6 +7265,19 @@ export interface BrandWebScrapeSitemapParams {
    * Minimum is 1, maximum is 100,000.
    */
   maxLinks?: number;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+
+  /**
+   * Optional RE2-compatible regex pattern. Only URLs matching this pattern are
+   * returned and counted against maxLinks.
+   */
+  urlRegex?: string;
 }
 
 export declare namespace Brand {
@@ -6410,7 +7286,6 @@ export declare namespace Brand {
     type BrandAIProductResponse as BrandAIProductResponse,
     type BrandAIProductsResponse as BrandAIProductsResponse,
     type BrandAIQueryResponse as BrandAIQueryResponse,
-    type BrandFontsResponse as BrandFontsResponse,
     type BrandIdentifyFromTransactionResponse as BrandIdentifyFromTransactionResponse,
     type BrandPrefetchResponse as BrandPrefetchResponse,
     type BrandPrefetchByEmailResponse as BrandPrefetchByEmailResponse,
@@ -6418,10 +7293,7 @@ export declare namespace Brand {
     type BrandRetrieveByIsinResponse as BrandRetrieveByIsinResponse,
     type BrandRetrieveByNameResponse as BrandRetrieveByNameResponse,
     type BrandRetrieveByTickerResponse as BrandRetrieveByTickerResponse,
-    type BrandRetrieveNaicsResponse as BrandRetrieveNaicsResponse,
     type BrandRetrieveSimplifiedResponse as BrandRetrieveSimplifiedResponse,
-    type BrandScreenshotResponse as BrandScreenshotResponse,
-    type BrandStyleguideResponse as BrandStyleguideResponse,
     type BrandWebScrapeHTMLResponse as BrandWebScrapeHTMLResponse,
     type BrandWebScrapeImagesResponse as BrandWebScrapeImagesResponse,
     type BrandWebScrapeMdResponse as BrandWebScrapeMdResponse,
@@ -6430,7 +7302,6 @@ export declare namespace Brand {
     type BrandAIProductParams as BrandAIProductParams,
     type BrandAIProductsParams as BrandAIProductsParams,
     type BrandAIQueryParams as BrandAIQueryParams,
-    type BrandFontsParams as BrandFontsParams,
     type BrandIdentifyFromTransactionParams as BrandIdentifyFromTransactionParams,
     type BrandPrefetchParams as BrandPrefetchParams,
     type BrandPrefetchByEmailParams as BrandPrefetchByEmailParams,
@@ -6438,10 +7309,7 @@ export declare namespace Brand {
     type BrandRetrieveByIsinParams as BrandRetrieveByIsinParams,
     type BrandRetrieveByNameParams as BrandRetrieveByNameParams,
     type BrandRetrieveByTickerParams as BrandRetrieveByTickerParams,
-    type BrandRetrieveNaicsParams as BrandRetrieveNaicsParams,
     type BrandRetrieveSimplifiedParams as BrandRetrieveSimplifiedParams,
-    type BrandScreenshotParams as BrandScreenshotParams,
-    type BrandStyleguideParams as BrandStyleguideParams,
     type BrandWebScrapeHTMLParams as BrandWebScrapeHTMLParams,
     type BrandWebScrapeImagesParams as BrandWebScrapeImagesParams,
     type BrandWebScrapeMdParams as BrandWebScrapeMdParams,
