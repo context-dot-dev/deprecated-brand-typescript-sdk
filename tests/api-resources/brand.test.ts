@@ -317,6 +317,7 @@ describe('resource brand', () => {
   test.skip('webScrapeHTML: required and optional params', async () => {
     const response = await client.brand.webScrapeHTML({
       url: 'https://example.com',
+      headers: { foo: 'J!' },
       includeFrames: true,
       maxAgeMs: 0,
       pdf: {
@@ -351,6 +352,7 @@ describe('resource brand', () => {
         maxTimePerMs: 1,
         resolution: true,
       },
+      headers: { foo: 'J!' },
       maxAgeMs: 0,
       timeoutMS: 1000,
       waitForMs: 0,
@@ -373,6 +375,7 @@ describe('resource brand', () => {
   test.skip('webScrapeMd: required and optional params', async () => {
     const response = await client.brand.webScrapeMd({
       url: 'https://example.com',
+      headers: { foo: 'J!' },
       includeFrames: true,
       includeImages: true,
       includeLinks: true,
@@ -405,6 +408,7 @@ describe('resource brand', () => {
   test.skip('webScrapeSitemap: required and optional params', async () => {
     const response = await client.brand.webScrapeSitemap({
       domain: 'domain',
+      headers: { foo: 'J!' },
       maxLinks: 1,
       timeoutMS: 1000,
       urlRegex: '^https?://[^/]+/blog/',
