@@ -7052,6 +7052,13 @@ export interface BrandWebScrapeHTMLParams {
   url: string;
 
   /**
+   * Optional outbound HTTP headers forwarded only to the target URL, sent as
+   * deep-object query params such as headers[X-Custom]=value. When provided, caching
+   * is bypassed: the result is neither read from nor written to cache.
+   */
+  headers?: { [key: string]: string };
+
+  /**
    * When true, iframes are rendered inline into the returned HTML.
    */
   includeFrames?: boolean;
@@ -7121,6 +7128,13 @@ export interface BrandWebScrapeImagesParams {
   enrichment?: BrandWebScrapeImagesParams.Enrichment;
 
   /**
+   * Optional outbound HTTP headers forwarded only to the target URL, sent as
+   * deep-object query params such as headers[X-Custom]=value. When provided, caching
+   * is bypassed: the result is neither read from nor written to cache.
+   */
+  headers?: { [key: string]: string };
+
+  /**
    * Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
    * day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
    */
@@ -7175,6 +7189,13 @@ export interface BrandWebScrapeMdParams {
    * protocol)
    */
   url: string;
+
+  /**
+   * Optional outbound HTTP headers forwarded only to the target URL, sent as
+   * deep-object query params such as headers[X-Custom]=value. When provided, caching
+   * is bypassed: the result is neither read from nor written to cache.
+   */
+  headers?: { [key: string]: string };
 
   /**
    * When true, the contents of iframes are rendered to Markdown.
@@ -7259,6 +7280,13 @@ export interface BrandWebScrapeSitemapParams {
    * Domain to build a sitemap for
    */
   domain: string;
+
+  /**
+   * Optional outbound HTTP headers forwarded only to the target URL, sent as
+   * deep-object query params such as headers[X-Custom]=value. When provided, caching
+   * is bypassed: the result is neither read from nor written to cache.
+   */
+  headers?: { [key: string]: string };
 
   /**
    * Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
