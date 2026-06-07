@@ -7060,6 +7060,13 @@ export interface BrandWebScrapeHTMLParams {
   url: string;
 
   /**
+   * CSS selectors to remove from the result. Applied after includeSelectors.
+   * Exclusion takes precedence: an element matching both is removed. Examples:
+   * "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+   */
+  excludeSelectors?: Array<string>;
+
+  /**
    * Optional outbound HTTP headers forwarded only to the target URL, sent as
    * deep-object query params such as headers[X-Custom]=value. When provided, caching
    * is bypassed: the result is neither read from nor written to cache.
@@ -7070,6 +7077,13 @@ export interface BrandWebScrapeHTMLParams {
    * When true, iframes are rendered inline into the returned HTML.
    */
   includeFrames?: boolean;
+
+  /**
+   * CSS selectors. When provided, only matching subtrees (and their descendants) are
+   * kept and everything else is dropped. When omitted, the entire document is kept.
+   * Examples: "article.main", "#content", "[role=main]".
+   */
+  includeSelectors?: Array<string>;
 
   /**
    * Return a cached result if a prior scrape for the same parameters exists and is
@@ -7199,6 +7213,13 @@ export interface BrandWebScrapeMdParams {
   url: string;
 
   /**
+   * CSS selectors to remove before conversion to Markdown. Applied after
+   * includeSelectors. Exclusion takes precedence: an element matching both is
+   * removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+   */
+  excludeSelectors?: Array<string>;
+
+  /**
    * Optional outbound HTTP headers forwarded only to the target URL, sent as
    * deep-object query params such as headers[X-Custom]=value. When provided, caching
    * is bypassed: the result is neither read from nor written to cache.
@@ -7219,6 +7240,13 @@ export interface BrandWebScrapeMdParams {
    * Preserve hyperlinks in Markdown output
    */
   includeLinks?: boolean;
+
+  /**
+   * CSS selectors. When provided, only matching HTML subtrees (and their
+   * descendants) are kept before conversion to Markdown. When omitted, the entire
+   * document is kept. Examples: "article.main", "#content", "[role=main]".
+   */
+  includeSelectors?: Array<string>;
 
   /**
    * Return a cached result if a prior scrape for the same parameters exists and is
