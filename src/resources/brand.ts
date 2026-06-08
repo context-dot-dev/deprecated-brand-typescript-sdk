@@ -7106,6 +7106,12 @@ export interface BrandWebScrapeHTMLParams {
   timeoutMS?: number;
 
   /**
+   * When true, return only the page's main content in the HTML response, excluding
+   * headers, footers, sidebars, and navigation when detectable.
+   */
+  useMainContentOnly?: boolean;
+
+  /**
    * Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
    * 30000 (30 seconds).
    */
