@@ -317,6 +317,7 @@ describe('resource brand', () => {
   test.skip('webScrapeHTML: required and optional params', async () => {
     const response = await client.brand.webScrapeHTML({
       url: 'https://example.com',
+      country: 'de',
       excludeSelectors: ['string'],
       headers: { foo: 'J!' },
       includeFrames: true,
@@ -378,6 +379,7 @@ describe('resource brand', () => {
   test.skip('webScrapeMd: required and optional params', async () => {
     const response = await client.brand.webScrapeMd({
       url: 'https://example.com',
+      country: 'de',
       excludeSelectors: ['string'],
       headers: { foo: 'J!' },
       includeFrames: true,
