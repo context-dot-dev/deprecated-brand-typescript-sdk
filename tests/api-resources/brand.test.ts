@@ -351,6 +351,7 @@ describe('resource brand', () => {
   test.skip('webScrapeImages: required and optional params', async () => {
     const response = await client.brand.webScrapeImages({
       url: 'https://example.com',
+      dedupe: true,
       enrichment: {
         classification: true,
         hostedUrl: true,
