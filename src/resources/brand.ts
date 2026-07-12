@@ -7961,8 +7961,8 @@ export interface BrandWebScrapeHTMLParams {
   maxAgeMs?: number;
 
   /**
-   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
-   * inclusive 1-based page range.
+   * PDF parsing controls. Use start/end to limit text extraction and embedded-image
+   * detection/OCR to an inclusive 1-based page range.
    */
   pdf?: BrandWebScrapeHTMLParams.Pdf;
 
@@ -7995,8 +7995,8 @@ export interface BrandWebScrapeHTMLParams {
 
 export namespace BrandWebScrapeHTMLParams {
   /**
-   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
-   * inclusive 1-based page range.
+   * PDF parsing controls. Use start/end to limit text extraction and embedded-image
+   * detection/OCR to an inclusive 1-based page range.
    */
   export interface Pdf {
     /**
@@ -8004,6 +8004,13 @@ export namespace BrandWebScrapeHTMLParams {
      * Must be greater than or equal to start when both are provided.
      */
     end?: number;
+
+    /**
+     * When true, detect and OCR images embedded in the selected PDF pages, inserting
+     * recognized text at each image's position in page reading order while preserving
+     * the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+     */
+    ocr?: boolean;
 
     /**
      * When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
@@ -8355,8 +8362,8 @@ export interface BrandWebScrapeMdParams {
   maxAgeMs?: number;
 
   /**
-   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
-   * inclusive 1-based page range.
+   * PDF parsing controls. Use start/end to limit text extraction and embedded-image
+   * detection/OCR to an inclusive 1-based page range.
    */
   pdf?: BrandWebScrapeMdParams.Pdf;
 
@@ -8394,8 +8401,8 @@ export interface BrandWebScrapeMdParams {
 
 export namespace BrandWebScrapeMdParams {
   /**
-   * PDF parsing controls. Use start/end to limit text extraction and OCR to an
-   * inclusive 1-based page range.
+   * PDF parsing controls. Use start/end to limit text extraction and embedded-image
+   * detection/OCR to an inclusive 1-based page range.
    */
   export interface Pdf {
     /**
@@ -8403,6 +8410,13 @@ export namespace BrandWebScrapeMdParams {
      * Must be greater than or equal to start when both are provided.
      */
     end?: number;
+
+    /**
+     * When true, detect and OCR images embedded in the selected PDF pages, inserting
+     * recognized text at each image's position in page reading order while preserving
+     * the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+     */
+    ocr?: boolean;
 
     /**
      * When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
