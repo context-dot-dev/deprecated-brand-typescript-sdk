@@ -11,12 +11,13 @@ export class Brand extends APIResource {
    *
    * @example
    * ```ts
-   * const brand = await client.brand.retrieve({
-   *   domain: 'domain',
-   * });
+   * const brand = await client.brand.retrieve();
    * ```
    */
-  retrieve(query: BrandRetrieveParams, options?: RequestOptions): APIPromise<BrandRetrieveResponse> {
+  retrieve(
+    query: BrandRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BrandRetrieveResponse> {
     return this._client.get('/brand/retrieve', { query, ...options });
   }
 
@@ -82,7 +83,7 @@ export class Brand extends APIResource {
    * @example
    * ```ts
    * const response = await client.brand.identifyFromTransaction(
-   *   { transaction_info: 'transaction_info' },
+   *   { transaction_info: 'xxx' },
    * );
    * ```
    */
@@ -207,7 +208,7 @@ export class Brand extends APIResource {
    * @example
    * ```ts
    * const response = await client.brand.retrieveSimplified({
-   *   domain: 'domain',
+   *   domain: 'xxx',
    * });
    * ```
    */
@@ -290,7 +291,7 @@ export class Brand extends APIResource {
    * @example
    * ```ts
    * const response = await client.brand.webScrapeSitemap({
-   *   domain: 'domain',
+   *   domain: 'xxx',
    * });
    * ```
    */
@@ -386,8 +387,7 @@ export namespace BrandRetrieveResponse {
     phone?: string;
 
     /**
-     * The primary language of the brand's website content. Detected from the HTML lang
-     * tag, page content analysis, or social media descriptions.
+     * Language to force for the retrieved brand data.
      */
     primary_language?:
       | 'afrikaans'
@@ -733,7 +733,6 @@ export namespace BrandRetrieveResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -794,6 +793,7 @@ export namespace BrandRetrieveResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -1443,8 +1443,7 @@ export namespace BrandIdentifyFromTransactionResponse {
     phone?: string;
 
     /**
-     * The primary language of the brand's website content. Detected from the HTML lang
-     * tag, page content analysis, or social media descriptions.
+     * Language to force for the retrieved brand data.
      */
     primary_language?:
       | 'afrikaans'
@@ -1790,7 +1789,6 @@ export namespace BrandIdentifyFromTransactionResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -1851,6 +1849,7 @@ export namespace BrandIdentifyFromTransactionResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -2304,8 +2303,7 @@ export namespace BrandRetrieveByEmailResponse {
     phone?: string;
 
     /**
-     * The primary language of the brand's website content. Detected from the HTML lang
-     * tag, page content analysis, or social media descriptions.
+     * Language to force for the retrieved brand data.
      */
     primary_language?:
       | 'afrikaans'
@@ -2651,7 +2649,6 @@ export namespace BrandRetrieveByEmailResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -2712,6 +2709,7 @@ export namespace BrandRetrieveByEmailResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -3083,8 +3081,7 @@ export namespace BrandRetrieveByIsinResponse {
     phone?: string;
 
     /**
-     * The primary language of the brand's website content. Detected from the HTML lang
-     * tag, page content analysis, or social media descriptions.
+     * Language to force for the retrieved brand data.
      */
     primary_language?:
       | 'afrikaans'
@@ -3430,7 +3427,6 @@ export namespace BrandRetrieveByIsinResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -3491,6 +3487,7 @@ export namespace BrandRetrieveByIsinResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -3862,8 +3859,7 @@ export namespace BrandRetrieveByNameResponse {
     phone?: string;
 
     /**
-     * The primary language of the brand's website content. Detected from the HTML lang
-     * tag, page content analysis, or social media descriptions.
+     * Language to force for the retrieved brand data.
      */
     primary_language?:
       | 'afrikaans'
@@ -4209,7 +4205,6 @@ export namespace BrandRetrieveByNameResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -4270,6 +4265,7 @@ export namespace BrandRetrieveByNameResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -4641,8 +4637,7 @@ export namespace BrandRetrieveByTickerResponse {
     phone?: string;
 
     /**
-     * The primary language of the brand's website content. Detected from the HTML lang
-     * tag, page content analysis, or social media descriptions.
+     * Language to force for the retrieved brand data.
      */
     primary_language?:
       | 'afrikaans'
@@ -4988,7 +4983,6 @@ export namespace BrandRetrieveByTickerResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -5049,6 +5043,7 @@ export namespace BrandRetrieveByTickerResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -6084,10 +6079,10 @@ export interface BrandRetrieveParams {
    * Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
    * Cannot be used with name or ticker parameters.
    */
-  domain: string;
+  domain?: string;
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
     | 'afrikaans'
@@ -6209,7 +6204,8 @@ export interface BrandRetrieveParams {
     | 'xhosa'
     | 'yiddish'
     | 'yoruba'
-    | 'zulu';
+    | 'zulu'
+    | null;
 
   /**
    * Maximum age in milliseconds for cached brand data before the API performs a hard
@@ -6217,14 +6213,20 @@ export interface BrandRetrieveParams {
    * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
    * year.
    */
-  maxAgeMs?: number;
+  maxAgeMs?: number | null;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
    * the API will skip time-consuming operations for faster response at the cost of
    * less comprehensive data. Works with all three lookup methods.
    */
-  maxSpeed?: boolean;
+  maxSpeed?: boolean | 'true' | 'false';
+
+  /**
+   * Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
+   * domain or ticker parameters.
+   */
+  name?: string;
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -6232,6 +6234,89 @@ export interface BrandRetrieveParams {
    * dashboard usage page. Up to 20 tags, each 1-50 characters.
    */
   tags?: Array<string>;
+
+  /**
+   * Stock ticker symbol to retrieve brand data for (e.g., 'AAPL'). Cannot be used
+   * with domain or name parameters.
+   */
+  ticker?: string;
+
+  /**
+   * Stock exchange code.
+   */
+  ticker_exchange?:
+    | 'AMEX'
+    | 'AMS'
+    | 'AQS'
+    | 'ASX'
+    | 'ATH'
+    | 'BER'
+    | 'BME'
+    | 'BRU'
+    | 'BSE'
+    | 'BUD'
+    | 'BUE'
+    | 'BVC'
+    | 'CBOE'
+    | 'CNQ'
+    | 'CPH'
+    | 'DFM'
+    | 'DOH'
+    | 'DUB'
+    | 'DUS'
+    | 'DXE'
+    | 'EGX'
+    | 'FSX'
+    | 'HAM'
+    | 'HEL'
+    | 'HKSE'
+    | 'HOSE'
+    | 'ICE'
+    | 'IOB'
+    | 'IST'
+    | 'JKT'
+    | 'JNB'
+    | 'JPX'
+    | 'KLS'
+    | 'KOE'
+    | 'KSC'
+    | 'KUW'
+    | 'LIS'
+    | 'LSE'
+    | 'MCX'
+    | 'MEX'
+    | 'MIL'
+    | 'MUN'
+    | 'NASDAQ'
+    | 'NEO'
+    | 'NSE'
+    | 'NYSE'
+    | 'NZE'
+    | 'OSL'
+    | 'OTC'
+    | 'PAR'
+    | 'PNK'
+    | 'PRA'
+    | 'RIS'
+    | 'SAO'
+    | 'SAU'
+    | 'SES'
+    | 'SET'
+    | 'SGO'
+    | 'SHH'
+    | 'SHZ'
+    | 'SIX'
+    | 'STO'
+    | 'STU'
+    | 'TAI'
+    | 'TAL'
+    | 'TLV'
+    | 'TSX'
+    | 'TSXV'
+    | 'TWO'
+    | 'VIE'
+    | 'WSE'
+    | 'XETRA';
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -6469,252 +6554,252 @@ export interface BrandIdentifyFromTransactionParams {
   city?: string;
 
   /**
-   * Optional country code (GL parameter) to specify the country. This affects the
-   * geographic location used for search queries.
+   * Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+   * search.
    */
   country_gl?:
-    | 'ad'
-    | 'ae'
     | 'af'
-    | 'ag'
-    | 'ai'
     | 'al'
-    | 'am'
-    | 'an'
-    | 'ao'
-    | 'aq'
-    | 'ar'
+    | 'dz'
     | 'as'
-    | 'at'
-    | 'au'
+    | 'ad'
+    | 'ao'
+    | 'ai'
+    | 'aq'
+    | 'ag'
+    | 'ar'
+    | 'am'
     | 'aw'
+    | 'au'
+    | 'at'
     | 'az'
-    | 'ba'
-    | 'bb'
-    | 'bd'
-    | 'be'
-    | 'bf'
-    | 'bg'
+    | 'bs'
     | 'bh'
-    | 'bi'
+    | 'bd'
+    | 'bb'
+    | 'by'
+    | 'be'
+    | 'bz'
     | 'bj'
     | 'bm'
-    | 'bn'
-    | 'bo'
-    | 'br'
-    | 'bs'
     | 'bt'
-    | 'bv'
+    | 'bo'
+    | 'ba'
     | 'bw'
-    | 'by'
-    | 'bz'
-    | 'ca'
-    | 'cc'
-    | 'cd'
-    | 'cf'
-    | 'cg'
-    | 'ch'
-    | 'ci'
-    | 'ck'
-    | 'cl'
+    | 'bv'
+    | 'br'
+    | 'io'
+    | 'bn'
+    | 'bg'
+    | 'bf'
+    | 'bi'
+    | 'kh'
     | 'cm'
-    | 'cn'
-    | 'co'
-    | 'cr'
-    | 'cu'
+    | 'ca'
     | 'cv'
+    | 'ky'
+    | 'cf'
+    | 'td'
+    | 'cl'
+    | 'cn'
     | 'cx'
+    | 'cc'
+    | 'co'
+    | 'km'
+    | 'cg'
+    | 'cd'
+    | 'ck'
+    | 'cr'
+    | 'ci'
+    | 'hr'
+    | 'cu'
     | 'cy'
     | 'cz'
-    | 'de'
-    | 'dj'
     | 'dk'
+    | 'dj'
     | 'dm'
     | 'do'
-    | 'dz'
     | 'ec'
-    | 'ee'
     | 'eg'
-    | 'eh'
+    | 'sv'
+    | 'gq'
     | 'er'
-    | 'es'
+    | 'ee'
     | 'et'
-    | 'fi'
-    | 'fj'
     | 'fk'
-    | 'fm'
     | 'fo'
+    | 'fj'
+    | 'fi'
     | 'fr'
-    | 'ga'
-    | 'gb'
-    | 'gd'
-    | 'ge'
     | 'gf'
+    | 'pf'
+    | 'tf'
+    | 'ga'
+    | 'gm'
+    | 'ge'
+    | 'de'
     | 'gh'
     | 'gi'
-    | 'gl'
-    | 'gm'
-    | 'gn'
-    | 'gp'
-    | 'gq'
     | 'gr'
-    | 'gs'
-    | 'gt'
+    | 'gl'
+    | 'gd'
+    | 'gp'
     | 'gu'
+    | 'gt'
+    | 'gn'
     | 'gw'
     | 'gy'
-    | 'hk'
-    | 'hm'
-    | 'hn'
-    | 'hr'
     | 'ht'
+    | 'hm'
+    | 'va'
+    | 'hn'
+    | 'hk'
     | 'hu'
+    | 'is'
+    | 'in'
     | 'id'
+    | 'ir'
+    | 'iq'
     | 'ie'
     | 'il'
-    | 'in'
-    | 'io'
-    | 'iq'
-    | 'ir'
-    | 'is'
     | 'it'
     | 'jm'
-    | 'jo'
     | 'jp'
+    | 'jo'
+    | 'kz'
     | 'ke'
-    | 'kg'
-    | 'kh'
     | 'ki'
-    | 'km'
-    | 'kn'
     | 'kp'
     | 'kr'
     | 'kw'
-    | 'ky'
-    | 'kz'
+    | 'kg'
     | 'la'
+    | 'lv'
     | 'lb'
-    | 'lc'
-    | 'li'
-    | 'lk'
-    | 'lr'
     | 'ls'
+    | 'lr'
+    | 'ly'
+    | 'li'
     | 'lt'
     | 'lu'
-    | 'lv'
-    | 'ly'
-    | 'ma'
-    | 'mc'
-    | 'md'
-    | 'mg'
-    | 'mh'
-    | 'mk'
-    | 'ml'
-    | 'mm'
-    | 'mn'
     | 'mo'
-    | 'mp'
+    | 'mk'
+    | 'mg'
+    | 'mw'
+    | 'my'
+    | 'mv'
+    | 'ml'
+    | 'mt'
+    | 'mh'
     | 'mq'
     | 'mr'
-    | 'ms'
-    | 'mt'
     | 'mu'
-    | 'mv'
-    | 'mw'
+    | 'yt'
     | 'mx'
-    | 'my'
+    | 'fm'
+    | 'md'
+    | 'mc'
+    | 'mn'
+    | 'ms'
+    | 'ma'
     | 'mz'
+    | 'mm'
     | 'na'
-    | 'nc'
-    | 'ne'
-    | 'nf'
-    | 'ng'
-    | 'ni'
-    | 'nl'
-    | 'no'
-    | 'np'
     | 'nr'
-    | 'nu'
+    | 'np'
+    | 'nl'
+    | 'an'
+    | 'nc'
     | 'nz'
+    | 'ni'
+    | 'ne'
+    | 'ng'
+    | 'nu'
+    | 'nf'
+    | 'mp'
+    | 'no'
     | 'om'
-    | 'pa'
-    | 'pe'
-    | 'pf'
-    | 'pg'
-    | 'ph'
     | 'pk'
-    | 'pl'
-    | 'pm'
-    | 'pn'
-    | 'pr'
-    | 'ps'
-    | 'pt'
     | 'pw'
+    | 'ps'
+    | 'pa'
+    | 'pg'
     | 'py'
+    | 'pe'
+    | 'ph'
+    | 'pn'
+    | 'pl'
+    | 'pt'
+    | 'pr'
     | 'qa'
     | 're'
     | 'ro'
-    | 'rs'
     | 'ru'
     | 'rw'
-    | 'sa'
-    | 'sb'
-    | 'sc'
-    | 'sd'
-    | 'se'
-    | 'sg'
     | 'sh'
-    | 'si'
-    | 'sj'
-    | 'sk'
-    | 'sl'
+    | 'kn'
+    | 'lc'
+    | 'pm'
+    | 'vc'
+    | 'ws'
     | 'sm'
-    | 'sn'
-    | 'so'
-    | 'sr'
     | 'st'
-    | 'sv'
-    | 'sy'
+    | 'sa'
+    | 'sn'
+    | 'rs'
+    | 'sc'
+    | 'sl'
+    | 'sg'
+    | 'sk'
+    | 'si'
+    | 'sb'
+    | 'so'
+    | 'za'
+    | 'gs'
+    | 'es'
+    | 'lk'
+    | 'sd'
+    | 'sr'
+    | 'sj'
     | 'sz'
-    | 'tc'
-    | 'td'
-    | 'tf'
-    | 'tg'
-    | 'th'
-    | 'tj'
-    | 'tk'
-    | 'tl'
-    | 'tm'
-    | 'tn'
-    | 'to'
-    | 'tr'
-    | 'tt'
-    | 'tv'
+    | 'se'
+    | 'ch'
+    | 'sy'
     | 'tw'
+    | 'tj'
     | 'tz'
-    | 'ua'
+    | 'th'
+    | 'tl'
+    | 'tg'
+    | 'tk'
+    | 'to'
+    | 'tt'
+    | 'tn'
+    | 'tr'
+    | 'tm'
+    | 'tc'
+    | 'tv'
     | 'ug'
-    | 'um'
+    | 'ua'
+    | 'ae'
+    | 'gb'
     | 'us'
+    | 'um'
     | 'uy'
     | 'uz'
-    | 'va'
-    | 'vc'
+    | 'vu'
     | 've'
+    | 'vn'
     | 'vg'
     | 'vi'
-    | 'vn'
-    | 'vu'
     | 'wf'
-    | 'ws'
+    | 'eh'
     | 'ye'
-    | 'yt'
-    | 'za'
     | 'zm'
     | 'zw';
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
     | 'afrikaans'
@@ -6836,31 +6921,32 @@ export interface BrandIdentifyFromTransactionParams {
     | 'xhosa'
     | 'yiddish'
     | 'yoruba'
-    | 'zulu';
+    | 'zulu'
+    | null;
 
   /**
    * When set to true, the API will perform an additional verification steps to
    * ensure the identified brand matches the transaction with high confidence.
    */
-  high_confidence_only?: boolean;
+  high_confidence_only?: boolean | 'true' | 'false';
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
    * the API will skip time-consuming operations for faster response at the cost of
    * less comprehensive data.
    */
-  maxSpeed?: boolean;
+  maxSpeed?: boolean | 'true' | 'false';
 
   /**
    * Optional Merchant Category Code (MCC) to help identify the business
    * category/industry.
    */
-  mcc?: string;
+  mcc?: string | number;
 
   /**
    * Optional phone number from the transaction to help verify brand match.
    */
-  phone?: number;
+  phone?: string | number;
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -6930,7 +7016,7 @@ export interface BrandRetrieveByEmailParams {
   email: string;
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
     | 'afrikaans'
@@ -7052,7 +7138,8 @@ export interface BrandRetrieveByEmailParams {
     | 'xhosa'
     | 'yiddish'
     | 'yoruba'
-    | 'zulu';
+    | 'zulu'
+    | null;
 
   /**
    * Maximum age in milliseconds for cached brand data before the API performs a hard
@@ -7060,14 +7147,14 @@ export interface BrandRetrieveByEmailParams {
    * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
    * year.
    */
-  maxAgeMs?: number;
+  maxAgeMs?: number | null;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
    * the API will skip time-consuming operations for faster response at the cost of
    * less comprehensive data.
    */
-  maxSpeed?: boolean;
+  maxSpeed?: boolean | 'true' | 'false';
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -7093,7 +7180,7 @@ export interface BrandRetrieveByIsinParams {
   isin: string;
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
     | 'afrikaans'
@@ -7215,7 +7302,8 @@ export interface BrandRetrieveByIsinParams {
     | 'xhosa'
     | 'yiddish'
     | 'yoruba'
-    | 'zulu';
+    | 'zulu'
+    | null;
 
   /**
    * Maximum age in milliseconds for cached brand data before the API performs a hard
@@ -7223,14 +7311,14 @@ export interface BrandRetrieveByIsinParams {
    * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
    * year.
    */
-  maxAgeMs?: number;
+  maxAgeMs?: number | null;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
    * the API will skip time-consuming operations for faster response at the cost of
    * less comprehensive data.
    */
-  maxSpeed?: boolean;
+  maxSpeed?: boolean | 'true' | 'false';
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -7255,252 +7343,252 @@ export interface BrandRetrieveByNameParams {
   name: string;
 
   /**
-   * Optional country code hint (GL parameter) to specify the country for the company
-   * name.
+   * Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+   * search.
    */
   country_gl?:
-    | 'ad'
-    | 'ae'
     | 'af'
-    | 'ag'
-    | 'ai'
     | 'al'
-    | 'am'
-    | 'an'
-    | 'ao'
-    | 'aq'
-    | 'ar'
+    | 'dz'
     | 'as'
-    | 'at'
-    | 'au'
+    | 'ad'
+    | 'ao'
+    | 'ai'
+    | 'aq'
+    | 'ag'
+    | 'ar'
+    | 'am'
     | 'aw'
+    | 'au'
+    | 'at'
     | 'az'
-    | 'ba'
-    | 'bb'
-    | 'bd'
-    | 'be'
-    | 'bf'
-    | 'bg'
+    | 'bs'
     | 'bh'
-    | 'bi'
+    | 'bd'
+    | 'bb'
+    | 'by'
+    | 'be'
+    | 'bz'
     | 'bj'
     | 'bm'
-    | 'bn'
-    | 'bo'
-    | 'br'
-    | 'bs'
     | 'bt'
-    | 'bv'
+    | 'bo'
+    | 'ba'
     | 'bw'
-    | 'by'
-    | 'bz'
-    | 'ca'
-    | 'cc'
-    | 'cd'
-    | 'cf'
-    | 'cg'
-    | 'ch'
-    | 'ci'
-    | 'ck'
-    | 'cl'
+    | 'bv'
+    | 'br'
+    | 'io'
+    | 'bn'
+    | 'bg'
+    | 'bf'
+    | 'bi'
+    | 'kh'
     | 'cm'
-    | 'cn'
-    | 'co'
-    | 'cr'
-    | 'cu'
+    | 'ca'
     | 'cv'
+    | 'ky'
+    | 'cf'
+    | 'td'
+    | 'cl'
+    | 'cn'
     | 'cx'
+    | 'cc'
+    | 'co'
+    | 'km'
+    | 'cg'
+    | 'cd'
+    | 'ck'
+    | 'cr'
+    | 'ci'
+    | 'hr'
+    | 'cu'
     | 'cy'
     | 'cz'
-    | 'de'
-    | 'dj'
     | 'dk'
+    | 'dj'
     | 'dm'
     | 'do'
-    | 'dz'
     | 'ec'
-    | 'ee'
     | 'eg'
-    | 'eh'
+    | 'sv'
+    | 'gq'
     | 'er'
-    | 'es'
+    | 'ee'
     | 'et'
-    | 'fi'
-    | 'fj'
     | 'fk'
-    | 'fm'
     | 'fo'
+    | 'fj'
+    | 'fi'
     | 'fr'
-    | 'ga'
-    | 'gb'
-    | 'gd'
-    | 'ge'
     | 'gf'
+    | 'pf'
+    | 'tf'
+    | 'ga'
+    | 'gm'
+    | 'ge'
+    | 'de'
     | 'gh'
     | 'gi'
-    | 'gl'
-    | 'gm'
-    | 'gn'
-    | 'gp'
-    | 'gq'
     | 'gr'
-    | 'gs'
-    | 'gt'
+    | 'gl'
+    | 'gd'
+    | 'gp'
     | 'gu'
+    | 'gt'
+    | 'gn'
     | 'gw'
     | 'gy'
-    | 'hk'
-    | 'hm'
-    | 'hn'
-    | 'hr'
     | 'ht'
+    | 'hm'
+    | 'va'
+    | 'hn'
+    | 'hk'
     | 'hu'
+    | 'is'
+    | 'in'
     | 'id'
+    | 'ir'
+    | 'iq'
     | 'ie'
     | 'il'
-    | 'in'
-    | 'io'
-    | 'iq'
-    | 'ir'
-    | 'is'
     | 'it'
     | 'jm'
-    | 'jo'
     | 'jp'
+    | 'jo'
+    | 'kz'
     | 'ke'
-    | 'kg'
-    | 'kh'
     | 'ki'
-    | 'km'
-    | 'kn'
     | 'kp'
     | 'kr'
     | 'kw'
-    | 'ky'
-    | 'kz'
+    | 'kg'
     | 'la'
+    | 'lv'
     | 'lb'
-    | 'lc'
-    | 'li'
-    | 'lk'
-    | 'lr'
     | 'ls'
+    | 'lr'
+    | 'ly'
+    | 'li'
     | 'lt'
     | 'lu'
-    | 'lv'
-    | 'ly'
-    | 'ma'
-    | 'mc'
-    | 'md'
-    | 'mg'
-    | 'mh'
-    | 'mk'
-    | 'ml'
-    | 'mm'
-    | 'mn'
     | 'mo'
-    | 'mp'
+    | 'mk'
+    | 'mg'
+    | 'mw'
+    | 'my'
+    | 'mv'
+    | 'ml'
+    | 'mt'
+    | 'mh'
     | 'mq'
     | 'mr'
-    | 'ms'
-    | 'mt'
     | 'mu'
-    | 'mv'
-    | 'mw'
+    | 'yt'
     | 'mx'
-    | 'my'
+    | 'fm'
+    | 'md'
+    | 'mc'
+    | 'mn'
+    | 'ms'
+    | 'ma'
     | 'mz'
+    | 'mm'
     | 'na'
-    | 'nc'
-    | 'ne'
-    | 'nf'
-    | 'ng'
-    | 'ni'
-    | 'nl'
-    | 'no'
-    | 'np'
     | 'nr'
-    | 'nu'
+    | 'np'
+    | 'nl'
+    | 'an'
+    | 'nc'
     | 'nz'
+    | 'ni'
+    | 'ne'
+    | 'ng'
+    | 'nu'
+    | 'nf'
+    | 'mp'
+    | 'no'
     | 'om'
-    | 'pa'
-    | 'pe'
-    | 'pf'
-    | 'pg'
-    | 'ph'
     | 'pk'
-    | 'pl'
-    | 'pm'
-    | 'pn'
-    | 'pr'
-    | 'ps'
-    | 'pt'
     | 'pw'
+    | 'ps'
+    | 'pa'
+    | 'pg'
     | 'py'
+    | 'pe'
+    | 'ph'
+    | 'pn'
+    | 'pl'
+    | 'pt'
+    | 'pr'
     | 'qa'
     | 're'
     | 'ro'
-    | 'rs'
     | 'ru'
     | 'rw'
-    | 'sa'
-    | 'sb'
-    | 'sc'
-    | 'sd'
-    | 'se'
-    | 'sg'
     | 'sh'
-    | 'si'
-    | 'sj'
-    | 'sk'
-    | 'sl'
+    | 'kn'
+    | 'lc'
+    | 'pm'
+    | 'vc'
+    | 'ws'
     | 'sm'
-    | 'sn'
-    | 'so'
-    | 'sr'
     | 'st'
-    | 'sv'
-    | 'sy'
+    | 'sa'
+    | 'sn'
+    | 'rs'
+    | 'sc'
+    | 'sl'
+    | 'sg'
+    | 'sk'
+    | 'si'
+    | 'sb'
+    | 'so'
+    | 'za'
+    | 'gs'
+    | 'es'
+    | 'lk'
+    | 'sd'
+    | 'sr'
+    | 'sj'
     | 'sz'
-    | 'tc'
-    | 'td'
-    | 'tf'
-    | 'tg'
-    | 'th'
-    | 'tj'
-    | 'tk'
-    | 'tl'
-    | 'tm'
-    | 'tn'
-    | 'to'
-    | 'tr'
-    | 'tt'
-    | 'tv'
+    | 'se'
+    | 'ch'
+    | 'sy'
     | 'tw'
+    | 'tj'
     | 'tz'
-    | 'ua'
+    | 'th'
+    | 'tl'
+    | 'tg'
+    | 'tk'
+    | 'to'
+    | 'tt'
+    | 'tn'
+    | 'tr'
+    | 'tm'
+    | 'tc'
+    | 'tv'
     | 'ug'
-    | 'um'
+    | 'ua'
+    | 'ae'
+    | 'gb'
     | 'us'
+    | 'um'
     | 'uy'
     | 'uz'
-    | 'va'
-    | 'vc'
+    | 'vu'
     | 've'
+    | 'vn'
     | 'vg'
     | 'vi'
-    | 'vn'
-    | 'vu'
     | 'wf'
-    | 'ws'
+    | 'eh'
     | 'ye'
-    | 'yt'
-    | 'za'
     | 'zm'
     | 'zw';
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
     | 'afrikaans'
@@ -7622,7 +7710,8 @@ export interface BrandRetrieveByNameParams {
     | 'xhosa'
     | 'yiddish'
     | 'yoruba'
-    | 'zulu';
+    | 'zulu'
+    | null;
 
   /**
    * Maximum age in milliseconds for cached brand data before the API performs a hard
@@ -7630,14 +7719,14 @@ export interface BrandRetrieveByNameParams {
    * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
    * year.
    */
-  maxAgeMs?: number;
+  maxAgeMs?: number | null;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
    * the API will skip time-consuming operations for faster response at the cost of
    * less comprehensive data.
    */
-  maxSpeed?: boolean;
+  maxSpeed?: boolean | 'true' | 'false';
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -7662,7 +7751,7 @@ export interface BrandRetrieveByTickerParams {
   ticker: string;
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
     | 'afrikaans'
@@ -7784,7 +7873,8 @@ export interface BrandRetrieveByTickerParams {
     | 'xhosa'
     | 'yiddish'
     | 'yoruba'
-    | 'zulu';
+    | 'zulu'
+    | null;
 
   /**
    * Maximum age in milliseconds for cached brand data before the API performs a hard
@@ -7792,14 +7882,14 @@ export interface BrandRetrieveByTickerParams {
    * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
    * year.
    */
-  maxAgeMs?: number;
+  maxAgeMs?: number | null;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
    * the API will skip time-consuming operations for faster response at the cost of
    * less comprehensive data.
    */
-  maxSpeed?: boolean;
+  maxSpeed?: boolean | 'true' | 'false';
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -7809,7 +7899,7 @@ export interface BrandRetrieveByTickerParams {
   tags?: Array<string>;
 
   /**
-   * Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+   * Stock exchange code.
    */
   ticker_exchange?:
     | 'AMEX'
@@ -7905,7 +7995,7 @@ export interface BrandRetrieveSimplifiedParams {
    * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
    * year.
    */
-  maxAgeMs?: number;
+  maxAgeMs?: number | null;
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -7913,6 +8003,11 @@ export interface BrandRetrieveSimplifiedParams {
    * dashboard usage page. Up to 20 tags, each 1-50 characters.
    */
   tags?: Array<string>;
+
+  /**
+   * Optional theme preference used when selecting brand assets.
+   */
+  theme?: 'light' | 'dark';
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -7929,8 +8024,9 @@ export interface BrandWebScrapeHTMLParams {
   url: string;
 
   /**
-   * Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-   * When provided, Context.dev fetches the target page from that country.
+   * Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+   * residential proxy exit location. Must be one of Context.dev's supported
+   * countries. When provided, Context.dev fetches the target page from that country.
    */
   country?:
     | 'ad'
@@ -8143,7 +8239,7 @@ export interface BrandWebScrapeHTMLParams {
    * Exclusion takes precedence: an element matching both is removed. Examples:
    * "nav", "footer", ".ad-banner", "[aria-hidden=true]".
    */
-  excludeSelectors?: Array<string>;
+  excludeSelectors?: Array<string> | null;
 
   /**
    * Optional outbound HTTP headers forwarded only to the target URL, sent as
@@ -8155,21 +8251,21 @@ export interface BrandWebScrapeHTMLParams {
   /**
    * When true, iframes are rendered inline into the returned HTML.
    */
-  includeFrames?: boolean;
+  includeFrames?: boolean | 'true' | 'false';
 
   /**
    * CSS selectors. When provided, only matching subtrees (and their descendants) are
    * kept and everything else is dropped. When omitted, the entire document is kept.
    * Examples: "article.main", "#content", "[role=main]".
    */
-  includeSelectors?: Array<string>;
+  includeSelectors?: Array<string> | null;
 
   /**
    * Return a cached result if a prior scrape for the same parameters exists and is
    * younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
    * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
    */
-  maxAgeMs?: number;
+  maxAgeMs?: number | null;
 
   /**
    * PDF parsing controls. Use start/end to limit text extraction and embedded-image
@@ -8182,7 +8278,7 @@ export interface BrandWebScrapeHTMLParams {
    * extracting HTML. Defaults to false. This adds a bit of latency in exchange for
    * more stable output on animated pages.
    */
-  settleAnimations?: boolean;
+  settleAnimations?: boolean | 'true' | 'false';
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -8202,13 +8298,13 @@ export interface BrandWebScrapeHTMLParams {
    * When true, return only the page's main content in the HTML response, excluding
    * headers, footers, sidebars, and navigation when detectable.
    */
-  useMainContentOnly?: boolean;
+  useMainContentOnly?: boolean | 'true' | 'false';
 
   /**
    * Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
    * 30000 (30 seconds).
    */
-  waitForMs?: number;
+  waitForMs?: number | null;
 }
 
 export namespace BrandWebScrapeHTMLParams {
@@ -8228,13 +8324,13 @@ export namespace BrandWebScrapeHTMLParams {
      * recognized text at each image's position in page reading order while preserving
      * the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
      */
-    ocr?: boolean;
+    ocr?: boolean | 'true' | 'false';
 
     /**
      * When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
      * a 400 WEBSITE_ACCESS_ERROR is returned.
      */
-    shouldParse?: boolean;
+    shouldParse?: boolean | 'true' | 'false';
 
     /**
      * First 1-based PDF page to parse. When omitted, parsing starts at the first page.
@@ -8255,13 +8351,13 @@ export interface BrandWebScrapeImagesParams {
    * group is kept. Images that cannot be downloaded or hashed are kept. Default:
    * false.
    */
-  dedupe?: boolean;
+  dedupe?: boolean | 'true' | 'false';
 
   /**
    * Optional per-image processing, sent as deep-object query params such as
    * enrichment[resolution]=true.
    */
-  enrichment?: BrandWebScrapeImagesParams.Enrichment;
+  enrichment?: BrandWebScrapeImagesParams.Enrichment | null;
 
   /**
    * Optional outbound HTTP headers forwarded only to the target URL, sent as
@@ -8274,7 +8370,7 @@ export interface BrandWebScrapeImagesParams {
    * Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
    * day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
    */
-  maxAgeMs?: number;
+  maxAgeMs?: number | null;
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -8294,7 +8390,7 @@ export interface BrandWebScrapeImagesParams {
    * Optional browser wait time in milliseconds after initial page load before
    * collecting images. Min: 0. Max: 30000 (30 seconds).
    */
-  waitForMs?: number;
+  waitForMs?: number | null;
 }
 
 export namespace BrandWebScrapeImagesParams {
@@ -8306,13 +8402,13 @@ export namespace BrandWebScrapeImagesParams {
     /**
      * Classify each image by visual asset type.
      */
-    classification?: boolean;
+    classification?: boolean | 'true' | 'false';
 
     /**
      * Host materializable images on the Brand.dev CDN and return their URL and MIME
      * type.
      */
-    hostedUrl?: boolean;
+    hostedUrl?: boolean | 'true' | 'false';
 
     /**
      * Per-image enrichment timeout in milliseconds. Default: 30000. Maximum: 60000.
@@ -8322,7 +8418,7 @@ export namespace BrandWebScrapeImagesParams {
     /**
      * Measure image width and height when possible.
      */
-    resolution?: boolean;
+    resolution?: boolean | 'true' | 'false';
   }
 }
 
@@ -8334,8 +8430,9 @@ export interface BrandWebScrapeMdParams {
   url: string;
 
   /**
-   * Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-   * When provided, Context.dev fetches the target page from that country.
+   * Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+   * residential proxy exit location. Must be one of Context.dev's supported
+   * countries. When provided, Context.dev fetches the target page from that country.
    */
   country?:
     | 'ad'
@@ -8548,7 +8645,7 @@ export interface BrandWebScrapeMdParams {
    * includeSelectors. Exclusion takes precedence: an element matching both is
    * removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
    */
-  excludeSelectors?: Array<string>;
+  excludeSelectors?: Array<string> | null;
 
   /**
    * Optional outbound HTTP headers forwarded only to the target URL, sent as
@@ -8560,31 +8657,31 @@ export interface BrandWebScrapeMdParams {
   /**
    * When true, the contents of iframes are rendered to Markdown.
    */
-  includeFrames?: boolean;
+  includeFrames?: boolean | 'true' | 'false';
 
   /**
    * Include image references in Markdown output
    */
-  includeImages?: boolean;
+  includeImages?: boolean | 'true' | 'false';
 
   /**
    * Preserve hyperlinks in Markdown output
    */
-  includeLinks?: boolean;
+  includeLinks?: boolean | 'true' | 'false';
 
   /**
    * CSS selectors. When provided, only matching HTML subtrees (and their
    * descendants) are kept before conversion to Markdown. When omitted, the entire
    * document is kept. Examples: "article.main", "#content", "[role=main]".
    */
-  includeSelectors?: Array<string>;
+  includeSelectors?: Array<string> | null;
 
   /**
    * Return a cached result if a prior scrape for the same parameters exists and is
    * younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
    * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
    */
-  maxAgeMs?: number;
+  maxAgeMs?: number | null;
 
   /**
    * PDF parsing controls. Use start/end to limit text extraction and embedded-image
@@ -8597,12 +8694,12 @@ export interface BrandWebScrapeMdParams {
    * converting to Markdown. Defaults to false. This adds a bit of latency in
    * exchange for more stable output on animated pages.
    */
-  settleAnimations?: boolean;
+  settleAnimations?: boolean | 'true' | 'false';
 
   /**
    * Shorten base64-encoded image data in the Markdown output
    */
-  shortenBase64Images?: boolean;
+  shortenBase64Images?: boolean | 'true' | 'false';
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -8622,13 +8719,13 @@ export interface BrandWebScrapeMdParams {
    * Extract only the main content of the page, excluding headers, footers, sidebars,
    * and navigation
    */
-  useMainContentOnly?: boolean;
+  useMainContentOnly?: boolean | 'true' | 'false';
 
   /**
    * Optional browser wait time in milliseconds after initial page load before
    * converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
    */
-  waitForMs?: number;
+  waitForMs?: number | null;
 }
 
 export namespace BrandWebScrapeMdParams {
@@ -8648,13 +8745,13 @@ export namespace BrandWebScrapeMdParams {
      * recognized text at each image's position in page reading order while preserving
      * the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
      */
-    ocr?: boolean;
+    ocr?: boolean | 'true' | 'false';
 
     /**
      * When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
      * a 400 WEBSITE_ACCESS_ERROR is returned.
      */
-    shouldParse?: boolean;
+    shouldParse?: boolean | 'true' | 'false';
 
     /**
      * First 1-based PDF page to parse. When omitted, parsing starts at the first page.
@@ -8681,6 +8778,12 @@ export interface BrandWebScrapeSitemapParams {
    * Minimum is 1, maximum is 100,000.
    */
   maxLinks?: number;
+
+  /**
+   * Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
+   * instead of discovering the domain's sitemaps.
+   */
+  sitemapUrl?: string;
 
   /**
    * Optional comma-separated caller-defined tags for tracking this request. Tags are
