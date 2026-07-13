@@ -8,6 +8,13 @@ export class Brand extends APIResource {
   /**
    * Retrieve logos, backdrops, colors, industry, description, and more from any
    * domain
+   *
+   * @example
+   * ```ts
+   * const brand = await client.brand.retrieve({
+   *   domain: 'domain',
+   * });
+   * ```
    */
   retrieve(query: BrandRetrieveParams, options?: RequestOptions): APIPromise<BrandRetrieveResponse> {
     return this._client.get('/brand/retrieve', { query, ...options });
@@ -16,6 +23,13 @@ export class Brand extends APIResource {
   /**
    * Given a single URL, determines if it is a product page and extracts the product
    * information.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.aiProduct({
+   *   url: 'https://example.com',
+   * });
+   * ```
    */
   aiProduct(body: BrandAIProductParams, options?: RequestOptions): APIPromise<BrandAIProductResponse> {
     return this._client.post('/brand/ai/product', { body, ...options });
@@ -25,6 +39,13 @@ export class Brand extends APIResource {
    * Extract product information from a brand's website. We will analyze the website
    * and return a list of products with details such as name, description, image,
    * pricing, features, and more.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.aiProducts({
+   *   domain: 'domain',
+   * });
+   * ```
    */
   aiProducts(body: BrandAIProductsParams, options?: RequestOptions): APIPromise<BrandAIProductsResponse> {
     return this._client.post('/brand/ai/products', { body, ...options });
@@ -34,6 +55,21 @@ export class Brand extends APIResource {
    * Use AI to extract specific data points from a brand's website. The AI will crawl
    * the website and extract the requested information based on the provided data
    * points.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.aiQuery({
+   *   data_to_extract: [
+   *     {
+   *       datapoint_description: 'datapoint_description',
+   *       datapoint_example: 'datapoint_example',
+   *       datapoint_name: 'datapoint_name',
+   *       datapoint_type: 'text',
+   *     },
+   *   ],
+   *   domain: 'domain',
+   * });
+   * ```
    */
   aiQuery(body: BrandAIQueryParams, options?: RequestOptions): APIPromise<BrandAIQueryResponse> {
     return this._client.post('/brand/ai/query', { body, ...options });
@@ -42,6 +78,13 @@ export class Brand extends APIResource {
   /**
    * Endpoint specially designed for platforms that want to identify transaction data
    * by the transaction title.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.identifyFromTransaction(
+   *   { transaction_info: 'transaction_info' },
+   * );
+   * ```
    */
   identifyFromTransaction(
     query: BrandIdentifyFromTransactionParams,
@@ -53,6 +96,13 @@ export class Brand extends APIResource {
   /**
    * Signal that you may fetch brand data for a particular domain soon to improve
    * latency.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.prefetch({
+   *   domain: 'domain',
+   * });
+   * ```
    */
   prefetch(body: BrandPrefetchParams, options?: RequestOptions): APIPromise<BrandPrefetchResponse> {
     return this._client.post('/brand/prefetch', { body, ...options });
@@ -63,6 +113,13 @@ export class Brand extends APIResource {
    * latency. This endpoint accepts an email address, extracts the domain from it,
    * validates that it's not a disposable or free email provider, and queues the
    * domain for prefetching.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.prefetchByEmail({
+   *   email: 'dev@stainless.com',
+   * });
+   * ```
    */
   prefetchByEmail(
     body: BrandPrefetchByEmailParams,
@@ -75,6 +132,13 @@ export class Brand extends APIResource {
    * Retrieve brand information using an email address while detecting disposable and
    * free email addresses. Disposable and free email addresses (like gmail.com,
    * yahoo.com) will throw a 422 error.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveByEmail({
+   *   email: 'dev@stainless.com',
+   * });
+   * ```
    */
   retrieveByEmail(
     query: BrandRetrieveByEmailParams,
@@ -86,6 +150,13 @@ export class Brand extends APIResource {
   /**
    * Retrieve brand information using an ISIN (International Securities
    * Identification Number).
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveByIsin({
+   *   isin: 'SE60513A9993',
+   * });
+   * ```
    */
   retrieveByIsin(
     query: BrandRetrieveByIsinParams,
@@ -96,6 +167,13 @@ export class Brand extends APIResource {
 
   /**
    * Retrieve brand information using a company name.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveByName({
+   *   name: 'xxx',
+   * });
+   * ```
    */
   retrieveByName(
     query: BrandRetrieveByNameParams,
@@ -106,6 +184,13 @@ export class Brand extends APIResource {
 
   /**
    * Retrieve brand information using a stock ticker symbol.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveByTicker({
+   *   ticker: 'ticker',
+   * });
+   * ```
    */
   retrieveByTicker(
     query: BrandRetrieveByTickerParams,
@@ -118,6 +203,13 @@ export class Brand extends APIResource {
    * Returns a simplified version of brand data containing only essential
    * information: domain, title, colors, logos, and backdrops. Optimized for faster
    * responses and reduced data transfer.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveSimplified({
+   *   domain: 'domain',
+   * });
+   * ```
    */
   retrieveSimplified(
     query: BrandRetrieveSimplifiedParams,
@@ -128,6 +220,13 @@ export class Brand extends APIResource {
 
   /**
    * Scrapes the given URL and returns the raw HTML content of the page.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.webScrapeHTML({
+   *   url: 'https://example.com',
+   * });
+   * ```
    */
   webScrapeHTML(
     query: BrandWebScrapeHTMLParams,
@@ -141,6 +240,13 @@ export class Brand extends APIResource {
    * URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
    * embeds. The base request costs 1 credit. When enrichment is enabled, the entire
    * call costs 5 credits.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.webScrapeImages({
+   *   url: 'https://example.com',
+   * });
+   * ```
    */
   webScrapeImages(
     query: BrandWebScrapeImagesParams,
@@ -166,6 +272,13 @@ export class Brand extends APIResource {
    * | 415         | No             | Unsupported content type                                                                 |
    * | 429         | No             | Per-minute rate limit exceeded; honor Retry-After                                        |
    * | 500         | No             | Internal error                                                                           |
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.webScrapeMd({
+   *   url: 'https://example.com',
+   * });
+   * ```
    */
   webScrapeMd(query: BrandWebScrapeMdParams, options?: RequestOptions): APIPromise<BrandWebScrapeMdResponse> {
     return this._client.get('/web/scrape/markdown', { query, ...options });
@@ -173,6 +286,13 @@ export class Brand extends APIResource {
 
   /**
    * Crawl an entire website's sitemap and return all discovered page URLs.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.webScrapeSitemap({
+   *   domain: 'domain',
+   * });
+   * ```
    */
   webScrapeSitemap(
     query: BrandWebScrapeSitemapParams,
@@ -6107,6 +6227,13 @@ export interface BrandRetrieveParams {
   maxSpeed?: boolean;
 
   /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
    * Optional timeout in milliseconds for the request. If the request takes longer
    * than this value, it will be aborted with a 408 status code. Maximum allowed
    * value is 300000ms (5 minutes).
@@ -6126,6 +6253,13 @@ export interface BrandAIProductParams {
    * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
    */
   maxAgeMs?: number;
+
+  /**
+   * Optional caller-defined tags for tracking this request. Tags are recorded on the
+   * request's usage log and can be used to filter usage on the dashboard usage page.
+   * Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -6157,6 +6291,13 @@ export declare namespace BrandAIProductsParams {
     maxProducts?: number;
 
     /**
+     * Optional caller-defined tags for tracking this request. Tags are recorded on the
+     * request's usage log and can be used to filter usage on the dashboard usage page.
+     * Up to 20 tags, each 1-50 characters.
+     */
+    tags?: Array<string>;
+
+    /**
      * Optional timeout in milliseconds for the request. If the request takes longer
      * than this value, it will be aborted with a 408 status code. Maximum allowed
      * value is 300000ms (5 minutes).
@@ -6184,6 +6325,13 @@ export declare namespace BrandAIProductsParams {
     maxProducts?: number;
 
     /**
+     * Optional caller-defined tags for tracking this request. Tags are recorded on the
+     * request's usage log and can be used to filter usage on the dashboard usage page.
+     * Up to 20 tags, each 1-50 characters.
+     */
+    tags?: Array<string>;
+
+    /**
      * Optional timeout in milliseconds for the request. If the request takes longer
      * than this value, it will be aborted with a 408 status code. Maximum allowed
      * value is 300000ms (5 minutes).
@@ -6207,6 +6355,13 @@ export interface BrandAIQueryParams {
    * Optional object specifying which pages to analyze
    */
   specific_pages?: BrandAIQueryParams.SpecificPages;
+
+  /**
+   * Optional caller-defined tags for tracking this request. Tags are recorded on the
+   * request's usage log and can be used to filter usage on the dashboard usage page.
+   * Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -6708,6 +6863,13 @@ export interface BrandIdentifyFromTransactionParams {
   phone?: number;
 
   /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
    * Optional timeout in milliseconds for the request. If the request takes longer
    * than this value, it will be aborted with a 408 status code. Maximum allowed
    * value is 300000ms (5 minutes).
@@ -6720,6 +6882,13 @@ export interface BrandPrefetchParams {
    * Domain name to prefetch brand data for
    */
   domain: string;
+
+  /**
+   * Optional caller-defined tags for tracking this request. Tags are recorded on the
+   * request's usage log and can be used to filter usage on the dashboard usage page.
+   * Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -6736,6 +6905,13 @@ export interface BrandPrefetchByEmailParams {
    * addresses are not allowed.
    */
   email: string;
+
+  /**
+   * Optional caller-defined tags for tracking this request. Tags are recorded on the
+   * request's usage log and can be used to filter usage on the dashboard usage page.
+   * Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -6894,6 +7070,13 @@ export interface BrandRetrieveByEmailParams {
   maxSpeed?: boolean;
 
   /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
    * Optional timeout in milliseconds for the request. If the request takes longer
    * than this value, it will be aborted with a 408 status code. Maximum allowed
    * value is 300000ms (5 minutes).
@@ -7048,6 +7231,13 @@ export interface BrandRetrieveByIsinParams {
    * less comprehensive data.
    */
   maxSpeed?: boolean;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -7450,6 +7640,13 @@ export interface BrandRetrieveByNameParams {
   maxSpeed?: boolean;
 
   /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
    * Optional timeout in milliseconds for the request. If the request takes longer
    * than this value, it will be aborted with a 408 status code. Maximum allowed
    * value is 300000ms (5 minutes).
@@ -7605,6 +7802,13 @@ export interface BrandRetrieveByTickerParams {
   maxSpeed?: boolean;
 
   /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
    * Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
    */
   ticker_exchange?:
@@ -7702,6 +7906,13 @@ export interface BrandRetrieveSimplifiedParams {
    * year.
    */
   maxAgeMs?: number;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -7974,6 +8185,13 @@ export interface BrandWebScrapeHTMLParams {
   settleAnimations?: boolean;
 
   /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
    * Optional timeout in milliseconds for the request. If the request takes longer
    * than this value, it will be aborted with a 408 status code. Maximum allowed
    * value is 300000ms (5 minutes).
@@ -8057,6 +8275,13 @@ export interface BrandWebScrapeImagesParams {
    * day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
    */
   maxAgeMs?: number;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -8380,6 +8605,13 @@ export interface BrandWebScrapeMdParams {
   shortenBase64Images?: boolean;
 
   /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
    * Optional timeout in milliseconds for the request. If the request takes longer
    * than this value, it will be aborted with a 408 status code. Maximum allowed
    * value is 300000ms (5 minutes).
@@ -8449,6 +8681,13 @@ export interface BrandWebScrapeSitemapParams {
    * Minimum is 1, maximum is 100,000.
    */
   maxLinks?: number;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer

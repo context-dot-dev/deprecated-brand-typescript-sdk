@@ -27,6 +27,7 @@ describe('resource brand', () => {
       force_language: 'afrikaans',
       maxAgeMs: 86400000,
       maxSpeed: true,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -48,6 +49,7 @@ describe('resource brand', () => {
     const response = await client.brand.aiProduct({
       url: 'https://example.com',
       maxAgeMs: 0,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -70,6 +72,7 @@ describe('resource brand', () => {
       domain: 'domain',
       maxAgeMs: 0,
       maxProducts: 1,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -121,6 +124,7 @@ describe('resource brand', () => {
         privacy_policy: true,
         terms_and_conditions: true,
       },
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -148,6 +152,7 @@ describe('resource brand', () => {
       maxSpeed: true,
       mcc: 'mcc',
       phone: 0,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -166,7 +171,11 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('prefetch: required and optional params', async () => {
-    const response = await client.brand.prefetch({ domain: 'domain', timeoutMS: 1000 });
+    const response = await client.brand.prefetch({
+      domain: 'domain',
+      tags: ['production', 'team-alpha'],
+      timeoutMS: 1000,
+    });
   });
 
   // Mock server tests are disabled
@@ -183,7 +192,11 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('prefetchByEmail: required and optional params', async () => {
-    const response = await client.brand.prefetchByEmail({ email: 'dev@stainless.com', timeoutMS: 1000 });
+    const response = await client.brand.prefetchByEmail({
+      email: 'dev@stainless.com',
+      tags: ['production', 'team-alpha'],
+      timeoutMS: 1000,
+    });
   });
 
   // Mock server tests are disabled
@@ -205,6 +218,7 @@ describe('resource brand', () => {
       force_language: 'afrikaans',
       maxAgeMs: 86400000,
       maxSpeed: true,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -228,6 +242,7 @@ describe('resource brand', () => {
       force_language: 'afrikaans',
       maxAgeMs: 86400000,
       maxSpeed: true,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -252,6 +267,7 @@ describe('resource brand', () => {
       force_language: 'afrikaans',
       maxAgeMs: 86400000,
       maxSpeed: true,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -275,6 +291,7 @@ describe('resource brand', () => {
       force_language: 'afrikaans',
       maxAgeMs: 86400000,
       maxSpeed: true,
+      tags: ['production', 'team-alpha'],
       ticker_exchange: 'AMEX',
       timeoutMS: 1000,
     });
@@ -297,6 +314,7 @@ describe('resource brand', () => {
     const response = await client.brand.retrieveSimplified({
       domain: 'domain',
       maxAgeMs: 86400000,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -330,6 +348,7 @@ describe('resource brand', () => {
         start: 1,
       },
       settleAnimations: true,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
       useMainContentOnly: true,
       waitForMs: 0,
@@ -361,6 +380,7 @@ describe('resource brand', () => {
       },
       headers: { foo: 'J!' },
       maxAgeMs: 0,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
       waitForMs: 0,
     });
@@ -398,6 +418,7 @@ describe('resource brand', () => {
       },
       settleAnimations: true,
       shortenBase64Images: true,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
       useMainContentOnly: true,
       waitForMs: 0,
@@ -422,6 +443,7 @@ describe('resource brand', () => {
       domain: 'domain',
       headers: { foo: 'J!' },
       maxLinks: 1,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
       urlRegex: '^https?://[^/]+/blog/',
     });
