@@ -37,9 +37,3 @@ Methods:
 - <code title="get /web/scrape/images">client.brand.<a href="./src/resources/brand.ts">webScrapeImages</a>({ ...params }) -> BrandWebScrapeImagesResponse</code>
 - <code title="get /web/scrape/markdown">client.brand.<a href="./src/resources/brand.ts">webScrapeMd</a>({ ...params }) -> BrandWebScrapeMdResponse</code>
 - <code title="get /web/scrape/sitemap">client.brand.<a href="./src/resources/brand.ts">webScrapeSitemap</a>({ ...params }) -> BrandWebScrapeSitemapResponse</code>
-
-# Monitors
-
-Types:
-
-- <code><a href="./src/resources/monitors.ts">WebhookDelivery</a></code>

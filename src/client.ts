@@ -52,7 +52,6 @@ import {
   BrandWebScrapeSitemapParams,
   BrandWebScrapeSitemapResponse,
 } from './resources/brand';
-import { Monitors, WebhookDelivery } from './resources/monitors';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -771,11 +770,9 @@ export class BrandDev {
   static toFile = Uploads.toFile;
 
   brand: API.Brand = new API.Brand(this);
-  monitors: API.Monitors = new API.Monitors(this);
 }
 
 BrandDev.Brand = Brand;
-BrandDev.Monitors = Monitors;
 
 export declare namespace BrandDev {
   export type RequestOptions = Opts.RequestOptions;
@@ -815,6 +812,4 @@ export declare namespace BrandDev {
     type BrandWebScrapeMdParams as BrandWebScrapeMdParams,
     type BrandWebScrapeSitemapParams as BrandWebScrapeSitemapParams,
   };
-
-  export { Monitors as Monitors, type WebhookDelivery as WebhookDelivery };
 }
