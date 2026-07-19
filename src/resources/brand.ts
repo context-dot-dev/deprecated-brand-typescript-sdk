@@ -6340,9 +6340,7 @@ export interface BrandAIProductParams {
   maxAgeMs?: number;
 
   /**
-   * Optional caller-defined tags for tracking this request. Tags are recorded on the
-   * request's usage log and can be used to filter usage on the dashboard usage page.
-   * Up to 20 tags, each 1-50 characters.
+   * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
    */
   tags?: Array<string>;
 
@@ -6376,9 +6374,7 @@ export declare namespace BrandAIProductsParams {
     maxProducts?: number;
 
     /**
-     * Optional caller-defined tags for tracking this request. Tags are recorded on the
-     * request's usage log and can be used to filter usage on the dashboard usage page.
-     * Up to 20 tags, each 1-50 characters.
+     * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
      */
     tags?: Array<string>;
 
@@ -6410,9 +6406,7 @@ export declare namespace BrandAIProductsParams {
     maxProducts?: number;
 
     /**
-     * Optional caller-defined tags for tracking this request. Tags are recorded on the
-     * request's usage log and can be used to filter usage on the dashboard usage page.
-     * Up to 20 tags, each 1-50 characters.
+     * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
      */
     tags?: Array<string>;
 
@@ -6442,9 +6436,7 @@ export interface BrandAIQueryParams {
   specific_pages?: BrandAIQueryParams.SpecificPages;
 
   /**
-   * Optional caller-defined tags for tracking this request. Tags are recorded on the
-   * request's usage log and can be used to filter usage on the dashboard usage page.
-   * Up to 20 tags, each 1-50 characters.
+   * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
    */
   tags?: Array<string>;
 
@@ -6970,9 +6962,7 @@ export interface BrandPrefetchParams {
   domain: string;
 
   /**
-   * Optional caller-defined tags for tracking this request. Tags are recorded on the
-   * request's usage log and can be used to filter usage on the dashboard usage page.
-   * Up to 20 tags, each 1-50 characters.
+   * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
    */
   tags?: Array<string>;
 
@@ -6993,9 +6983,7 @@ export interface BrandPrefetchByEmailParams {
   email: string;
 
   /**
-   * Optional caller-defined tags for tracking this request. Tags are recorded on the
-   * request's usage log and can be used to filter usage on the dashboard usage page.
-   * Up to 20 tags, each 1-50 characters.
+   * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
    */
   tags?: Array<string>;
 
