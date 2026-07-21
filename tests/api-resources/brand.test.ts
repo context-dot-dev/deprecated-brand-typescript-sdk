@@ -362,6 +362,7 @@ describe('resource brand', () => {
       timeoutMS: 1,
       useMainContentOnly: 'true',
       waitForMs: 0,
+      zdr: 'enabled',
     });
   });
 
@@ -432,6 +433,7 @@ describe('resource brand', () => {
       timeoutMS: 1,
       useMainContentOnly: 'true',
       waitForMs: 0,
+      zdr: 'enabled',
     });
   });
 
@@ -457,6 +459,7 @@ describe('resource brand', () => {
       tags: ['production', 'team-alpha'],
       timeoutMS: 1,
       urlRegex: '^https?://[^/]+/blog/',
+      zdr: 'enabled',
     });
   });
 });
