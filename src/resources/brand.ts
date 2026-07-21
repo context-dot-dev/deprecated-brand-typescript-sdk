@@ -8293,6 +8293,14 @@ export interface BrandWebScrapeHTMLParams {
    * 30000 (30 seconds).
    */
   waitForMs?: number | null;
+
+  /**
+   * Set to enabled to bypass shared caches and omit request and response content
+   * from retained usage logs. Requires zero data retention to be enabled for your
+   * organization (contact support@context.dev), otherwise the request fails with
+   * ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+   */
+  zdr?: 'enabled' | 'disabled';
 }
 
 export namespace BrandWebScrapeHTMLParams {
@@ -8714,6 +8722,14 @@ export interface BrandWebScrapeMdParams {
    * converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
    */
   waitForMs?: number | null;
+
+  /**
+   * Set to enabled to bypass shared caches and omit request and response content
+   * from retained usage logs. Requires zero data retention to be enabled for your
+   * organization (contact support@context.dev), otherwise the request fails with
+   * ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+   */
+  zdr?: 'enabled' | 'disabled';
 }
 
 export namespace BrandWebScrapeMdParams {
@@ -8792,6 +8808,14 @@ export interface BrandWebScrapeSitemapParams {
    * returned and counted against maxLinks.
    */
   urlRegex?: string;
+
+  /**
+   * Set to enabled to bypass shared caches and omit request and response content
+   * from retained usage logs. Requires zero data retention to be enabled for your
+   * organization (contact support@context.dev), otherwise the request fails with
+   * ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+   */
+  zdr?: 'enabled' | 'disabled';
 }
 
 export declare namespace Brand {
