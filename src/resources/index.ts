@@ -35,3 +35,4 @@ export {
   type BrandWebScrapeMdParams,
   type BrandWebScrapeSitemapParams,
 } from './brand';
+export { Monitors, type WebhookDelivery } from './monitors';
