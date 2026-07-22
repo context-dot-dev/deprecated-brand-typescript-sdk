@@ -345,6 +345,7 @@ describe('resource brand', () => {
   test.skip('webScrapeHTML: required and optional params', async () => {
     const response = await client.brand.webScrapeHTML({
       url: 'https://example.com',
+      actions: [{ do: 'wait', timeMs: 0 }],
       country: 'de',
       excludeSelectors: ['x'],
       headers: { foo: 'J!' },
@@ -382,6 +383,7 @@ describe('resource brand', () => {
   test.skip('webScrapeImages: required and optional params', async () => {
     const response = await client.brand.webScrapeImages({
       url: 'https://example.com',
+      actions: [{ do: 'wait', timeMs: 0 }],
       dedupe: 'true',
       enrichment: {
         classification: 'true',
@@ -413,6 +415,7 @@ describe('resource brand', () => {
   test.skip('webScrapeMd: required and optional params', async () => {
     const response = await client.brand.webScrapeMd({
       url: 'https://example.com',
+      actions: [{ do: 'wait', timeMs: 0 }],
       country: 'de',
       excludeSelectors: ['x'],
       headers: { foo: 'J!' },
