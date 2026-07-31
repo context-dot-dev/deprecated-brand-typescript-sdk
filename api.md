@@ -43,3 +43,10 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/monitors.ts">WebhookDelivery</a></code>
+
+# Batch
+
+Types:
+
+- <code><a href="./src/resources/batch.ts">ErrorCount</a></code>
+- <code><a href="./src/resources/batch.ts">Error</a></code>

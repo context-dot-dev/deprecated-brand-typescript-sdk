@@ -17,6 +17,7 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import { Batch, Error, ErrorCount } from './resources/batch';
 import {
   Brand,
   BrandAIProductParams,
@@ -772,10 +773,12 @@ export class BrandDev {
 
   brand: API.Brand = new API.Brand(this);
   monitors: API.Monitors = new API.Monitors(this);
+  batch: API.Batch = new API.Batch(this);
 }
 
 BrandDev.Brand = Brand;
 BrandDev.Monitors = Monitors;
+BrandDev.Batch = Batch;
 
 export declare namespace BrandDev {
   export type RequestOptions = Opts.RequestOptions;
@@ -817,4 +820,6 @@ export declare namespace BrandDev {
   };
 
   export { Monitors as Monitors, type WebhookDelivery as WebhookDelivery };
+
+  export { Batch as Batch, type ErrorCount as ErrorCount, type Error as Error };
 }
