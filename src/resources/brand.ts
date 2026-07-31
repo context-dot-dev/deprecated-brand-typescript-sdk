@@ -5578,6 +5578,17 @@ export interface BrandWebScrapeHTMLResponse {
   url: string;
 
   /**
+   * One verified outcome per requested browser action, in request order.
+   */
+  actionsApplied?: Array<BrandWebScrapeHTMLResponse.ActionsApplied>;
+
+  /**
+   * True when an action was applied but the returned content could not be refreshed
+   * afterward.
+   */
+  actionsHtmlStale?: boolean;
+
+  /**
    * Metadata about the API key used for the request. Included in every response
    * whenever a valid API key is provided, even when the response status is not 200.
    */
@@ -5708,6 +5719,29 @@ export namespace BrandWebScrapeHTMLResponse {
        */
       type?: string;
     }
+  }
+
+  export interface ActionsApplied {
+    instruction: string;
+
+    /**
+     * Applied means the requested page state was visibly verified. Failed means it was
+     * not verified. Skipped means it was not attempted.
+     */
+    status: 'applied' | 'failed' | 'skipped';
+
+    /**
+     * Visible page evidence used to verify an applied action.
+     */
+    completionEvidence?: string;
+
+    durationMs?: number;
+
+    error?: string;
+
+    method?: string;
+
+    targetDescription?: string;
   }
 
   /**
@@ -5856,6 +5890,17 @@ export interface BrandWebScrapeMdResponse {
   url: string;
 
   /**
+   * One verified outcome per requested browser action, in request order.
+   */
+  actionsApplied?: Array<BrandWebScrapeMdResponse.ActionsApplied>;
+
+  /**
+   * True when an action was applied but the returned content could not be refreshed
+   * afterward.
+   */
+  actionsHtmlStale?: boolean;
+
+  /**
    * Metadata about the API key used for the request. Included in every response
    * whenever a valid API key is provided, even when the response status is not 200.
    */
@@ -5986,6 +6031,29 @@ export namespace BrandWebScrapeMdResponse {
        */
       type?: string;
     }
+  }
+
+  export interface ActionsApplied {
+    instruction: string;
+
+    /**
+     * Applied means the requested page state was visibly verified. Failed means it was
+     * not verified. Skipped means it was not attempted.
+     */
+    status: 'applied' | 'failed' | 'skipped';
+
+    /**
+     * Visible page evidence used to verify an applied action.
+     */
+    completionEvidence?: string;
+
+    durationMs?: number;
+
+    error?: string;
+
+    method?: string;
+
+    targetDescription?: string;
   }
 
   /**
