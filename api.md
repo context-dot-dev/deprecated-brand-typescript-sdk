@@ -56,5 +56,7 @@ Types:
 
 Types:
 
-- <code><a href="./src/resources/batch.ts">ErrorCount</a></code>
-- <code><a href="./src/resources/batch.ts">Error</a></code>
+- <code><a href="./src/resources/batch.ts">PageErrorCount</a></code>
+- <code><a href="./src/resources/batch.ts">Failure</a></code>
+- <code><a href="./src/resources/batch.ts">CrawlControls</a></code>
+- <code><a href="./src/resources/batch.ts">Intake</a></code>
