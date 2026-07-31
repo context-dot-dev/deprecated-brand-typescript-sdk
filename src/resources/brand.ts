@@ -77,6 +77,22 @@ export class Brand extends APIResource {
   }
 
   /**
+   * Scrape font information from a website including font families, usage
+   * statistics, fallbacks, and element/word counts.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.fonts();
+   * ```
+   */
+  fonts(
+    query: BrandFontsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BrandFontsResponse> {
+    return this._client.get('/web/fonts', { query, ...options });
+  }
+
+  /**
    * Endpoint specially designed for platforms that want to identify transaction data
    * by the transaction title.
    *
@@ -201,6 +217,23 @@ export class Brand extends APIResource {
   }
 
   /**
+   * Classify any brand into 2022 NAICS industry codes from its domain or name.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveNaics({
+   *   input: 'xxxx',
+   * });
+   * ```
+   */
+  retrieveNaics(
+    query: BrandRetrieveNaicsParams,
+    options?: RequestOptions,
+  ): APIPromise<BrandRetrieveNaicsResponse> {
+    return this._client.get('/web/naics', { query, ...options });
+  }
+
+  /**
    * Returns a simplified version of brand data containing only essential
    * information: domain, title, colors, logos, and backdrops. Optimized for faster
    * responses and reduced data transfer.
@@ -217,6 +250,37 @@ export class Brand extends APIResource {
     options?: RequestOptions,
   ): APIPromise<BrandRetrieveSimplifiedResponse> {
     return this._client.get('/brand/retrieve-simplified', { query, ...options });
+  }
+
+  /**
+   * Capture a screenshot of a website.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.screenshot();
+   * ```
+   */
+  screenshot(
+    query: BrandScreenshotParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BrandScreenshotResponse> {
+    return this._client.get('/web/screenshot', { query, ...options });
+  }
+
+  /**
+   * Extract a comprehensive design system from a website including colors,
+   * typography, spacing, shadows, and UI components.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.styleguide();
+   * ```
+   */
+  styleguide(
+    query: BrandStyleguideParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BrandStyleguideResponse> {
+    return this._client.get('/web/styleguide', { query, ...options });
   }
 
   /**
@@ -1342,6 +1406,119 @@ export namespace BrandAIQueryResponse {
      * primitives, or an array of objects when datapoint_list_type is 'object'.
      */
     datapoint_value?: string | number | boolean | Array<string> | Array<number> | Array<unknown>;
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
+}
+
+export interface BrandFontsResponse {
+  /**
+   * HTTP status code, e.g., 200
+   */
+  code: number;
+
+  /**
+   * The normalized domain that was processed
+   */
+  domain: string;
+
+  /**
+   * Array of font usage information
+   */
+  fonts: Array<BrandFontsResponse.Font>;
+
+  /**
+   * Status of the response, e.g., 'ok'
+   */
+  status: string;
+
+  /**
+   * Font assets keyed by family name as it appears in the fonts array (non-generic
+   * names only). Clients match entries in fonts to pick a file URL from files.
+   * Omitted when no families resolve to Google or custom @font-face URLs.
+   */
+  fontLinks?: { [key: string]: BrandFontsResponse.FontLinks };
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandFontsResponse.KeyMetadata;
+}
+
+export namespace BrandFontsResponse {
+  export interface Font {
+    /**
+     * Array of fallback font families
+     */
+    fallbacks: Array<string>;
+
+    /**
+     * Font family name
+     */
+    font: string;
+
+    /**
+     * Number of elements using this font
+     */
+    num_elements: number;
+
+    /**
+     * Number of words using this font
+     */
+    num_words: number;
+
+    /**
+     * Percentage of elements using this font
+     */
+    percent_elements: number;
+
+    /**
+     * Percentage of words using this font
+     */
+    percent_words: number;
+
+    /**
+     * Array of CSS selectors or element types where this font is used
+     */
+    uses: Array<string>;
+  }
+
+  export interface FontLinks {
+    /**
+     * Upright font files keyed by weight string (e.g. "400" for regular, "500",
+     * "700"). Values are absolute URLs.
+     */
+    files: { [key: string]: string };
+
+    type: 'google' | 'custom';
+
+    /**
+     * Google Fonts category when type is google (e.g. sans-serif, serif, monospace,
+     * display, handwriting). Omitted for custom fonts when unknown.
+     */
+    category?: string;
+
+    /**
+     * Present when type is custom: human-readable name derived from the fontLinks key
+     * (strip build/hash suffixes, split camelCase / PascalCase, normalize separators).
+     * Google entries omit this.
+     */
+    displayName?: string;
   }
 
   /**
@@ -5333,6 +5510,69 @@ export namespace BrandRetrieveByTickerResponse {
   }
 }
 
+export interface BrandRetrieveNaicsResponse {
+  /**
+   * Array of NAICS codes and titles.
+   */
+  codes?: Array<BrandRetrieveNaicsResponse.Code>;
+
+  /**
+   * Domain found for the brand
+   */
+  domain?: string;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandRetrieveNaicsResponse.KeyMetadata;
+
+  /**
+   * Status of the response, e.g., 'ok'
+   */
+  status?: string;
+
+  /**
+   * Industry classification type, for naics api it will be `naics`
+   */
+  type?: string;
+}
+
+export namespace BrandRetrieveNaicsResponse {
+  export interface Code {
+    /**
+     * NAICS code
+     */
+    code: string;
+
+    /**
+     * Confidence level for how well this NAICS code matches the company description
+     */
+    confidence: 'high' | 'medium' | 'low';
+
+    /**
+     * NAICS title
+     */
+    name: string;
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
+}
+
 export interface BrandRetrieveSimplifiedResponse {
   /**
    * Simplified brand information
@@ -5529,6 +5769,603 @@ export namespace BrandRetrieveSimplifiedResponse {
      * The number of credits remaining for your organization after this request.
      */
     credits_remaining: number;
+  }
+}
+
+export interface BrandScreenshotResponse {
+  /**
+   * HTTP status code
+   */
+  code?: number;
+
+  /**
+   * The normalized domain that was processed
+   */
+  domain?: string;
+
+  /**
+   * Height in pixels of the returned screenshot image
+   */
+  height?: number;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandScreenshotResponse.KeyMetadata;
+
+  /**
+   * Public image URL for standard requests, or an in-memory data URL when ZDR is
+   * enabled.
+   */
+  screenshot?: string;
+
+  /**
+   * Type of screenshot that was captured
+   */
+  screenshotType?: 'viewport' | 'fullPage';
+
+  /**
+   * Status of the response, e.g., 'ok'
+   */
+  status?: string;
+
+  /**
+   * Width in pixels of the returned screenshot image
+   */
+  width?: number;
+}
+
+export namespace BrandScreenshotResponse {
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
+}
+
+export interface BrandStyleguideResponse {
+  /**
+   * HTTP status code
+   */
+  code?: number;
+
+  /**
+   * The normalized domain that was processed
+   */
+  domain?: string;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandStyleguideResponse.KeyMetadata;
+
+  /**
+   * Status of the response, e.g., 'ok'
+   */
+  status?: string;
+
+  /**
+   * Comprehensive styleguide data extracted from the website
+   */
+  styleguide?: BrandStyleguideResponse.Styleguide;
+}
+
+export namespace BrandStyleguideResponse {
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
+
+  /**
+   * Comprehensive styleguide data extracted from the website
+   */
+  export interface Styleguide {
+    /**
+     * Primary colors used on the website
+     */
+    colors: Styleguide.Colors;
+
+    /**
+     * UI component styles
+     */
+    components: Styleguide.Components;
+
+    /**
+     * Spacing system used on the website
+     */
+    elementSpacing: Styleguide.ElementSpacing;
+
+    /**
+     * Font assets keyed by family name as it appears in fontFamily/fontFallbacks
+     * (non-generic names only). Clients match typography.fontFamily / fontWeight or
+     * button styles to pick a file URL from files.
+     */
+    fontLinks: { [key: string]: Styleguide.FontLinks };
+
+    /**
+     * The primary color mode of the website design
+     */
+    mode: 'light' | 'dark';
+
+    /**
+     * Shadow styles used on the website
+     */
+    shadows: Styleguide.Shadows;
+
+    /**
+     * Typography styles used on the website
+     */
+    typography: Styleguide.Typography;
+  }
+
+  export namespace Styleguide {
+    /**
+     * Primary colors used on the website
+     */
+    export interface Colors {
+      /**
+       * Accent color (hex format)
+       */
+      accent: string;
+
+      /**
+       * Background color (hex format)
+       */
+      background: string;
+
+      /**
+       * Text color (hex format)
+       */
+      text: string;
+    }
+
+    /**
+     * UI component styles
+     */
+    export interface Components {
+      /**
+       * Button component styles
+       */
+      button: Components.Button;
+
+      /**
+       * Card component style
+       */
+      card?: Components.Card;
+    }
+
+    export namespace Components {
+      /**
+       * Button component styles
+       */
+      export interface Button {
+        link?: Button.Link;
+
+        primary?: Button.Primary;
+
+        secondary?: Button.Secondary;
+      }
+
+      export namespace Button {
+        export interface Link {
+          backgroundColor: string;
+
+          /**
+           * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
+           * alpha)
+           */
+          borderColor: string;
+
+          borderRadius: string;
+
+          borderStyle: string;
+
+          borderWidth: string;
+
+          /**
+           * Computed box-shadow (comma-separated layers when present)
+           */
+          boxShadow: string;
+
+          color: string;
+
+          /**
+           * Ready-to-use CSS declaration block for this component style
+           */
+          css: string;
+
+          fontSize: string;
+
+          fontWeight: number;
+
+          /**
+           * Sampled minimum height of the button box (typically px)
+           */
+          minHeight: string;
+
+          /**
+           * Sampled minimum width of the button box (typically px)
+           */
+          minWidth: string;
+
+          padding: string;
+
+          textDecoration: string;
+
+          /**
+           * Full ordered font list from computed font-family
+           */
+          fontFallbacks?: Array<string>;
+
+          /**
+           * Primary button typeface (first in fontFallbacks)
+           */
+          fontFamily?: string;
+
+          /**
+           * Hex color of the underline when it differs from the text color
+           */
+          textDecorationColor?: string;
+        }
+
+        export interface Primary {
+          backgroundColor: string;
+
+          /**
+           * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
+           * alpha)
+           */
+          borderColor: string;
+
+          borderRadius: string;
+
+          borderStyle: string;
+
+          borderWidth: string;
+
+          /**
+           * Computed box-shadow (comma-separated layers when present)
+           */
+          boxShadow: string;
+
+          color: string;
+
+          /**
+           * Ready-to-use CSS declaration block for this component style
+           */
+          css: string;
+
+          fontSize: string;
+
+          fontWeight: number;
+
+          /**
+           * Sampled minimum height of the button box (typically px)
+           */
+          minHeight: string;
+
+          /**
+           * Sampled minimum width of the button box (typically px)
+           */
+          minWidth: string;
+
+          padding: string;
+
+          textDecoration: string;
+
+          /**
+           * Full ordered font list from computed font-family
+           */
+          fontFallbacks?: Array<string>;
+
+          /**
+           * Primary button typeface (first in fontFallbacks)
+           */
+          fontFamily?: string;
+
+          /**
+           * Hex color of the underline when it differs from the text color
+           */
+          textDecorationColor?: string;
+        }
+
+        export interface Secondary {
+          backgroundColor: string;
+
+          /**
+           * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
+           * alpha)
+           */
+          borderColor: string;
+
+          borderRadius: string;
+
+          borderStyle: string;
+
+          borderWidth: string;
+
+          /**
+           * Computed box-shadow (comma-separated layers when present)
+           */
+          boxShadow: string;
+
+          color: string;
+
+          /**
+           * Ready-to-use CSS declaration block for this component style
+           */
+          css: string;
+
+          fontSize: string;
+
+          fontWeight: number;
+
+          /**
+           * Sampled minimum height of the button box (typically px)
+           */
+          minHeight: string;
+
+          /**
+           * Sampled minimum width of the button box (typically px)
+           */
+          minWidth: string;
+
+          padding: string;
+
+          textDecoration: string;
+
+          /**
+           * Full ordered font list from computed font-family
+           */
+          fontFallbacks?: Array<string>;
+
+          /**
+           * Primary button typeface (first in fontFallbacks)
+           */
+          fontFamily?: string;
+
+          /**
+           * Hex color of the underline when it differs from the text color
+           */
+          textDecorationColor?: string;
+        }
+      }
+
+      /**
+       * Card component style
+       */
+      export interface Card {
+        backgroundColor: string;
+
+        /**
+         * Border color as CSS hex (#RRGGBB or #RRGGBBAA when computed border-color has
+         * alpha)
+         */
+        borderColor: string;
+
+        borderRadius: string;
+
+        borderStyle: string;
+
+        borderWidth: string;
+
+        boxShadow: string;
+
+        /**
+         * Ready-to-use CSS declaration block for this component style
+         */
+        css: string;
+
+        padding: string;
+
+        textColor: string;
+      }
+    }
+
+    /**
+     * Spacing system used on the website
+     */
+    export interface ElementSpacing {
+      lg: string;
+
+      md: string;
+
+      sm: string;
+
+      xl: string;
+
+      xs: string;
+    }
+
+    export interface FontLinks {
+      /**
+       * Upright font files keyed by weight string (e.g. "400" for regular, "500",
+       * "700"). Values are absolute URLs.
+       */
+      files: { [key: string]: string };
+
+      type: 'google' | 'custom';
+
+      /**
+       * Google Fonts category when type is google (e.g. sans-serif, serif, monospace,
+       * display, handwriting). Omitted for custom fonts when unknown.
+       */
+      category?: string;
+
+      /**
+       * Present when type is custom: human-readable name derived from the fontLinks key
+       * (strip build/hash suffixes, split camelCase / PascalCase, normalize separators).
+       * Google entries omit this.
+       */
+      displayName?: string;
+    }
+
+    /**
+     * Shadow styles used on the website
+     */
+    export interface Shadows {
+      inner: string;
+
+      lg: string;
+
+      md: string;
+
+      sm: string;
+
+      xl: string;
+    }
+
+    /**
+     * Typography styles used on the website
+     */
+    export interface Typography {
+      /**
+       * Heading styles
+       */
+      headings: Typography.Headings;
+
+      p?: Typography.P;
+    }
+
+    export namespace Typography {
+      /**
+       * Heading styles
+       */
+      export interface Headings {
+        h1?: Headings.H1;
+
+        h2?: Headings.H2;
+
+        h3?: Headings.H3;
+
+        h4?: Headings.H4;
+      }
+
+      export namespace Headings {
+        export interface H1 {
+          /**
+           * Full ordered font list from resolved computed font-family
+           */
+          fontFallbacks: Array<string>;
+
+          /**
+           * Primary face (first family in the computed stack)
+           */
+          fontFamily: string;
+
+          fontSize: string;
+
+          fontWeight: number;
+
+          letterSpacing: string;
+
+          lineHeight: string;
+        }
+
+        export interface H2 {
+          /**
+           * Full ordered font list from resolved computed font-family
+           */
+          fontFallbacks: Array<string>;
+
+          /**
+           * Primary face (first family in the computed stack)
+           */
+          fontFamily: string;
+
+          fontSize: string;
+
+          fontWeight: number;
+
+          letterSpacing: string;
+
+          lineHeight: string;
+        }
+
+        export interface H3 {
+          /**
+           * Full ordered font list from resolved computed font-family
+           */
+          fontFallbacks: Array<string>;
+
+          /**
+           * Primary face (first family in the computed stack)
+           */
+          fontFamily: string;
+
+          fontSize: string;
+
+          fontWeight: number;
+
+          letterSpacing: string;
+
+          lineHeight: string;
+        }
+
+        export interface H4 {
+          /**
+           * Full ordered font list from resolved computed font-family
+           */
+          fontFallbacks: Array<string>;
+
+          /**
+           * Primary face (first family in the computed stack)
+           */
+          fontFamily: string;
+
+          fontSize: string;
+
+          fontWeight: number;
+
+          letterSpacing: string;
+
+          lineHeight: string;
+        }
+      }
+
+      export interface P {
+        /**
+         * Full ordered font list from resolved computed font-family
+         */
+        fontFallbacks: Array<string>;
+
+        /**
+         * Primary face (first family in the computed stack)
+         */
+        fontFamily: string;
+
+        fontSize: string;
+
+        fontWeight: number;
+
+        letterSpacing: string;
+
+        lineHeight: string;
+      }
+    }
   }
 }
 
@@ -6602,6 +7439,44 @@ export namespace BrandAIQueryParams {
      */
     terms_and_conditions?: boolean;
   }
+}
+
+export interface BrandFontsParams {
+  /**
+   * A specific URL to fetch fonts from directly, bypassing domain resolution (e.g.,
+   * 'https://example.com/design-system'). When provided, fonts are extracted from
+   * this exact URL. You must provide either 'domain' or 'directUrl', but not both.
+   */
+  directUrl?: string;
+
+  /**
+   * Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
+   * domain will be automatically normalized and validated. You must provide either
+   * 'domain' or 'directUrl', but not both.
+   */
+  domain?: string;
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number | null;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
 }
 
 export interface BrandIdentifyFromTransactionParams {
@@ -8041,6 +8916,40 @@ export interface BrandRetrieveByTickerParams {
   timeoutMS?: number;
 }
 
+export interface BrandRetrieveNaicsParams {
+  /**
+   * Brand domain or title to retrieve NAICS code for. If a valid domain is provided,
+   * it will be used for classification, otherwise, we will search for the brand
+   * using the provided title.
+   */
+  input: string;
+
+  /**
+   * Maximum number of NAICS codes to return. Must be between 1 and 10. Defaults
+   * to 5.
+   */
+  maxResults?: number;
+
+  /**
+   * Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
+   */
+  minResults?: number;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+}
+
 export interface BrandRetrieveSimplifiedParams {
   /**
    * Domain name to retrieve simplified brand data for
@@ -8066,6 +8975,375 @@ export interface BrandRetrieveSimplifiedParams {
    * Optional theme preference used when selecting brand assets.
    */
   theme?: 'light' | 'dark';
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+}
+
+export interface BrandScreenshotParams {
+  /**
+   * Optional parameter to choose the site's visual theme in the screenshot. Use
+   * 'light' or 'dark' when the site offers both appearances.
+   */
+  colorScheme?: 'light' | 'dark';
+
+  /**
+   * Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+   * residential proxy exit location. Must be one of Context.dev's supported
+   * countries. When provided, Context.dev fetches the target page from that country.
+   */
+  country?:
+    | 'ad'
+    | 'ae'
+    | 'af'
+    | 'ag'
+    | 'ai'
+    | 'al'
+    | 'am'
+    | 'ao'
+    | 'ar'
+    | 'at'
+    | 'au'
+    | 'aw'
+    | 'az'
+    | 'ba'
+    | 'bb'
+    | 'bd'
+    | 'be'
+    | 'bf'
+    | 'bg'
+    | 'bh'
+    | 'bi'
+    | 'bj'
+    | 'bm'
+    | 'bn'
+    | 'bo'
+    | 'bq'
+    | 'br'
+    | 'bs'
+    | 'bw'
+    | 'by'
+    | 'bz'
+    | 'ca'
+    | 'cd'
+    | 'cf'
+    | 'cg'
+    | 'ch'
+    | 'ci'
+    | 'cl'
+    | 'cm'
+    | 'cn'
+    | 'co'
+    | 'cr'
+    | 'cv'
+    | 'cw'
+    | 'cy'
+    | 'cz'
+    | 'de'
+    | 'dj'
+    | 'dk'
+    | 'dm'
+    | 'do'
+    | 'dz'
+    | 'ec'
+    | 'ee'
+    | 'eg'
+    | 'es'
+    | 'et'
+    | 'fi'
+    | 'fj'
+    | 'fr'
+    | 'ga'
+    | 'gb'
+    | 'gd'
+    | 'ge'
+    | 'gf'
+    | 'gg'
+    | 'gh'
+    | 'gm'
+    | 'gn'
+    | 'gp'
+    | 'gq'
+    | 'gr'
+    | 'gt'
+    | 'gu'
+    | 'gw'
+    | 'gy'
+    | 'hk'
+    | 'hn'
+    | 'hr'
+    | 'ht'
+    | 'hu'
+    | 'id'
+    | 'ie'
+    | 'il'
+    | 'im'
+    | 'in'
+    | 'iq'
+    | 'ir'
+    | 'is'
+    | 'it'
+    | 'je'
+    | 'jm'
+    | 'jo'
+    | 'jp'
+    | 'ke'
+    | 'kg'
+    | 'kh'
+    | 'kn'
+    | 'kr'
+    | 'kw'
+    | 'ky'
+    | 'kz'
+    | 'la'
+    | 'lb'
+    | 'lc'
+    | 'lk'
+    | 'lr'
+    | 'ls'
+    | 'lt'
+    | 'lu'
+    | 'lv'
+    | 'ly'
+    | 'ma'
+    | 'mc'
+    | 'md'
+    | 'me'
+    | 'mf'
+    | 'mg'
+    | 'mk'
+    | 'ml'
+    | 'mm'
+    | 'mn'
+    | 'mo'
+    | 'mq'
+    | 'mr'
+    | 'mt'
+    | 'mu'
+    | 'mv'
+    | 'mw'
+    | 'mx'
+    | 'my'
+    | 'mz'
+    | 'na'
+    | 'nc'
+    | 'ne'
+    | 'ng'
+    | 'ni'
+    | 'nl'
+    | 'no'
+    | 'np'
+    | 'nz'
+    | 'om'
+    | 'pa'
+    | 'pe'
+    | 'pf'
+    | 'pg'
+    | 'ph'
+    | 'pk'
+    | 'pl'
+    | 'pr'
+    | 'ps'
+    | 'pt'
+    | 'py'
+    | 'qa'
+    | 're'
+    | 'ro'
+    | 'rs'
+    | 'ru'
+    | 'rw'
+    | 'sa'
+    | 'sc'
+    | 'sd'
+    | 'se'
+    | 'sg'
+    | 'si'
+    | 'sk'
+    | 'sl'
+    | 'sm'
+    | 'sn'
+    | 'so'
+    | 'sr'
+    | 'ss'
+    | 'st'
+    | 'sv'
+    | 'sx'
+    | 'sy'
+    | 'sz'
+    | 'tc'
+    | 'td'
+    | 'tg'
+    | 'th'
+    | 'tj'
+    | 'tl'
+    | 'tm'
+    | 'tn'
+    | 'tr'
+    | 'tt'
+    | 'tw'
+    | 'tz'
+    | 'ua'
+    | 'ug'
+    | 'us'
+    | 'uy'
+    | 'uz'
+    | 'vc'
+    | 've'
+    | 'vg'
+    | 'vi'
+    | 'vn'
+    | 'ye'
+    | 'yt'
+    | 'za'
+    | 'zm'
+    | 'zw';
+
+  /**
+   * A specific URL to screenshot directly, bypassing domain resolution (e.g.,
+   * 'https://example.com/pricing'). When provided, the screenshot is taken of this
+   * exact URL. You must provide either 'domain' or 'directUrl', but not both.
+   */
+  directUrl?: string;
+
+  /**
+   * Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
+   * domain will be automatically normalized and validated. You must provide either
+   * 'domain' or 'directUrl', but not both.
+   */
+  domain?: string;
+
+  /**
+   * Optional parameter to determine screenshot type. If 'true', takes a full page
+   * screenshot capturing all content. If 'false' or not provided, takes a viewport
+   * screenshot (standard browser view).
+   */
+  fullScreenshot?: 'true' | 'false';
+
+  /**
+   * Optional parameter to control cookie/consent popup handling. If 'true', we
+   * dismiss cookie banner before capture. If 'false' or not provided, captures the
+   * page without that step.
+   */
+  handleCookiePopup?: boolean | 'true' | 'false';
+
+  /**
+   * Return a cached screenshot if a prior screenshot for the same parameters exists
+   * and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+   * omitted. Max is 30 days (2592000000 ms). Set to 0 to always capture fresh.
+   */
+  maxAgeMs?: number | null;
+
+  /**
+   * Optional parameter to specify which page type to screenshot. If provided, the
+   * system will scrape the domain's links and use heuristics to find the most
+   * appropriate URL for the specified page type (30 supported languages). If not
+   * provided, screenshots the main domain landing page. Only applicable when using
+   * 'domain', not 'directUrl'.
+   */
+  page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact';
+
+  /**
+   * Optional vertical scroll offset in pixels for capturing a long page in
+   * viewport-sized chunks. When provided, the full page is captured once and the
+   * returned image is the viewport-sized slice that begins at this Y offset (e.g.
+   * request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page
+   * top to bottom). The final slice may be shorter than the viewport height. Takes
+   * precedence over fullScreenshot. Max: 100000.
+   */
+  scrollOffset?: number | null;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+
+  /**
+   * Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
+   */
+  viewport?: BrandScreenshotParams.Viewport;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load before taking
+   * the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
+   * omitted.
+   */
+  waitForMs?: number | null;
+
+  /**
+   * Set to enabled to bypass shared caches and omit request and response content
+   * from retained usage logs. Requires zero data retention to be enabled for your
+   * organization (contact support@context.dev), otherwise the request fails with
+   * ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+   */
+  zdr?: 'enabled' | 'disabled';
+}
+
+export namespace BrandScreenshotParams {
+  /**
+   * Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
+   */
+  export interface Viewport {
+    /**
+     * Viewport height in pixels.
+     */
+    height?: number;
+
+    /**
+     * Viewport width in pixels.
+     */
+    width?: number;
+  }
+}
+
+export interface BrandStyleguideParams {
+  /**
+   * Optional browser color scheme to emulate for websites that respond to
+   * prefers-color-scheme. This value is part of the styleguide cache key.
+   */
+  colorScheme?: 'light' | 'dark';
+
+  /**
+   * A specific URL to fetch the styleguide from directly, bypassing domain
+   * resolution (e.g., 'https://example.com/design-system'). When provided, the
+   * styleguide is extracted from this exact URL. You must provide either 'domain' or
+   * 'directUrl', but not both.
+   */
+  directUrl?: string;
+
+  /**
+   * Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
+   * domain will be automatically normalized and validated. You must provide either
+   * 'domain' or 'directUrl', but not both.
+   */
+  domain?: string;
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number | null;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -8975,6 +10253,7 @@ export declare namespace Brand {
     type BrandAIProductResponse as BrandAIProductResponse,
     type BrandAIProductsResponse as BrandAIProductsResponse,
     type BrandAIQueryResponse as BrandAIQueryResponse,
+    type BrandFontsResponse as BrandFontsResponse,
     type BrandIdentifyFromTransactionResponse as BrandIdentifyFromTransactionResponse,
     type BrandPrefetchResponse as BrandPrefetchResponse,
     type BrandPrefetchByEmailResponse as BrandPrefetchByEmailResponse,
@@ -8982,7 +10261,10 @@ export declare namespace Brand {
     type BrandRetrieveByIsinResponse as BrandRetrieveByIsinResponse,
     type BrandRetrieveByNameResponse as BrandRetrieveByNameResponse,
     type BrandRetrieveByTickerResponse as BrandRetrieveByTickerResponse,
+    type BrandRetrieveNaicsResponse as BrandRetrieveNaicsResponse,
     type BrandRetrieveSimplifiedResponse as BrandRetrieveSimplifiedResponse,
+    type BrandScreenshotResponse as BrandScreenshotResponse,
+    type BrandStyleguideResponse as BrandStyleguideResponse,
     type BrandWebScrapeHTMLResponse as BrandWebScrapeHTMLResponse,
     type BrandWebScrapeImagesResponse as BrandWebScrapeImagesResponse,
     type BrandWebScrapeMdResponse as BrandWebScrapeMdResponse,
@@ -8991,6 +10273,7 @@ export declare namespace Brand {
     type BrandAIProductParams as BrandAIProductParams,
     type BrandAIProductsParams as BrandAIProductsParams,
     type BrandAIQueryParams as BrandAIQueryParams,
+    type BrandFontsParams as BrandFontsParams,
     type BrandIdentifyFromTransactionParams as BrandIdentifyFromTransactionParams,
     type BrandPrefetchParams as BrandPrefetchParams,
     type BrandPrefetchByEmailParams as BrandPrefetchByEmailParams,
@@ -8998,7 +10281,10 @@ export declare namespace Brand {
     type BrandRetrieveByIsinParams as BrandRetrieveByIsinParams,
     type BrandRetrieveByNameParams as BrandRetrieveByNameParams,
     type BrandRetrieveByTickerParams as BrandRetrieveByTickerParams,
+    type BrandRetrieveNaicsParams as BrandRetrieveNaicsParams,
     type BrandRetrieveSimplifiedParams as BrandRetrieveSimplifiedParams,
+    type BrandScreenshotParams as BrandScreenshotParams,
+    type BrandStyleguideParams as BrandStyleguideParams,
     type BrandWebScrapeHTMLParams as BrandWebScrapeHTMLParams,
     type BrandWebScrapeImagesParams as BrandWebScrapeImagesParams,
     type BrandWebScrapeMdParams as BrandWebScrapeMdParams,

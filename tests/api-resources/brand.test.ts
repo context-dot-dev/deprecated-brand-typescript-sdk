@@ -139,6 +139,35 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('fonts', async () => {
+    const responsePromise = client.brand.fonts();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('fonts: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.brand.fonts(
+        {
+          directUrl: 'https://example.com',
+          domain: 'xxx',
+          maxAgeMs: 0,
+          tags: ['production', 'team-alpha'],
+          timeoutMS: 1000,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(BrandDev.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('identifyFromTransaction: only required params', async () => {
     const responsePromise = client.brand.identifyFromTransaction({ transaction_info: 'xxx' });
     const rawResponse = await responsePromise.asResponse();
@@ -307,6 +336,29 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('retrieveNaics: only required params', async () => {
+    const responsePromise = client.brand.retrieveNaics({ input: 'xxxx' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('retrieveNaics: required and optional params', async () => {
+    const response = await client.brand.retrieveNaics({
+      input: 'xxxx',
+      maxResults: 1,
+      minResults: 1,
+      tags: ['production', 'team-alpha'],
+      timeoutMS: 1000,
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieveSimplified: only required params', async () => {
     const responsePromise = client.brand.retrieveSimplified({ domain: 'xxx' });
     const rawResponse = await responsePromise.asResponse();
@@ -327,6 +379,74 @@ describe('resource brand', () => {
       theme: 'light',
       timeoutMS: 1000,
     });
+  });
+
+  // Mock server tests are disabled
+  test.skip('screenshot', async () => {
+    const responsePromise = client.brand.screenshot();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('screenshot: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.brand.screenshot(
+        {
+          colorScheme: 'light',
+          country: 'de',
+          directUrl: 'https://example.com',
+          domain: 'xxx',
+          fullScreenshot: 'true',
+          handleCookiePopup: 'true',
+          maxAgeMs: 0,
+          page: 'login',
+          scrollOffset: 0,
+          tags: ['production', 'team-alpha'],
+          timeoutMS: 1,
+          viewport: { height: 240, width: 240 },
+          waitForMs: 0,
+          zdr: 'enabled',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(BrandDev.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('styleguide', async () => {
+    const responsePromise = client.brand.styleguide();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('styleguide: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.brand.styleguide(
+        {
+          colorScheme: 'light',
+          directUrl: 'https://example.com',
+          domain: 'xxx',
+          maxAgeMs: 0,
+          tags: ['production', 'team-alpha'],
+          timeoutMS: 1000,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(BrandDev.NotFoundError);
   });
 
   // Mock server tests are disabled
