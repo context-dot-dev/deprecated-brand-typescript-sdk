@@ -345,6 +345,52 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'retrieve_naics',
+    endpoint: '/web/naics',
+    httpMethod: 'get',
+    summary: 'Classify NAICS industries',
+    description: 'Classify any brand into 2022 NAICS industry codes from its domain or name.',
+    stainlessPath: '(resource) brand > (method) retrieve_naics',
+    qualified: 'client.brand.retrieveNaics',
+    params: [
+      'input: string;',
+      'maxResults?: number;',
+      'minResults?: number;',
+      'tags?: string[];',
+      'timeoutMS?: number;',
+    ],
+    response:
+      "{ codes?: { code: string; confidence: 'high' | 'medium' | 'low'; name: string; }[]; domain?: string; key_metadata?: { credits_consumed: number; credits_remaining: number; }; status?: string; type?: string; }",
+    markdown:
+      "## retrieve_naics\n\n`client.brand.retrieveNaics(input: string, maxResults?: number, minResults?: number, tags?: string[], timeoutMS?: number): { codes?: object[]; domain?: string; key_metadata?: object; status?: string; type?: string; }`\n\n**get** `/web/naics`\n\nClassify any brand into 2022 NAICS industry codes from its domain or name.\n\n### Parameters\n\n- `input: string`\n  Brand domain or title to retrieve NAICS code for. If a valid domain is provided, it will be used for classification, otherwise, we will search for the brand using the provided title.\n\n- `maxResults?: number`\n  Maximum number of NAICS codes to return. Must be between 1 and 10. Defaults to 5.\n\n- `minResults?: number`\n  Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.\n\n- `tags?: string[]`\n  Optional comma-separated caller-defined tags for tracking this request. Tags are recorded on the request's usage log and can be used to filter usage on the dashboard usage page. Up to 20 tags, each 1-50 characters.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ codes?: { code: string; confidence: 'high' | 'medium' | 'low'; name: string; }[]; domain?: string; key_metadata?: { credits_consumed: number; credits_remaining: number; }; status?: string; type?: string; }`\n\n  - `codes?: { code: string; confidence: 'high' | 'medium' | 'low'; name: string; }[]`\n  - `domain?: string`\n  - `key_metadata?: { credits_consumed: number; credits_remaining: number; }`\n  - `status?: string`\n  - `type?: string`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.retrieveNaics({ input: 'xxxx' });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.brand.retrieveNaics',
+        example:
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.retrieveNaics({ input: 'xxxx' });\n\nconsole.log(response.codes);",
+      },
+      python: {
+        method: 'brand.retrieve_naics',
+        example:
+          'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.retrieve_naics(\n    input="xxxx",\n)\nprint(response.codes)',
+      },
+      java: {
+        method: 'brand().retrieveNaics',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandRetrieveNaicsParams;\nimport com.branddev.api.models.brand.BrandRetrieveNaicsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandRetrieveNaicsParams params = BrandRetrieveNaicsParams.builder()\n            .input("xxxx")\n            .build();\n        BrandRetrieveNaicsResponse response = client.brand().retrieveNaics(params);\n    }\n}',
+      },
+      ruby: {
+        method: 'brand.retrieve_naics',
+        example:
+          'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.retrieve_naics(input: "xxxx")\n\nputs(response)',
+      },
+      http: {
+        example:
+          'curl https://api.brand.dev/v1/web/naics \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
+      },
+    },
+  },
+  {
     name: 'ai_query',
     endpoint: '/brand/ai/query',
     httpMethod: 'post',
@@ -516,6 +562,156 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.brand.dev/v1/brand/retrieve-simplified \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'styleguide',
+    endpoint: '/web/styleguide',
+    httpMethod: 'get',
+    summary: 'Scrape Styleguide',
+    description:
+      'Extract a comprehensive design system from a website including colors, typography, spacing, shadows, and UI components.',
+    stainlessPath: '(resource) brand > (method) styleguide',
+    qualified: 'client.brand.styleguide',
+    params: [
+      "colorScheme?: 'light' | 'dark';",
+      'directUrl?: string;',
+      'domain?: string;',
+      'maxAgeMs?: number;',
+      'tags?: string[];',
+      'timeoutMS?: number;',
+    ],
+    response:
+      "{ code?: number; domain?: string; key_metadata?: { credits_consumed: number; credits_remaining: number; }; status?: string; styleguide?: { colors: { accent: string; background: string; text: string; }; components: { button: object; card?: object; }; elementSpacing: { lg: string; md: string; sm: string; xl: string; xs: string; }; fontLinks: object; mode: 'light' | 'dark'; shadows: { inner: string; lg: string; md: string; sm: string; xl: string; }; typography: { headings: object; p?: object; }; }; }",
+    markdown:
+      "## styleguide\n\n`client.brand.styleguide(colorScheme?: 'light' | 'dark', directUrl?: string, domain?: string, maxAgeMs?: number, tags?: string[], timeoutMS?: number): { code?: number; domain?: string; key_metadata?: object; status?: string; styleguide?: object; }`\n\n**get** `/web/styleguide`\n\nExtract a comprehensive design system from a website including colors, typography, spacing, shadows, and UI components.\n\n### Parameters\n\n- `colorScheme?: 'light' | 'dark'`\n  Optional browser color scheme to emulate for websites that respond to prefers-color-scheme. This value is part of the styleguide cache key.\n\n- `directUrl?: string`\n  A specific URL to fetch the styleguide from directly, bypassing domain resolution (e.g., 'https://example.com/design-system'). When provided, the styleguide is extracted from this exact URL. You must provide either 'domain' or 'directUrl', but not both.\n\n- `domain?: string`\n  Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The domain will be automatically normalized and validated. You must provide either 'domain' or 'directUrl', but not both.\n\n- `maxAgeMs?: number`\n  Maximum age in milliseconds for cached brand data before the API performs a hard refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms) are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1 year.\n\n- `tags?: string[]`\n  Optional comma-separated caller-defined tags for tracking this request. Tags are recorded on the request's usage log and can be used to filter usage on the dashboard usage page. Up to 20 tags, each 1-50 characters.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ code?: number; domain?: string; key_metadata?: { credits_consumed: number; credits_remaining: number; }; status?: string; styleguide?: { colors: { accent: string; background: string; text: string; }; components: { button: object; card?: object; }; elementSpacing: { lg: string; md: string; sm: string; xl: string; xs: string; }; fontLinks: object; mode: 'light' | 'dark'; shadows: { inner: string; lg: string; md: string; sm: string; xl: string; }; typography: { headings: object; p?: object; }; }; }`\n\n  - `code?: number`\n  - `domain?: string`\n  - `key_metadata?: { credits_consumed: number; credits_remaining: number; }`\n  - `status?: string`\n  - `styleguide?: { colors: { accent: string; background: string; text: string; }; components: { button: { link?: { backgroundColor: string; borderColor: string; borderRadius: string; borderStyle: string; borderWidth: string; boxShadow: string; color: string; css: string; fontSize: string; fontWeight: number; minHeight: string; minWidth: string; padding: string; textDecoration: string; fontFallbacks?: string[]; fontFamily?: string; textDecorationColor?: string; }; primary?: { backgroundColor: string; borderColor: string; borderRadius: string; borderStyle: string; borderWidth: string; boxShadow: string; color: string; css: string; fontSize: string; fontWeight: number; minHeight: string; minWidth: string; padding: string; textDecoration: string; fontFallbacks?: string[]; fontFamily?: string; textDecorationColor?: string; }; secondary?: { backgroundColor: string; borderColor: string; borderRadius: string; borderStyle: string; borderWidth: string; boxShadow: string; color: string; css: string; fontSize: string; fontWeight: number; minHeight: string; minWidth: string; padding: string; textDecoration: string; fontFallbacks?: string[]; fontFamily?: string; textDecorationColor?: string; }; }; card?: { backgroundColor: string; borderColor: string; borderRadius: string; borderStyle: string; borderWidth: string; boxShadow: string; css: string; padding: string; textColor: string; }; }; elementSpacing: { lg: string; md: string; sm: string; xl: string; xs: string; }; fontLinks: object; mode: 'light' | 'dark'; shadows: { inner: string; lg: string; md: string; sm: string; xl: string; }; typography: { headings: { h1?: { fontFallbacks: string[]; fontFamily: string; fontSize: string; fontWeight: number; letterSpacing: string; lineHeight: string; }; h2?: { fontFallbacks: string[]; fontFamily: string; fontSize: string; fontWeight: number; letterSpacing: string; lineHeight: string; }; h3?: { fontFallbacks: string[]; fontFamily: string; fontSize: string; fontWeight: number; letterSpacing: string; lineHeight: string; }; h4?: { fontFallbacks: string[]; fontFamily: string; fontSize: string; fontWeight: number; letterSpacing: string; lineHeight: string; }; }; p?: { fontFallbacks: string[]; fontFamily: string; fontSize: string; fontWeight: number; letterSpacing: string; lineHeight: string; }; }; }`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.styleguide();\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.brand.styleguide',
+        example:
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.styleguide();\n\nconsole.log(response.styleguide);",
+      },
+      python: {
+        method: 'brand.styleguide',
+        example:
+          'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.styleguide()\nprint(response.styleguide)',
+      },
+      java: {
+        method: 'brand().styleguide',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandStyleguideParams;\nimport com.branddev.api.models.brand.BrandStyleguideResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandStyleguideResponse response = client.brand().styleguide();\n    }\n}',
+      },
+      ruby: {
+        method: 'brand.styleguide',
+        example:
+          'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.styleguide\n\nputs(response)',
+      },
+      http: {
+        example:
+          'curl https://api.brand.dev/v1/web/styleguide \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'screenshot',
+    endpoint: '/web/screenshot',
+    httpMethod: 'get',
+    summary: 'Scrape Screenshot',
+    description: 'Capture a screenshot of a website.',
+    stainlessPath: '(resource) brand > (method) screenshot',
+    qualified: 'client.brand.screenshot',
+    params: [
+      "colorScheme?: 'light' | 'dark';",
+      'country?: string;',
+      'directUrl?: string;',
+      'domain?: string;',
+      "fullScreenshot?: 'true' | 'false';",
+      "handleCookiePopup?: boolean | 'true' | 'false';",
+      'maxAgeMs?: number;',
+      "page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact';",
+      'scrollOffset?: number;',
+      'tags?: string[];',
+      'timeoutMS?: number;',
+      'viewport?: { height?: number; width?: number; };',
+      'waitForMs?: number;',
+      "zdr?: 'enabled' | 'disabled';",
+    ],
+    response:
+      "{ code?: number; domain?: string; height?: number; key_metadata?: { credits_consumed: number; credits_remaining: number; }; screenshot?: string; screenshotType?: 'viewport' | 'fullPage'; status?: string; width?: number; }",
+    markdown:
+      "## screenshot\n\n`client.brand.screenshot(colorScheme?: 'light' | 'dark', country?: string, directUrl?: string, domain?: string, fullScreenshot?: 'true' | 'false', handleCookiePopup?: boolean | 'true' | 'false', maxAgeMs?: number, page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact', scrollOffset?: number, tags?: string[], timeoutMS?: number, viewport?: { height?: number; width?: number; }, waitForMs?: number, zdr?: 'enabled' | 'disabled'): { code?: number; domain?: string; height?: number; key_metadata?: object; screenshot?: string; screenshotType?: 'viewport' | 'fullPage'; status?: string; width?: number; }`\n\n**get** `/web/screenshot`\n\nCapture a screenshot of a website.\n\n### Parameters\n\n- `colorScheme?: 'light' | 'dark'`\n  Optional parameter to choose the site's visual theme in the screenshot. Use 'light' or 'dark' when the site offers both appearances.\n\n- `country?: string`\n  Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev residential proxy exit location. Must be one of Context.dev's supported countries. When provided, Context.dev fetches the target page from that country.\n\n- `directUrl?: string`\n  A specific URL to screenshot directly, bypassing domain resolution (e.g., 'https://example.com/pricing'). When provided, the screenshot is taken of this exact URL. You must provide either 'domain' or 'directUrl', but not both.\n\n- `domain?: string`\n  Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The domain will be automatically normalized and validated. You must provide either 'domain' or 'directUrl', but not both.\n\n- `fullScreenshot?: 'true' | 'false'`\n  Optional parameter to determine screenshot type. If 'true', takes a full page screenshot capturing all content. If 'false' or not provided, takes a viewport screenshot (standard browser view).\n\n- `handleCookiePopup?: boolean | 'true' | 'false'`\n  Optional parameter to control cookie/consent popup handling. If 'true', we dismiss cookie banner before capture. If 'false' or not provided, captures the page without that step.\n\n- `maxAgeMs?: number`\n  Return a cached screenshot if a prior screenshot for the same parameters exists and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when omitted. Max is 30 days (2592000000 ms). Set to 0 to always capture fresh.\n\n- `page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact'`\n  Optional parameter to specify which page type to screenshot. If provided, the system will scrape the domain's links and use heuristics to find the most appropriate URL for the specified page type (30 supported languages). If not provided, screenshots the main domain landing page. Only applicable when using 'domain', not 'directUrl'.\n\n- `scrollOffset?: number`\n  Optional vertical scroll offset in pixels for capturing a long page in viewport-sized chunks. When provided, the full page is captured once and the returned image is the viewport-sized slice that begins at this Y offset (e.g. request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page top to bottom). The final slice may be shorter than the viewport height. Takes precedence over fullScreenshot. Max: 100000.\n\n- `tags?: string[]`\n  Optional comma-separated caller-defined tags for tracking this request. Tags are recorded on the request's usage log and can be used to filter usage on the dashboard usage page. Up to 20 tags, each 1-50 characters.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n- `viewport?: { height?: number; width?: number; }`\n  Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.\n  - `height?: number`\n    Viewport height in pixels.\n  - `width?: number`\n    Viewport width in pixels.\n\n- `waitForMs?: number`\n  Optional browser wait time in milliseconds after initial page load before taking the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when omitted.\n\n- `zdr?: 'enabled' | 'disabled'`\n  Set to enabled to bypass shared caches and omit request and response content from retained usage logs. Requires zero data retention to be enabled for your organization (contact support@context.dev), otherwise the request fails with ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.\n\n### Returns\n\n- `{ code?: number; domain?: string; height?: number; key_metadata?: { credits_consumed: number; credits_remaining: number; }; screenshot?: string; screenshotType?: 'viewport' | 'fullPage'; status?: string; width?: number; }`\n\n  - `code?: number`\n  - `domain?: string`\n  - `height?: number`\n  - `key_metadata?: { credits_consumed: number; credits_remaining: number; }`\n  - `screenshot?: string`\n  - `screenshotType?: 'viewport' | 'fullPage'`\n  - `status?: string`\n  - `width?: number`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.screenshot();\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.brand.screenshot',
+        example:
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.screenshot();\n\nconsole.log(response.width);",
+      },
+      python: {
+        method: 'brand.screenshot',
+        example:
+          'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.screenshot()\nprint(response.width)',
+      },
+      java: {
+        method: 'brand().screenshot',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandScreenshotParams;\nimport com.branddev.api.models.brand.BrandScreenshotResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandScreenshotResponse response = client.brand().screenshot();\n    }\n}',
+      },
+      ruby: {
+        method: 'brand.screenshot',
+        example:
+          'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.screenshot\n\nputs(response)',
+      },
+      http: {
+        example:
+          'curl https://api.brand.dev/v1/web/screenshot \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
+      },
+    },
+  },
+  {
+    name: 'fonts',
+    endpoint: '/web/fonts',
+    httpMethod: 'get',
+    summary: 'Scrape Fonts',
+    description:
+      'Scrape font information from a website including font families, usage statistics, fallbacks, and element/word counts.',
+    stainlessPath: '(resource) brand > (method) fonts',
+    qualified: 'client.brand.fonts',
+    params: [
+      'directUrl?: string;',
+      'domain?: string;',
+      'maxAgeMs?: number;',
+      'tags?: string[];',
+      'timeoutMS?: number;',
+    ],
+    response:
+      '{ code: number; domain: string; fonts: { fallbacks: string[]; font: string; num_elements: number; num_words: number; percent_elements: number; percent_words: number; uses: string[]; }[]; status: string; fontLinks?: object; key_metadata?: { credits_consumed: number; credits_remaining: number; }; }',
+    markdown:
+      "## fonts\n\n`client.brand.fonts(directUrl?: string, domain?: string, maxAgeMs?: number, tags?: string[], timeoutMS?: number): { code: number; domain: string; fonts: object[]; status: string; fontLinks?: object; key_metadata?: object; }`\n\n**get** `/web/fonts`\n\nScrape font information from a website including font families, usage statistics, fallbacks, and element/word counts.\n\n### Parameters\n\n- `directUrl?: string`\n  A specific URL to fetch fonts from directly, bypassing domain resolution (e.g., 'https://example.com/design-system'). When provided, fonts are extracted from this exact URL. You must provide either 'domain' or 'directUrl', but not both.\n\n- `domain?: string`\n  Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The domain will be automatically normalized and validated. You must provide either 'domain' or 'directUrl', but not both.\n\n- `maxAgeMs?: number`\n  Maximum age in milliseconds for cached brand data before the API performs a hard refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms) are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1 year.\n\n- `tags?: string[]`\n  Optional comma-separated caller-defined tags for tracking this request. Tags are recorded on the request's usage log and can be used to filter usage on the dashboard usage page. Up to 20 tags, each 1-50 characters.\n\n- `timeoutMS?: number`\n  Optional timeout in milliseconds for the request. If the request takes longer than this value, it will be aborted with a 408 status code. Maximum allowed value is 300000ms (5 minutes).\n\n### Returns\n\n- `{ code: number; domain: string; fonts: { fallbacks: string[]; font: string; num_elements: number; num_words: number; percent_elements: number; percent_words: number; uses: string[]; }[]; status: string; fontLinks?: object; key_metadata?: { credits_consumed: number; credits_remaining: number; }; }`\n\n  - `code: number`\n  - `domain: string`\n  - `fonts: { fallbacks: string[]; font: string; num_elements: number; num_words: number; percent_elements: number; percent_words: number; uses: string[]; }[]`\n  - `status: string`\n  - `fontLinks?: object`\n  - `key_metadata?: { credits_consumed: number; credits_remaining: number; }`\n\n### Example\n\n```typescript\nimport BrandDev from 'brand.dev';\n\nconst client = new BrandDev();\n\nconst response = await client.brand.fonts();\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.brand.fonts',
+        example:
+          "import BrandDev from 'brand.dev';\n\nconst client = new BrandDev({\n  apiKey: process.env['BRAND_DEV_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.brand.fonts();\n\nconsole.log(response.code);",
+      },
+      python: {
+        method: 'brand.fonts',
+        example:
+          'import os\nfrom brand.dev import BrandDev\n\nclient = BrandDev(\n    api_key=os.environ.get("BRAND_DEV_API_KEY"),  # This is the default and can be omitted\n)\nresponse = client.brand.fonts()\nprint(response.code)',
+      },
+      java: {
+        method: 'brand().fonts',
+        example:
+          'package com.branddev.api.example;\n\nimport com.branddev.api.client.BrandDevClient;\nimport com.branddev.api.client.okhttp.BrandDevOkHttpClient;\nimport com.branddev.api.models.brand.BrandFontsParams;\nimport com.branddev.api.models.brand.BrandFontsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        BrandDevClient client = BrandDevOkHttpClient.fromEnv();\n\n        BrandFontsResponse response = client.brand().fonts();\n    }\n}',
+      },
+      ruby: {
+        method: 'brand.fonts',
+        example:
+          'require "brand_dev"\n\nbrand_dev = BrandDev::Client.new(api_key: "My API Key")\n\nresponse = brand_dev.brand.fonts\n\nputs(response)',
+      },
+      http: {
+        example:
+          'curl https://api.brand.dev/v1/web/fonts \\\n    -H "Authorization: Bearer $BRAND_DEV_API_KEY"',
       },
     },
   },
