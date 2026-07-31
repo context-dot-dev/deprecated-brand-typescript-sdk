@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Batch, type ErrorCount, type Error } from './batch';
+export { Batch, type PageErrorCount, type Failure, type CrawlControls, type Intake } from './batch';
 export {
   Brand,
   type BrandRetrieveResponse,

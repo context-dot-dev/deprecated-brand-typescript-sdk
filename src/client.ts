@@ -17,7 +17,7 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { Batch, Error, ErrorCount } from './resources/batch';
+import { Batch, CrawlControls, Failure, Intake, PageErrorCount } from './resources/batch';
 import {
   Brand,
   BrandAIProductParams,
@@ -837,5 +837,11 @@ export declare namespace BrandDev {
 
   export { Monitors as Monitors, type WebhookDelivery as WebhookDelivery };
 
-  export { Batch as Batch, type ErrorCount as ErrorCount, type Error as Error };
+  export {
+    Batch as Batch,
+    type PageErrorCount as PageErrorCount,
+    type Failure as Failure,
+    type CrawlControls as CrawlControls,
+    type Intake as Intake,
+  };
 }
