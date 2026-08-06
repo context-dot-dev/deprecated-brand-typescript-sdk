@@ -433,6 +433,11 @@ export namespace BrandRetrieveResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -707,6 +712,29 @@ export namespace BrandRetrieveResponse {
        * Name of the color
        */
       name?: string;
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -1602,6 +1630,11 @@ export namespace BrandIdentifyFromTransactionResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -1876,6 +1909,29 @@ export namespace BrandIdentifyFromTransactionResponse {
        * Name of the color
        */
       name?: string;
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -2462,6 +2518,11 @@ export namespace BrandRetrieveByEmailResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -2736,6 +2797,29 @@ export namespace BrandRetrieveByEmailResponse {
        * Name of the color
        */
       name?: string;
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -3240,6 +3324,11 @@ export namespace BrandRetrieveByIsinResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -3514,6 +3603,29 @@ export namespace BrandRetrieveByIsinResponse {
        * Name of the color
        */
       name?: string;
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -4018,6 +4130,11 @@ export namespace BrandRetrieveByNameResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -4292,6 +4409,29 @@ export namespace BrandRetrieveByNameResponse {
        * Name of the color
        */
       name?: string;
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -4796,6 +4936,11 @@ export namespace BrandRetrieveByTickerResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -5070,6 +5215,29 @@ export namespace BrandRetrieveByTickerResponse {
        * Name of the color
        */
       name?: string;
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
