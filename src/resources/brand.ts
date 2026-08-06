@@ -9692,7 +9692,7 @@ export namespace BrandWebScrapeHTMLParams {
     /**
      * When true, detect and OCR images embedded in the selected PDF pages, inserting
      * recognized text at each image's position in page reading order while preserving
-     * the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+     * the PDF text layer. When false, no OCR runs.
      */
     ocr?: boolean | 'true' | 'false';
 
@@ -10174,7 +10174,7 @@ export namespace BrandWebScrapeMdParams {
     /**
      * When true, detect and OCR images embedded in the selected PDF pages, inserting
      * recognized text at each image's position in page reading order while preserving
-     * the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+     * the PDF text layer. When false, no OCR runs.
      */
     ocr?: boolean | 'true' | 'false';
 
