@@ -60,7 +60,7 @@ export interface CrawlControls {
   /**
    * Where the crawl started.
    */
-  source: CrawlControls.UnionMember0 | CrawlControls.UnionMember1;
+  source: CrawlControls.StartURL | CrawlControls.Sitemap;
 
   /**
    * RE2 pattern URLs had to match to be crawled. Null when the crawl set none.
@@ -69,7 +69,10 @@ export interface CrawlControls {
 }
 
 export namespace CrawlControls {
-  export interface UnionMember0 {
+  /**
+   * The crawl discovered pages by following links from one URL.
+   */
+  export interface StartURL {
     type: 'start_url';
 
     /**
@@ -78,7 +81,10 @@ export namespace CrawlControls {
     url: string;
   }
 
-  export interface UnionMember1 {
+  /**
+   * The crawl scraped the pages listed in the domain's sitemap.
+   */
+  export interface Sitemap {
     /**
      * Domain whose sitemap supplied the pages.
      */
