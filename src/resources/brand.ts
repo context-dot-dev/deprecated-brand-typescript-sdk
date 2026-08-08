@@ -341,17 +341,17 @@ export class Brand extends APIResource {
    *
    * ### Billing & errors
    *
-   * | HTTP status | Billed?                                   | Meaning                                                                                  |
-   * | ----------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- |
-   * | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
-   * | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped                             |
-   * | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
-   * | 404         | No                                        | Target page returned or fingerprinted as not found                                       |
-   * | 408         | No                                        | Request timed out                                                                        |
-   * | 413         | No                                        | Target content exceeds the maximum supported size (20 MB)                                |
-   * | 415         | No                                        | Unsupported content type                                                                 |
-   * | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                        |
-   * | 500         | No                                        | Internal error                                                                           |
+   * | HTTP status | Billed?                                   | Meaning                                                                                                                                                                                                                                                                                                       |
+   * | ----------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   * | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing                                                                                                                                                                                                                       |
+   * | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped. error_code WEBSITE_BLOCKED specifically means the site answered with an anti-bot challenge, CAPTCHA wall, or login shell instead of the page (even when the site returned HTTP 200) — retrying later or from another country sometimes succeeds |
+   * | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code                                                                                                                                                                                                                      |
+   * | 404         | No                                        | Target page returned or fingerprinted as not found                                                                                                                                                                                                                                                            |
+   * | 408         | No                                        | Request timed out                                                                                                                                                                                                                                                                                             |
+   * | 413         | No                                        | Target content exceeds the maximum supported size (20 MB)                                                                                                                                                                                                                                                     |
+   * | 415         | No                                        | Unsupported content type                                                                                                                                                                                                                                                                                      |
+   * | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                                                                                                                                                                                                                                             |
+   * | 500         | No                                        | Internal error                                                                                                                                                                                                                                                                                                |
    *
    * @example
    * ```ts
@@ -6664,6 +6664,12 @@ export namespace BrandWebScrapeHTMLResponse {
     favicon?: string;
 
     /**
+     * Page headings (h1–h6) in document order, extracted from the unfiltered document.
+     * Capped at the first 500 headings. Omitted when the page has none.
+     */
+    headings?: Array<Metadata.Heading>;
+
+    /**
      * Primary resolved preview image from Open Graph, Twitter, or image metadata.
      */
     image?: string;
@@ -6740,6 +6746,18 @@ export namespace BrandWebScrapeHTMLResponse {
        * Alternate resource MIME type, when present.
        */
       type?: string;
+    }
+
+    export interface Heading {
+      /**
+       * Heading level, 1–6 (from h1–h6).
+       */
+      level: number;
+
+      /**
+       * Heading text with whitespace collapsed, truncated to 1000 characters.
+       */
+      text: string;
     }
   }
 
@@ -6976,6 +6994,12 @@ export namespace BrandWebScrapeMdResponse {
     favicon?: string;
 
     /**
+     * Page headings (h1–h6) in document order, extracted from the unfiltered document.
+     * Capped at the first 500 headings. Omitted when the page has none.
+     */
+    headings?: Array<Metadata.Heading>;
+
+    /**
      * Primary resolved preview image from Open Graph, Twitter, or image metadata.
      */
     image?: string;
@@ -7052,6 +7076,18 @@ export namespace BrandWebScrapeMdResponse {
        * Alternate resource MIME type, when present.
        */
       type?: string;
+    }
+
+    export interface Heading {
+      /**
+       * Heading level, 1–6 (from h1–h6).
+       */
+      level: number;
+
+      /**
+       * Heading text with whitespace collapsed, truncated to 1000 characters.
+       */
+      text: string;
     }
   }
 
