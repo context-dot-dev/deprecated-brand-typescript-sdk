@@ -540,6 +540,7 @@ describe('resource brand', () => {
       excludeSelectors: ['x'],
       headers: { foo: 'J!' },
       includeFrames: 'true',
+      includeHTML: 'true',
       includeImages: 'true',
       includeLinks: 'true',
       includeSelectors: ['x'],
