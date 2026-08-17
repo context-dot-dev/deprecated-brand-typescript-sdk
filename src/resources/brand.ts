@@ -724,6 +724,13 @@ export namespace BrandRetrieveResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
     }
 
     /**
@@ -1921,6 +1928,13 @@ export namespace BrandIdentifyFromTransactionResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
     }
 
     /**
@@ -2809,6 +2823,13 @@ export namespace BrandRetrieveByEmailResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
     }
 
     /**
@@ -3615,6 +3636,13 @@ export namespace BrandRetrieveByIsinResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
     }
 
     /**
@@ -4421,6 +4449,13 @@ export namespace BrandRetrieveByNameResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
     }
 
     /**
@@ -5227,6 +5262,13 @@ export namespace BrandRetrieveByTickerResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
     }
 
     /**
@@ -5874,6 +5916,13 @@ export namespace BrandRetrieveSimplifiedResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
     }
 
     export interface Logo {
