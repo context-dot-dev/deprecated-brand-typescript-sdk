@@ -399,6 +399,7 @@ describe('resource brand', () => {
     await expect(
       client.brand.screenshot(
         {
+          clearPopups: true,
           colorScheme: 'light',
           country: 'de',
           directUrl: 'https://example.com',
