@@ -6913,6 +6913,11 @@ export interface BrandWebScrapeImagesResponse {
   url: string;
 
   /**
+   * One verified outcome per requested browser action, in request order.
+   */
+  actionsApplied?: Array<BrandWebScrapeImagesResponse.ActionsApplied>;
+
+  /**
    * Metadata about the API key used for the request. Included in every response
    * whenever a valid API key is provided, even when the response status is not 200.
    */
@@ -6977,6 +6982,29 @@ export namespace BrandWebScrapeImagesResponse {
        */
       width?: number;
     }
+  }
+
+  export interface ActionsApplied {
+    instruction: string;
+
+    /**
+     * Applied means the requested page state was visibly verified. Failed means it was
+     * not verified. Skipped means it was not attempted.
+     */
+    status: 'applied' | 'failed' | 'skipped';
+
+    /**
+     * Visible page evidence used to verify an applied action.
+     */
+    completionEvidence?: string;
+
+    durationMs?: number;
+
+    error?: string;
+
+    method?: string;
+
+    targetDescription?: string;
   }
 
   /**
@@ -9697,7 +9725,9 @@ export interface BrandWebScrapeHTMLParams {
    * parameter. Maximum: 5 actions.
    */
   actions?: Array<
-    BrandWebScrapeHTMLParams.WebScrapeWaitAction | BrandWebScrapeHTMLParams.WebScrapePerformAction
+    | BrandWebScrapeHTMLParams.WebScrapeWaitAction
+    | BrandWebScrapeHTMLParams.WebScrapePerformAction
+    | BrandWebScrapeHTMLParams.WebScrapeScrollAction
   > | null;
 
   /**
@@ -10011,6 +10041,36 @@ export namespace BrandWebScrapeHTMLParams {
   }
 
   /**
+   * Scroll the page or a selected scrollable container, waiting adaptively for
+   * content and dimensions to settle after each iteration.
+   */
+  export interface WebScrapeScrollAction {
+    do: 'scroll';
+
+    /**
+     * Pixels per scroll, one visible viewport, or the current scroll boundary.
+     * Defaults to viewport.
+     */
+    amount?: number | 'viewport' | 'max';
+
+    /**
+     * CSS selector for the first matching scroll container. Defaults to the page.
+     */
+    container?: string;
+
+    /**
+     * Direction to scroll. Defaults to down.
+     */
+    direction?: 'up' | 'down' | 'left' | 'right';
+
+    /**
+     * Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+     * changing. Defaults to 1.
+     */
+    maxScrolls?: number;
+  }
+
+  /**
    * PDF parsing controls. Use start/end to limit text extraction and embedded-image
    * detection/OCR to an inclusive 1-based page range.
    */
@@ -10054,7 +10114,9 @@ export interface BrandWebScrapeImagesParams {
    * parameter. Maximum: 5 actions.
    */
   actions?: Array<
-    BrandWebScrapeImagesParams.WebScrapeWaitAction | BrandWebScrapeImagesParams.WebScrapePerformAction
+    | BrandWebScrapeImagesParams.WebScrapeWaitAction
+    | BrandWebScrapeImagesParams.WebScrapePerformAction
+    | BrandWebScrapeImagesParams.WebScrapeScrollAction
   > | null;
 
   /**
@@ -10125,6 +10187,36 @@ export namespace BrandWebScrapeImagesParams {
   }
 
   /**
+   * Scroll the page or a selected scrollable container, waiting adaptively for
+   * content and dimensions to settle after each iteration.
+   */
+  export interface WebScrapeScrollAction {
+    do: 'scroll';
+
+    /**
+     * Pixels per scroll, one visible viewport, or the current scroll boundary.
+     * Defaults to viewport.
+     */
+    amount?: number | 'viewport' | 'max';
+
+    /**
+     * CSS selector for the first matching scroll container. Defaults to the page.
+     */
+    container?: string;
+
+    /**
+     * Direction to scroll. Defaults to down.
+     */
+    direction?: 'up' | 'down' | 'left' | 'right';
+
+    /**
+     * Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+     * changing. Defaults to 1.
+     */
+    maxScrolls?: number;
+  }
+
+  /**
    * Optional per-image processing, sent as deep-object query params such as
    * enrichment[resolution]=true.
    */
@@ -10165,7 +10257,9 @@ export interface BrandWebScrapeMdParams {
    * parameter. Maximum: 5 actions.
    */
   actions?: Array<
-    BrandWebScrapeMdParams.WebScrapeWaitAction | BrandWebScrapeMdParams.WebScrapePerformAction
+    | BrandWebScrapeMdParams.WebScrapeWaitAction
+    | BrandWebScrapeMdParams.WebScrapePerformAction
+    | BrandWebScrapeMdParams.WebScrapeScrollAction
   > | null;
 
   /**
@@ -10498,6 +10592,36 @@ export namespace BrandWebScrapeMdParams {
     action: string;
 
     do: 'perform';
+  }
+
+  /**
+   * Scroll the page or a selected scrollable container, waiting adaptively for
+   * content and dimensions to settle after each iteration.
+   */
+  export interface WebScrapeScrollAction {
+    do: 'scroll';
+
+    /**
+     * Pixels per scroll, one visible viewport, or the current scroll boundary.
+     * Defaults to viewport.
+     */
+    amount?: number | 'viewport' | 'max';
+
+    /**
+     * CSS selector for the first matching scroll container. Defaults to the page.
+     */
+    container?: string;
+
+    /**
+     * Direction to scroll. Defaults to down.
+     */
+    direction?: 'up' | 'down' | 'left' | 'right';
+
+    /**
+     * Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+     * changing. Defaults to 1.
+     */
+    maxScrolls?: number;
   }
 
   /**
