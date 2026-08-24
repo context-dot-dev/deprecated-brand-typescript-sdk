@@ -465,7 +465,9 @@ export namespace BrandRetrieveResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -1715,7 +1717,9 @@ export namespace BrandIdentifyFromTransactionResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -2610,7 +2614,9 @@ export namespace BrandRetrieveByEmailResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -3423,7 +3429,9 @@ export namespace BrandRetrieveByIsinResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -4236,7 +4244,9 @@ export namespace BrandRetrieveByNameResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -5049,7 +5059,9 @@ export namespace BrandRetrieveByTickerResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
