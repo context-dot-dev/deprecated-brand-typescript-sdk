@@ -37,7 +37,7 @@ const client = new BrandDev({
 
 const brand = await client.brand.retrieve({ domain: 'REPLACE_ME' });
 
-console.log(brand.brand);
+console.log(brand.cache_metadata);
 ```
 
 ### Request & Response types
@@ -154,7 +154,7 @@ const { data: brand, response: raw } = await client.brand
   .retrieve({ domain: 'REPLACE_ME' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(brand.brand);
+console.log(brand.cache_metadata);
 ```
 
 ### Logging
