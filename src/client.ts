@@ -17,6 +17,7 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import { Batch, CrawlControls, Failure, Intake, PageErrorCount } from './resources/batch';
 import {
   Brand,
   BrandAIProductParams,
@@ -60,6 +61,7 @@ import {
   BrandWebScrapeSitemapParams,
   BrandWebScrapeSitemapResponse,
 } from './resources/brand';
+import { Monitors, WebhookDelivery } from './resources/monitors';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -210,6 +212,18 @@ export class BrandDev {
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
 
+    const customHeadersEnv = readEnv('BRAND_DEV_CUSTOM_HEADERS');
+    if (customHeadersEnv) {
+      const parsed: Record<string, string> = {};
+      for (const line of customHeadersEnv.split('\n')) {
+        const colon = line.indexOf(':');
+        if (colon >= 0) {
+          parsed[line.substring(0, colon).trim()] = line.substring(colon + 1).trim();
+        }
+      }
+      options.defaultHeaders = { ...parsed, ...options.defaultHeaders };
+    }
+
     this._options = options;
 
     this.apiKey = apiKey;
@@ -253,9 +267,6 @@ export class BrandDev {
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
-  /**
-   * Basic re-implementation of `qs.stringify` for primitive types.
-   */
   protected stringifyQuery(query: object | Record<string, unknown>): string {
     return stringifyQuery(query);
   }
@@ -696,11 +707,19 @@ export class BrandDev {
     return () => controller.abort();
   }
 
-  private buildBody({ options: { body, headers: rawHeaders } }: { options: FinalRequestOptions }): {
+  private buildBody({ options }: { options: FinalRequestOptions }): {
     bodyHeaders: HeadersLike;
     body: BodyInit | undefined;
   } {
+    const { body, headers: rawHeaders } = options;
     if (!body) {
+      // A resource method always passes a `body` key when its operation defines a
+      // request body, even if the caller omitted an optional body param. Keep the
+      // content-type for those, and only elide it for operations with no body at
+      // all (e.g. GET/DELETE).
+      if (body == null && 'body' in options) {
+        return this.#encoder({ body, headers: buildHeaders([rawHeaders]) });
+      }
       return { bodyHeaders: undefined, body: undefined };
     }
     const headers = buildHeaders([rawHeaders]);
@@ -761,9 +780,13 @@ export class BrandDev {
   static toFile = Uploads.toFile;
 
   brand: API.Brand = new API.Brand(this);
+  monitors: API.Monitors = new API.Monitors(this);
+  batch: API.Batch = new API.Batch(this);
 }
 
 BrandDev.Brand = Brand;
+BrandDev.Monitors = Monitors;
+BrandDev.Batch = Batch;
 
 export declare namespace BrandDev {
   export type RequestOptions = Opts.RequestOptions;
@@ -810,5 +833,15 @@ export declare namespace BrandDev {
     type BrandWebScrapeImagesParams as BrandWebScrapeImagesParams,
     type BrandWebScrapeMdParams as BrandWebScrapeMdParams,
     type BrandWebScrapeSitemapParams as BrandWebScrapeSitemapParams,
+  };
+
+  export { Monitors as Monitors, type WebhookDelivery as WebhookDelivery };
+
+  export {
+    Batch as Batch,
+    type PageErrorCount as PageErrorCount,
+    type Failure as Failure,
+    type CrawlControls as CrawlControls,
+    type Intake as Intake,
   };
 }

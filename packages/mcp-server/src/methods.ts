@@ -38,7 +38,7 @@ export const sdkMethods: SdkMethod[] = [
     clientCallName: 'client.brand.fonts',
     fullyQualifiedName: 'brand.fonts',
     httpMethod: 'get',
-    httpPath: '/brand/fonts',
+    httpPath: '/web/fonts',
   },
   {
     clientCallName: 'client.brand.identifyFromTransaction',
@@ -86,7 +86,7 @@ export const sdkMethods: SdkMethod[] = [
     clientCallName: 'client.brand.retrieveNaics',
     fullyQualifiedName: 'brand.retrieveNaics',
     httpMethod: 'get',
-    httpPath: '/brand/naics',
+    httpPath: '/web/naics',
   },
   {
     clientCallName: 'client.brand.retrieveSimplified',
@@ -98,13 +98,13 @@ export const sdkMethods: SdkMethod[] = [
     clientCallName: 'client.brand.screenshot',
     fullyQualifiedName: 'brand.screenshot',
     httpMethod: 'get',
-    httpPath: '/brand/screenshot',
+    httpPath: '/web/screenshot',
   },
   {
     clientCallName: 'client.brand.styleguide',
     fullyQualifiedName: 'brand.styleguide',
     httpMethod: 'get',
-    httpPath: '/brand/styleguide',
+    httpPath: '/web/styleguide',
   },
   {
     clientCallName: 'client.brand.webScrapeHTML',

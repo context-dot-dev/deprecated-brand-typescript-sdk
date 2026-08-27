@@ -9,8 +9,8 @@ const client = new BrandDev({
 
 describe('resource brand', () => {
   // Mock server tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.brand.retrieve({ domain: 'domain' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.brand.retrieve();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,13 +21,24 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.brand.retrieve({
-      domain: 'domain',
-      force_language: 'albanian',
-      maxSpeed: true,
-      timeoutMS: 1000,
-    });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.brand.retrieve(
+        {
+          domain: 'xxx',
+          force_language: 'afrikaans',
+          maxAgeMs: 0,
+          maxSpeed: true,
+          name: 'xxx',
+          tags: ['production', 'team-alpha'],
+          ticker: 'ticker',
+          ticker_exchange: 'AMEX',
+          timeoutMS: 1000,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(BrandDev.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -44,7 +55,12 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('aiProduct: required and optional params', async () => {
-    const response = await client.brand.aiProduct({ url: 'https://example.com', timeoutMS: 1000 });
+    const response = await client.brand.aiProduct({
+      url: 'https://example.com',
+      maxAgeMs: 0,
+      tags: ['production', 'team-alpha'],
+      timeoutMS: 1000,
+    });
   });
 
   // Mock server tests are disabled
@@ -63,7 +79,9 @@ describe('resource brand', () => {
   test.skip('aiProducts: required and optional params', async () => {
     const response = await client.brand.aiProducts({
       domain: 'domain',
+      maxAgeMs: 0,
       maxProducts: 1,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -115,13 +133,14 @@ describe('resource brand', () => {
         privacy_policy: true,
         terms_and_conditions: true,
       },
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
 
   // Mock server tests are disabled
-  test.skip('fonts: only required params', async () => {
-    const responsePromise = client.brand.fonts({ domain: 'domain' });
+  test.skip('fonts', async () => {
+    const responsePromise = client.brand.fonts();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -132,13 +151,25 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('fonts: required and optional params', async () => {
-    const response = await client.brand.fonts({ domain: 'domain', timeoutMS: 1000 });
+  test.skip('fonts: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.brand.fonts(
+        {
+          directUrl: 'https://example.com',
+          domain: 'xxx',
+          maxAgeMs: 0,
+          tags: ['production', 'team-alpha'],
+          timeoutMS: 1000,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(BrandDev.NotFoundError);
   });
 
   // Mock server tests are disabled
   test.skip('identifyFromTransaction: only required params', async () => {
-    const responsePromise = client.brand.identifyFromTransaction({ transaction_info: 'transaction_info' });
+    const responsePromise = client.brand.identifyFromTransaction({ transaction_info: 'xxx' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -151,14 +182,15 @@ describe('resource brand', () => {
   // Mock server tests are disabled
   test.skip('identifyFromTransaction: required and optional params', async () => {
     const response = await client.brand.identifyFromTransaction({
-      transaction_info: 'transaction_info',
+      transaction_info: 'xxx',
       city: 'city',
-      country_gl: 'ad',
-      force_language: 'albanian',
+      country_gl: 'af',
+      force_language: 'afrikaans',
       high_confidence_only: true,
       maxSpeed: true,
-      mcc: 'mcc',
-      phone: 0,
+      mcc: 'string',
+      phone: 'string',
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -177,7 +209,11 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('prefetch: required and optional params', async () => {
-    const response = await client.brand.prefetch({ domain: 'domain', timeoutMS: 1000 });
+    const response = await client.brand.prefetch({
+      domain: 'domain',
+      tags: ['production', 'team-alpha'],
+      timeoutMS: 1000,
+    });
   });
 
   // Mock server tests are disabled
@@ -194,7 +230,11 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('prefetchByEmail: required and optional params', async () => {
-    const response = await client.brand.prefetchByEmail({ email: 'dev@stainless.com', timeoutMS: 1000 });
+    const response = await client.brand.prefetchByEmail({
+      email: 'dev@stainless.com',
+      tags: ['production', 'team-alpha'],
+      timeoutMS: 1000,
+    });
   });
 
   // Mock server tests are disabled
@@ -213,8 +253,10 @@ describe('resource brand', () => {
   test.skip('retrieveByEmail: required and optional params', async () => {
     const response = await client.brand.retrieveByEmail({
       email: 'dev@stainless.com',
-      force_language: 'albanian',
+      force_language: 'afrikaans',
+      maxAgeMs: 0,
       maxSpeed: true,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -235,8 +277,10 @@ describe('resource brand', () => {
   test.skip('retrieveByIsin: required and optional params', async () => {
     const response = await client.brand.retrieveByIsin({
       isin: 'SE60513A9993',
-      force_language: 'albanian',
+      force_language: 'afrikaans',
+      maxAgeMs: 0,
       maxSpeed: true,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -257,9 +301,11 @@ describe('resource brand', () => {
   test.skip('retrieveByName: required and optional params', async () => {
     const response = await client.brand.retrieveByName({
       name: 'xxx',
-      country_gl: 'ad',
-      force_language: 'albanian',
+      country_gl: 'af',
+      force_language: 'afrikaans',
+      maxAgeMs: 0,
       maxSpeed: true,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
@@ -280,8 +326,10 @@ describe('resource brand', () => {
   test.skip('retrieveByTicker: required and optional params', async () => {
     const response = await client.brand.retrieveByTicker({
       ticker: 'ticker',
-      force_language: 'albanian',
+      force_language: 'afrikaans',
+      maxAgeMs: 0,
       maxSpeed: true,
+      tags: ['production', 'team-alpha'],
       ticker_exchange: 'AMEX',
       timeoutMS: 1000,
     });
@@ -289,7 +337,7 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('retrieveNaics: only required params', async () => {
-    const responsePromise = client.brand.retrieveNaics({ input: 'input' });
+    const responsePromise = client.brand.retrieveNaics({ input: 'xxxx' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -302,16 +350,17 @@ describe('resource brand', () => {
   // Mock server tests are disabled
   test.skip('retrieveNaics: required and optional params', async () => {
     const response = await client.brand.retrieveNaics({
-      input: 'input',
+      input: 'xxxx',
       maxResults: 1,
       minResults: 1,
+      tags: ['production', 'team-alpha'],
       timeoutMS: 1000,
     });
   });
 
   // Mock server tests are disabled
   test.skip('retrieveSimplified: only required params', async () => {
-    const responsePromise = client.brand.retrieveSimplified({ domain: 'domain' });
+    const responsePromise = client.brand.retrieveSimplified({ domain: 'xxx' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -323,12 +372,18 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('retrieveSimplified: required and optional params', async () => {
-    const response = await client.brand.retrieveSimplified({ domain: 'domain', timeoutMS: 1000 });
+    const response = await client.brand.retrieveSimplified({
+      domain: 'xxx',
+      maxAgeMs: 0,
+      tags: ['production', 'team-alpha'],
+      theme: 'light',
+      timeoutMS: 1000,
+    });
   });
 
   // Mock server tests are disabled
-  test.skip('screenshot: only required params', async () => {
-    const responsePromise = client.brand.screenshot({ domain: 'domain' });
+  test.skip('screenshot', async () => {
+    const responsePromise = client.brand.screenshot();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -339,13 +394,30 @@ describe('resource brand', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('screenshot: required and optional params', async () => {
-    const response = await client.brand.screenshot({
-      domain: 'domain',
-      fullScreenshot: 'true',
-      page: 'login',
-      prioritize: 'speed',
-    });
+  test.skip('screenshot: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.brand.screenshot(
+        {
+          clearPopups: true,
+          colorScheme: 'light',
+          country: 'de',
+          directUrl: 'https://example.com',
+          domain: 'xxx',
+          fullScreenshot: 'true',
+          handleCookiePopup: true,
+          maxAgeMs: 0,
+          page: 'login',
+          scrollOffset: 0,
+          tags: ['production', 'team-alpha'],
+          timeoutMS: 1,
+          viewport: { height: 240, width: 240 },
+          waitForMs: 0,
+          zdr: 'enabled',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(BrandDev.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -366,8 +438,11 @@ describe('resource brand', () => {
     await expect(
       client.brand.styleguide(
         {
+          colorScheme: 'light',
           directUrl: 'https://example.com',
-          domain: 'domain',
+          domain: 'xxx',
+          maxAgeMs: 0,
+          tags: ['production', 'team-alpha'],
           timeoutMS: 1000,
         },
         { path: '/_stainless_unknown_path' },
@@ -389,7 +464,28 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('webScrapeHTML: required and optional params', async () => {
-    const response = await client.brand.webScrapeHTML({ url: 'https://example.com' });
+    const response = await client.brand.webScrapeHTML({
+      url: 'https://example.com',
+      actions: [{ do: 'wait', timeMs: 0 }],
+      country: 'de',
+      excludeSelectors: ['x'],
+      headers: { foo: 'J!' },
+      includeFrames: true,
+      includeSelectors: ['x'],
+      maxAgeMs: 0,
+      pdf: {
+        end: 1,
+        ocr: true,
+        shouldParse: true,
+        start: 1,
+      },
+      settleAnimations: true,
+      tags: ['production', 'team-alpha'],
+      timeoutMS: 1,
+      useMainContentOnly: true,
+      waitForMs: 0,
+      zdr: 'enabled',
+    });
   });
 
   // Mock server tests are disabled
@@ -406,7 +502,22 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('webScrapeImages: required and optional params', async () => {
-    const response = await client.brand.webScrapeImages({ url: 'https://example.com' });
+    const response = await client.brand.webScrapeImages({
+      url: 'https://example.com',
+      actions: [{ do: 'wait', timeMs: 0 }],
+      dedupe: true,
+      enrichment: {
+        classification: true,
+        hostedUrl: true,
+        maxTimePerMs: 1,
+        resolution: true,
+      },
+      headers: { foo: 'J!' },
+      maxAgeMs: 0,
+      tags: ['production', 'team-alpha'],
+      timeoutMS: 1,
+      waitForMs: 0,
+    });
   });
 
   // Mock server tests are disabled
@@ -425,16 +536,35 @@ describe('resource brand', () => {
   test.skip('webScrapeMd: required and optional params', async () => {
     const response = await client.brand.webScrapeMd({
       url: 'https://example.com',
+      actions: [{ do: 'wait', timeMs: 0 }],
+      country: 'de',
+      excludeSelectors: ['x'],
+      headers: { foo: 'J!' },
+      includeFrames: true,
+      includeHTML: true,
       includeImages: true,
       includeLinks: true,
+      includeSelectors: ['x'],
+      maxAgeMs: 0,
+      pdf: {
+        end: 1,
+        ocr: true,
+        shouldParse: true,
+        start: 1,
+      },
+      settleAnimations: true,
       shortenBase64Images: true,
+      tags: ['production', 'team-alpha'],
+      timeoutMS: 1,
       useMainContentOnly: true,
+      waitForMs: 0,
+      zdr: 'enabled',
     });
   });
 
   // Mock server tests are disabled
   test.skip('webScrapeSitemap: only required params', async () => {
-    const responsePromise = client.brand.webScrapeSitemap({ domain: 'domain' });
+    const responsePromise = client.brand.webScrapeSitemap({ domain: 'xxx' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -446,6 +576,16 @@ describe('resource brand', () => {
 
   // Mock server tests are disabled
   test.skip('webScrapeSitemap: required and optional params', async () => {
-    const response = await client.brand.webScrapeSitemap({ domain: 'domain', maxLinks: 1 });
+    const response = await client.brand.webScrapeSitemap({
+      domain: 'xxx',
+      headers: { foo: 'J!' },
+      maxLinks: 1,
+      search: 'help center and troubleshooting articles',
+      sitemapUrl: 'https://example.com',
+      tags: ['production', 'team-alpha'],
+      timeoutMS: 1,
+      urlRegex: '^https?://[^/]+/blog/',
+      zdr: 'enabled',
+    });
   });
 });

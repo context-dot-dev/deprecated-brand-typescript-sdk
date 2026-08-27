@@ -8,24 +8,45 @@ export class Brand extends APIResource {
   /**
    * Retrieve logos, backdrops, colors, industry, description, and more from any
    * domain
+   *
+   * @example
+   * ```ts
+   * const brand = await client.brand.retrieve();
+   * ```
    */
-  retrieve(query: BrandRetrieveParams, options?: RequestOptions): APIPromise<BrandRetrieveResponse> {
+  retrieve(
+    query: BrandRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BrandRetrieveResponse> {
     return this._client.get('/brand/retrieve', { query, ...options });
   }
 
   /**
-   * Beta feature: Given a single URL, determines if it is a product detail page,
-   * classifies the platform/product type, and extracts the product information.
-   * Supports Amazon, TikTok Shop, Etsy, and generic ecommerce sites.
+   * Given a single URL, determines if it is a product page and extracts the product
+   * information.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.aiProduct({
+   *   url: 'https://example.com',
+   * });
+   * ```
    */
   aiProduct(body: BrandAIProductParams, options?: RequestOptions): APIPromise<BrandAIProductResponse> {
     return this._client.post('/brand/ai/product', { body, ...options });
   }
 
   /**
-   * Beta feature: Extract product information from a brand's website. We will
-   * analyze the website and return a list of products with details such as name,
-   * description, image, pricing, features, and more.
+   * Extract product information from a brand's website. We will analyze the website
+   * and return a list of products with details such as name, description, image,
+   * pricing, features, and more.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.aiProducts({
+   *   domain: 'domain',
+   * });
+   * ```
    */
   aiProducts(body: BrandAIProductsParams, options?: RequestOptions): APIPromise<BrandAIProductsResponse> {
     return this._client.post('/brand/ai/products', { body, ...options });
@@ -35,22 +56,52 @@ export class Brand extends APIResource {
    * Use AI to extract specific data points from a brand's website. The AI will crawl
    * the website and extract the requested information based on the provided data
    * points.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.aiQuery({
+   *   data_to_extract: [
+   *     {
+   *       datapoint_description: 'datapoint_description',
+   *       datapoint_example: 'datapoint_example',
+   *       datapoint_name: 'datapoint_name',
+   *       datapoint_type: 'text',
+   *     },
+   *   ],
+   *   domain: 'domain',
+   * });
+   * ```
    */
   aiQuery(body: BrandAIQueryParams, options?: RequestOptions): APIPromise<BrandAIQueryResponse> {
     return this._client.post('/brand/ai/query', { body, ...options });
   }
 
   /**
-   * Extract font information from a brand's website including font families, usage
+   * Scrape font information from a website including font families, usage
    * statistics, fallbacks, and element/word counts.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.fonts();
+   * ```
    */
-  fonts(query: BrandFontsParams, options?: RequestOptions): APIPromise<BrandFontsResponse> {
-    return this._client.get('/brand/fonts', { query, ...options });
+  fonts(
+    query: BrandFontsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BrandFontsResponse> {
+    return this._client.get('/web/fonts', { query, ...options });
   }
 
   /**
    * Endpoint specially designed for platforms that want to identify transaction data
    * by the transaction title.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.identifyFromTransaction(
+   *   { transaction_info: 'xxx' },
+   * );
+   * ```
    */
   identifyFromTransaction(
     query: BrandIdentifyFromTransactionParams,
@@ -61,9 +112,14 @@ export class Brand extends APIResource {
 
   /**
    * Signal that you may fetch brand data for a particular domain soon to improve
-   * latency. This endpoint does not charge credits and is available for paid
-   * customers to optimize future requests. [You must be on a paid plan to use this
-   * endpoint]
+   * latency.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.prefetch({
+   *   domain: 'domain',
+   * });
+   * ```
    */
   prefetch(body: BrandPrefetchParams, options?: RequestOptions): APIPromise<BrandPrefetchResponse> {
     return this._client.post('/brand/prefetch', { body, ...options });
@@ -73,9 +129,14 @@ export class Brand extends APIResource {
    * Signal that you may fetch brand data for a particular domain soon to improve
    * latency. This endpoint accepts an email address, extracts the domain from it,
    * validates that it's not a disposable or free email provider, and queues the
-   * domain for prefetching. This endpoint does not charge credits and is available
-   * for paid customers to optimize future requests. [You must be on a paid plan to
-   * use this endpoint]
+   * domain for prefetching.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.prefetchByEmail({
+   *   email: 'dev@stainless.com',
+   * });
+   * ```
    */
   prefetchByEmail(
     body: BrandPrefetchByEmailParams,
@@ -86,9 +147,15 @@ export class Brand extends APIResource {
 
   /**
    * Retrieve brand information using an email address while detecting disposable and
-   * free email addresses. This endpoint extracts the domain from the email address
-   * and returns brand data for that domain. Disposable and free email addresses
-   * (like gmail.com, yahoo.com) will throw a 422 error.
+   * free email addresses. Disposable and free email addresses (like gmail.com,
+   * yahoo.com) will throw a 422 error.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveByEmail({
+   *   email: 'dev@stainless.com',
+   * });
+   * ```
    */
   retrieveByEmail(
     query: BrandRetrieveByEmailParams,
@@ -99,8 +166,14 @@ export class Brand extends APIResource {
 
   /**
    * Retrieve brand information using an ISIN (International Securities
-   * Identification Number). This endpoint looks up the company associated with the
-   * ISIN and returns its brand data.
+   * Identification Number).
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveByIsin({
+   *   isin: 'SE60513A9993',
+   * });
+   * ```
    */
   retrieveByIsin(
     query: BrandRetrieveByIsinParams,
@@ -110,8 +183,14 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Retrieve brand information using a company name. This endpoint searches for the
-   * company by name and returns its brand data.
+   * Retrieve brand information using a company name.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveByName({
+   *   name: 'xxx',
+   * });
+   * ```
    */
   retrieveByName(
     query: BrandRetrieveByNameParams,
@@ -121,8 +200,14 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Retrieve brand information using a stock ticker symbol. This endpoint looks up
-   * the company associated with the ticker and returns its brand data.
+   * Retrieve brand information using a stock ticker symbol.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveByTicker({
+   *   ticker: 'ticker',
+   * });
+   * ```
    */
   retrieveByTicker(
     query: BrandRetrieveByTickerParams,
@@ -132,19 +217,33 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Endpoint to classify any brand into a 2022 NAICS code.
+   * Classify any brand into 2022 NAICS industry codes from its domain or name.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveNaics({
+   *   input: 'xxxx',
+   * });
+   * ```
    */
   retrieveNaics(
     query: BrandRetrieveNaicsParams,
     options?: RequestOptions,
   ): APIPromise<BrandRetrieveNaicsResponse> {
-    return this._client.get('/brand/naics', { query, ...options });
+    return this._client.get('/web/naics', { query, ...options });
   }
 
   /**
    * Returns a simplified version of brand data containing only essential
-   * information: domain, title, colors, logos, and backdrops. This endpoint is
-   * optimized for faster responses and reduced data transfer.
+   * information: domain, title, colors, logos, and backdrops. Optimized for faster
+   * responses and reduced data transfer.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.retrieveSimplified({
+   *   domain: 'xxx',
+   * });
+   * ```
    */
   retrieveSimplified(
     query: BrandRetrieveSimplifiedParams,
@@ -154,30 +253,46 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Capture a screenshot of a website. Supports both viewport (standard browser
-   * view) and full-page screenshots. Can also screenshot specific page types (login,
-   * pricing, etc.) by using heuristics to find the appropriate URL. Returns a URL to
-   * the uploaded screenshot image hosted on our CDN.
+   * Capture a screenshot of a website.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.screenshot();
+   * ```
    */
-  screenshot(query: BrandScreenshotParams, options?: RequestOptions): APIPromise<BrandScreenshotResponse> {
-    return this._client.get('/brand/screenshot', { query, ...options });
+  screenshot(
+    query: BrandScreenshotParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BrandScreenshotResponse> {
+    return this._client.get('/web/screenshot', { query, ...options });
   }
 
   /**
-   * Automatically extract comprehensive design system information from a brand's
-   * website including colors, typography, spacing, shadows, and UI components.
-   * Either 'domain' or 'directUrl' must be provided as a query parameter, but not
-   * both.
+   * Extract a comprehensive design system from a website including colors,
+   * typography, spacing, shadows, and UI components.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.styleguide();
+   * ```
    */
   styleguide(
     query: BrandStyleguideParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<BrandStyleguideResponse> {
-    return this._client.get('/brand/styleguide', { query, ...options });
+    return this._client.get('/web/styleguide', { query, ...options });
   }
 
   /**
-   * Scrapes the given URL and returns the raw HTML content of the page.
+   * Scrapes the given URL and returns the raw HTML content of the page. The base
+   * request costs 1 credit; requests with browser actions cost 2 credits.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.webScrapeHTML({
+   *   url: 'https://example.com',
+   * });
+   * ```
    */
   webScrapeHTML(
     query: BrandWebScrapeHTMLParams,
@@ -187,9 +302,18 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Scrapes all images from the given URL. Extracts images from img, svg,
-   * picture/source, link, and video elements including inline SVGs, base64 data
-   * URIs, and standard URLs.
+   * Extract image assets from a web page, including standard URLs, inline SVGs, data
+   * URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
+   * embeds. The base request costs 1 credit, or 2 credits with browser actions. When
+   * enrichment is enabled, the entire call costs 5 credits, including requests that
+   * also use actions.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.webScrapeImages({
+   *   url: 'https://example.com',
+   * });
+   * ```
    */
   webScrapeImages(
     query: BrandWebScrapeImagesParams,
@@ -199,17 +323,60 @@ export class Brand extends APIResource {
   }
 
   /**
-   * Scrapes the given URL, converts the HTML content to Markdown, and returns the
-   * result.
+   * Scrapes the given URL into LLM usable Markdown. Inspect key_metadata on JSON
+   * responses from a recognized API key; use error_code to distinguish stable
+   * failure categories.
+   *
+   * ### YouTube
+   *
+   * YouTube URLs return the video or channel itself rather than the surrounding
+   * player and navigation chrome. A URL addressing a single video (`/watch`,
+   * `youtu.be`, `/shorts`, `/embed`, `/live`) returns its title, channel, duration,
+   * view count, keywords, full description, and the transcript when the video has
+   * captions that can be retrieved; videos without captions return everything except
+   * the transcript. A channel URL (`/channel/UC…`, `/@handle`, `/c/…`, `/user/…`)
+   * returns its name, handle, subscriber count, video count, and full description.
+   * When `includeImages=true`, video responses also include the thumbnail and
+   * channel responses include the avatar. Costs the same as any other scrape.
+   *
+   * ### Billing & errors
+   *
+   * | HTTP status | Billed?                                   | Meaning                                                                                                                                                                                                                                                                                                       |
+   * | ----------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   * | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing                                                                                                                                                                                                                       |
+   * | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped. error_code WEBSITE_BLOCKED specifically means the site answered with an anti-bot challenge, CAPTCHA wall, or login shell instead of the page (even when the site returned HTTP 200) — retrying later or from another country sometimes succeeds |
+   * | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code                                                                                                                                                                                                                      |
+   * | 404         | No                                        | Target page returned or fingerprinted as not found                                                                                                                                                                                                                                                            |
+   * | 408         | No                                        | Request timed out                                                                                                                                                                                                                                                                                             |
+   * | 413         | No                                        | Target content exceeds the maximum supported size (20 MB)                                                                                                                                                                                                                                                     |
+   * | 415         | No                                        | Unsupported content type                                                                                                                                                                                                                                                                                      |
+   * | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                                                                                                                                                                                                                                             |
+   * | 500         | No                                        | Internal error                                                                                                                                                                                                                                                                                                |
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.webScrapeMd({
+   *   url: 'https://example.com',
+   * });
+   * ```
    */
   webScrapeMd(query: BrandWebScrapeMdParams, options?: RequestOptions): APIPromise<BrandWebScrapeMdResponse> {
     return this._client.get('/web/scrape/markdown', { query, ...options });
   }
 
   /**
-   * Crawls the sitemap of the given domain and returns all discovered page URLs.
-   * Supports sitemap index files (recursive), parallel fetching with concurrency
-   * control, deduplication, and filters out non-page resources (images, PDFs, etc.).
+   * Crawl an entire website's sitemap and return all discovered page URLs. Pass
+   * `search` to have the crawled sitemap filtered down to the pages about a phrase
+   * (for example `pricing and plans` or `api authentication docs`), most relevant
+   * first — a searched crawl scans the whole sitemap and costs 2 credits instead
+   * of 1.
+   *
+   * @example
+   * ```ts
+   * const response = await client.brand.webScrapeSitemap({
+   *   domain: 'xxx',
+   * });
+   * ```
    */
   webScrapeSitemap(
     query: BrandWebScrapeSitemapParams,
@@ -221,6 +388,13 @@ export class Brand extends APIResource {
 
 export interface BrandRetrieveResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveResponse.CacheMetadata;
+
+  /**
    * Detailed brand information
    */
   brand?: BrandRetrieveResponse.Brand;
@@ -231,12 +405,36 @@ export interface BrandRetrieveResponse {
   code?: number;
 
   /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandRetrieveResponse.KeyMetadata;
+
+  /**
    * Status of the response, e.g., 'ok'
    */
   status?: string;
 }
 
 export namespace BrandRetrieveResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -272,6 +470,11 @@ export namespace BrandRetrieveResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -287,7 +490,9 @@ export namespace BrandRetrieveResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -295,6 +500,132 @@ export namespace BrandRetrieveResponse {
      * Company phone number
      */
     phone?: string;
+
+    /**
+     * Language to force for the retrieved brand data.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
 
     /**
      * The brand's slogan
@@ -420,6 +751,36 @@ export namespace BrandRetrieveResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -517,7 +878,6 @@ export namespace BrandRetrieveResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -578,6 +938,7 @@ export namespace BrandRetrieveResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -790,9 +1151,40 @@ export namespace BrandRetrieveResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -816,13 +1208,42 @@ export namespace BrandRetrieveResponse {
       ticker?: string;
     }
   }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandAIProductResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandAIProductResponse.CacheMetadata;
+
+  /**
    * Whether the given URL is a product detail page
    */
   is_product_page?: boolean;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandAIProductResponse.KeyMetadata;
 
   /**
    * The detected ecommerce platform, or null if not a product page
@@ -837,6 +1258,40 @@ export interface BrandAIProductResponse {
 
 export namespace BrandAIProductResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
+
+  /**
    * The extracted product data, or null if not a product page
    */
   export interface Product {
@@ -861,6 +1316,11 @@ export namespace BrandAIProductResponse {
     name: string;
 
     /**
+     * Stock Keeping Unit (product identifier). Null if no identifier is found.
+     */
+    sku: string | null;
+
+    /**
      * Tags associated with the product
      */
     tags: Array<string>;
@@ -869,6 +1329,19 @@ export namespace BrandAIProductResponse {
      * Target audience for the product (array of strings)
      */
     target_audience: Array<string>;
+
+    /**
+     * Normalized stock or ordering availability
+     */
+    availability?:
+      | 'in_stock'
+      | 'out_of_stock'
+      | 'limited_availability'
+      | 'preorder'
+      | 'backorder'
+      | 'made_to_order'
+      | 'discontinued'
+      | null;
 
     /**
      * Billing frequency for the product
@@ -886,6 +1359,11 @@ export namespace BrandAIProductResponse {
     currency?: string | null;
 
     /**
+     * Dimension statements shown for the product, preserving labels, values, and units
+     */
+    dimensions?: Array<string>;
+
+    /**
      * URL to the product image
      */
     image_url?: string | null;
@@ -901,6 +1379,11 @@ export namespace BrandAIProductResponse {
     pricing_model?: 'per_seat' | 'flat' | 'tiered' | 'freemium' | 'custom' | null;
 
     /**
+     * Original or regular price before a displayed discount
+     */
+    regular_price?: number | null;
+
+    /**
      * URL to the product page
      */
     url?: string | null;
@@ -909,12 +1392,59 @@ export namespace BrandAIProductResponse {
 
 export interface BrandAIProductsResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandAIProductsResponse.CacheMetadata;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandAIProductsResponse.KeyMetadata;
+
+  /**
    * Array of products extracted from the website
    */
   products?: Array<BrandAIProductsResponse.Product>;
 }
 
 export namespace BrandAIProductsResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
+
   export interface Product {
     /**
      * Description of the product
@@ -937,6 +1467,11 @@ export namespace BrandAIProductsResponse {
     name: string;
 
     /**
+     * Stock Keeping Unit (product identifier). Null if no identifier is found.
+     */
+    sku: string | null;
+
+    /**
      * Tags associated with the product
      */
     tags: Array<string>;
@@ -945,6 +1480,19 @@ export namespace BrandAIProductsResponse {
      * Target audience for the product (array of strings)
      */
     target_audience: Array<string>;
+
+    /**
+     * Normalized stock or ordering availability
+     */
+    availability?:
+      | 'in_stock'
+      | 'out_of_stock'
+      | 'limited_availability'
+      | 'preorder'
+      | 'backorder'
+      | 'made_to_order'
+      | 'discontinued'
+      | null;
 
     /**
      * Billing frequency for the product
@@ -962,6 +1510,11 @@ export namespace BrandAIProductsResponse {
     currency?: string | null;
 
     /**
+     * Dimension statements shown for the product, preserving labels, values, and units
+     */
+    dimensions?: Array<string>;
+
+    /**
      * URL to the product image
      */
     image_url?: string | null;
@@ -975,6 +1528,11 @@ export namespace BrandAIProductsResponse {
      * Pricing model for the product
      */
     pricing_model?: 'per_seat' | 'flat' | 'tiered' | 'freemium' | 'custom' | null;
+
+    /**
+     * Original or regular price before a displayed discount
+     */
+    regular_price?: number | null;
 
     /**
      * URL to the product page
@@ -993,6 +1551,12 @@ export interface BrandAIQueryResponse {
    * The domain that was analyzed
    */
   domain?: string;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandAIQueryResponse.KeyMetadata;
 
   /**
    * Status of the response, e.g., 'ok'
@@ -1018,9 +1582,32 @@ export namespace BrandAIQueryResponse {
      */
     datapoint_value?: string | number | boolean | Array<string> | Array<number> | Array<unknown>;
   }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandFontsResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandFontsResponse.CacheMetadata;
+
   /**
    * HTTP status code, e.g., 200
    */
@@ -1040,9 +1627,40 @@ export interface BrandFontsResponse {
    * Status of the response, e.g., 'ok'
    */
   status: string;
+
+  /**
+   * Font assets keyed by family name as it appears in the fonts array (non-generic
+   * names only). Clients match entries in fonts to pick a file URL from files.
+   * Omitted when no families resolve to Google or custom @font-face URLs.
+   */
+  fontLinks?: { [key: string]: BrandFontsResponse.FontLinks };
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandFontsResponse.KeyMetadata;
 }
 
 export namespace BrandFontsResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   export interface Font {
     /**
      * Array of fallback font families
@@ -1079,9 +1697,55 @@ export namespace BrandFontsResponse {
      */
     uses: Array<string>;
   }
+
+  export interface FontLinks {
+    /**
+     * Upright font files keyed by weight string (e.g. "400" for regular, "500",
+     * "700"). Values are absolute URLs.
+     */
+    files: { [key: string]: string };
+
+    type: 'google' | 'custom';
+
+    /**
+     * Google Fonts category when type is google (e.g. sans-serif, serif, monospace,
+     * display, handwriting). Omitted for custom fonts when unknown.
+     */
+    category?: string;
+
+    /**
+     * Present when type is custom: human-readable name derived from the fontLinks key
+     * (strip build/hash suffixes, split camelCase / PascalCase, normalize separators).
+     * Google entries omit this.
+     */
+    displayName?: string;
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandIdentifyFromTransactionResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandIdentifyFromTransactionResponse.CacheMetadata;
+
   /**
    * Detailed brand information
    */
@@ -1093,12 +1757,36 @@ export interface BrandIdentifyFromTransactionResponse {
   code?: number;
 
   /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandIdentifyFromTransactionResponse.KeyMetadata;
+
+  /**
    * Status of the response, e.g., 'ok'
    */
   status?: string;
 }
 
 export namespace BrandIdentifyFromTransactionResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -1134,6 +1822,11 @@ export namespace BrandIdentifyFromTransactionResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -1149,7 +1842,9 @@ export namespace BrandIdentifyFromTransactionResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -1157,6 +1852,132 @@ export namespace BrandIdentifyFromTransactionResponse {
      * Company phone number
      */
     phone?: string;
+
+    /**
+     * Language to force for the retrieved brand data.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
 
     /**
      * The brand's slogan
@@ -1282,6 +2103,36 @@ export namespace BrandIdentifyFromTransactionResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -1379,7 +2230,6 @@ export namespace BrandIdentifyFromTransactionResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -1440,6 +2290,7 @@ export namespace BrandIdentifyFromTransactionResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -1652,9 +2503,40 @@ export namespace BrandIdentifyFromTransactionResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -1678,6 +2560,22 @@ export namespace BrandIdentifyFromTransactionResponse {
       ticker?: string;
     }
   }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandPrefetchResponse {
@@ -1687,6 +2585,12 @@ export interface BrandPrefetchResponse {
   domain?: string;
 
   /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandPrefetchResponse.KeyMetadata;
+
+  /**
    * Success message
    */
   message?: string;
@@ -1695,6 +2599,24 @@ export interface BrandPrefetchResponse {
    * Status of the response, e.g., 'ok'
    */
   status?: string;
+}
+
+export namespace BrandPrefetchResponse {
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandPrefetchByEmailResponse {
@@ -1704,6 +2626,12 @@ export interface BrandPrefetchByEmailResponse {
   domain?: string;
 
   /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandPrefetchByEmailResponse.KeyMetadata;
+
+  /**
    * Success message
    */
   message?: string;
@@ -1714,7 +2642,32 @@ export interface BrandPrefetchByEmailResponse {
   status?: string;
 }
 
+export namespace BrandPrefetchByEmailResponse {
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
+}
+
 export interface BrandRetrieveByEmailResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveByEmailResponse.CacheMetadata;
+
   /**
    * Detailed brand information
    */
@@ -1726,12 +2679,36 @@ export interface BrandRetrieveByEmailResponse {
   code?: number;
 
   /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandRetrieveByEmailResponse.KeyMetadata;
+
+  /**
    * Status of the response, e.g., 'ok'
    */
   status?: string;
 }
 
 export namespace BrandRetrieveByEmailResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -1767,6 +2744,11 @@ export namespace BrandRetrieveByEmailResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -1782,7 +2764,9 @@ export namespace BrandRetrieveByEmailResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -1790,6 +2774,132 @@ export namespace BrandRetrieveByEmailResponse {
      * Company phone number
      */
     phone?: string;
+
+    /**
+     * Language to force for the retrieved brand data.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
 
     /**
      * The brand's slogan
@@ -1915,6 +3025,36 @@ export namespace BrandRetrieveByEmailResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -2012,7 +3152,6 @@ export namespace BrandRetrieveByEmailResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -2073,6 +3212,7 @@ export namespace BrandRetrieveByEmailResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -2285,9 +3425,40 @@ export namespace BrandRetrieveByEmailResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -2311,9 +3482,32 @@ export namespace BrandRetrieveByEmailResponse {
       ticker?: string;
     }
   }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandRetrieveByIsinResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveByIsinResponse.CacheMetadata;
+
   /**
    * Detailed brand information
    */
@@ -2325,12 +3519,36 @@ export interface BrandRetrieveByIsinResponse {
   code?: number;
 
   /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandRetrieveByIsinResponse.KeyMetadata;
+
+  /**
    * Status of the response, e.g., 'ok'
    */
   status?: string;
 }
 
 export namespace BrandRetrieveByIsinResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -2366,6 +3584,11 @@ export namespace BrandRetrieveByIsinResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -2381,7 +3604,9 @@ export namespace BrandRetrieveByIsinResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -2389,6 +3614,132 @@ export namespace BrandRetrieveByIsinResponse {
      * Company phone number
      */
     phone?: string;
+
+    /**
+     * Language to force for the retrieved brand data.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
 
     /**
      * The brand's slogan
@@ -2514,6 +3865,36 @@ export namespace BrandRetrieveByIsinResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -2611,7 +3992,6 @@ export namespace BrandRetrieveByIsinResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -2672,6 +4052,7 @@ export namespace BrandRetrieveByIsinResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -2884,9 +4265,40 @@ export namespace BrandRetrieveByIsinResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -2910,9 +4322,32 @@ export namespace BrandRetrieveByIsinResponse {
       ticker?: string;
     }
   }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandRetrieveByNameResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveByNameResponse.CacheMetadata;
+
   /**
    * Detailed brand information
    */
@@ -2924,12 +4359,36 @@ export interface BrandRetrieveByNameResponse {
   code?: number;
 
   /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandRetrieveByNameResponse.KeyMetadata;
+
+  /**
    * Status of the response, e.g., 'ok'
    */
   status?: string;
 }
 
 export namespace BrandRetrieveByNameResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -2965,6 +4424,11 @@ export namespace BrandRetrieveByNameResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -2980,7 +4444,9 @@ export namespace BrandRetrieveByNameResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -2988,6 +4454,132 @@ export namespace BrandRetrieveByNameResponse {
      * Company phone number
      */
     phone?: string;
+
+    /**
+     * Language to force for the retrieved brand data.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
 
     /**
      * The brand's slogan
@@ -3113,6 +4705,36 @@ export namespace BrandRetrieveByNameResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -3210,7 +4832,6 @@ export namespace BrandRetrieveByNameResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -3271,6 +4892,7 @@ export namespace BrandRetrieveByNameResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -3483,9 +5105,40 @@ export namespace BrandRetrieveByNameResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -3509,9 +5162,32 @@ export namespace BrandRetrieveByNameResponse {
       ticker?: string;
     }
   }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandRetrieveByTickerResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveByTickerResponse.CacheMetadata;
+
   /**
    * Detailed brand information
    */
@@ -3523,12 +5199,36 @@ export interface BrandRetrieveByTickerResponse {
   code?: number;
 
   /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandRetrieveByTickerResponse.KeyMetadata;
+
+  /**
    * Status of the response, e.g., 'ok'
    */
   status?: string;
 }
 
 export namespace BrandRetrieveByTickerResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -3564,6 +5264,11 @@ export namespace BrandRetrieveByTickerResponse {
     email?: string;
 
     /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    employees?: Brand.Employees;
+
+    /**
      * Industry classification information for the brand
      */
     industries?: Brand.Industries;
@@ -3579,7 +5284,9 @@ export namespace BrandRetrieveByTickerResponse {
     links?: Brand.Links;
 
     /**
-     * An array of logos associated with the brand
+     * An array of logos associated with the brand. When a similarly shaped SVG variant
+     * exists, it is returned ahead of its raster equivalent; otherwise relevance order
+     * is preserved
      */
     logos?: Array<Brand.Logo>;
 
@@ -3587,6 +5294,132 @@ export namespace BrandRetrieveByTickerResponse {
      * Company phone number
      */
     phone?: string;
+
+    /**
+     * Language to force for the retrieved brand data.
+     */
+    primary_language?:
+      | 'afrikaans'
+      | 'albanian'
+      | 'amharic'
+      | 'arabic'
+      | 'armenian'
+      | 'assamese'
+      | 'aymara'
+      | 'azeri'
+      | 'basque'
+      | 'belarusian'
+      | 'bengali'
+      | 'bosnian'
+      | 'bulgarian'
+      | 'burmese'
+      | 'cantonese'
+      | 'catalan'
+      | 'cebuano'
+      | 'chinese'
+      | 'corsican'
+      | 'croatian'
+      | 'czech'
+      | 'danish'
+      | 'dutch'
+      | 'english'
+      | 'esperanto'
+      | 'estonian'
+      | 'farsi'
+      | 'fijian'
+      | 'finnish'
+      | 'french'
+      | 'galician'
+      | 'georgian'
+      | 'german'
+      | 'greek'
+      | 'guarani'
+      | 'gujarati'
+      | 'haitian-creole'
+      | 'hausa'
+      | 'hawaiian'
+      | 'hebrew'
+      | 'hindi'
+      | 'hmong'
+      | 'hungarian'
+      | 'icelandic'
+      | 'igbo'
+      | 'indonesian'
+      | 'irish'
+      | 'italian'
+      | 'japanese'
+      | 'javanese'
+      | 'kannada'
+      | 'kazakh'
+      | 'khmer'
+      | 'kinyarwanda'
+      | 'korean'
+      | 'kurdish'
+      | 'kyrgyz'
+      | 'lao'
+      | 'latin'
+      | 'latvian'
+      | 'lingala'
+      | 'lithuanian'
+      | 'luxembourgish'
+      | 'macedonian'
+      | 'malagasy'
+      | 'malay'
+      | 'malayalam'
+      | 'maltese'
+      | 'maori'
+      | 'marathi'
+      | 'mongolian'
+      | 'nepali'
+      | 'norwegian'
+      | 'odia'
+      | 'oromo'
+      | 'pashto'
+      | 'pidgin'
+      | 'polish'
+      | 'portuguese'
+      | 'punjabi'
+      | 'quechua'
+      | 'romanian'
+      | 'russian'
+      | 'samoan'
+      | 'scottish-gaelic'
+      | 'serbian'
+      | 'sesotho'
+      | 'shona'
+      | 'sindhi'
+      | 'sinhala'
+      | 'slovak'
+      | 'slovene'
+      | 'somali'
+      | 'spanish'
+      | 'sundanese'
+      | 'swahili'
+      | 'swedish'
+      | 'tagalog'
+      | 'tajik'
+      | 'tamil'
+      | 'tatar'
+      | 'telugu'
+      | 'thai'
+      | 'tibetan'
+      | 'tigrinya'
+      | 'tongan'
+      | 'tswana'
+      | 'turkish'
+      | 'turkmen'
+      | 'ukrainian'
+      | 'urdu'
+      | 'uyghur'
+      | 'uzbek'
+      | 'vietnamese'
+      | 'welsh'
+      | 'wolof'
+      | 'xhosa'
+      | 'yiddish'
+      | 'yoruba'
+      | 'zulu'
+      | null;
 
     /**
      * The brand's slogan
@@ -3712,6 +5545,36 @@ export namespace BrandRetrieveByTickerResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
+    }
+
+    /**
+     * Employee headcount information for the brand (will be null if unknown)
+     */
+    export interface Employees {
+      /**
+       * Exact employee count when a precise headcount is known
+       */
+      exact?: number;
+
+      /**
+       * Employee count range for the brand (e.g. '11 to 50')
+       */
+      range?:
+        | '1 to 10'
+        | '11 to 50'
+        | '51 to 200'
+        | '201 to 500'
+        | '501 to 1000'
+        | '1001 to 5000'
+        | '5001 to 10000'
+        | '10001+';
     }
 
     /**
@@ -3809,7 +5672,6 @@ export namespace BrandRetrieveByTickerResponse {
           | 'Streaming Platforms (Video, Music, Audio)'
           | 'Gaming & Interactive Entertainment'
           | 'Creator Economy & Influencer Platforms'
-          | 'Advertising, Adtech & Media Buying'
           | 'Film, TV & Production Studios'
           | 'Events, Venues & Live Entertainment'
           | 'Virtual Worlds & Metaverse Experiences'
@@ -3870,6 +5732,7 @@ export namespace BrandRetrieveByTickerResponse {
           | 'Streetwear & Emerging Luxury'
           | 'Couture & Made-to-Measure'
           | 'News Publishing & Journalism'
+          | 'Advertising, Adtech & Media Buying'
           | 'Digital Media & Content Platforms'
           | 'Broadcasting (TV & Radio)'
           | 'Podcasting & Audio Media'
@@ -4082,9 +5945,40 @@ export namespace BrandRetrieveByTickerResponse {
 
     export interface Social {
       /**
-       * Type of social media, e.g., 'facebook', 'twitter'
+       * Type of social media platform
        */
-      type?: string;
+      type?:
+        | 'x'
+        | 'facebook'
+        | 'instagram'
+        | 'linkedin'
+        | 'youtube'
+        | 'pinterest'
+        | 'tiktok'
+        | 'dribbble'
+        | 'github'
+        | 'behance'
+        | 'snapchat'
+        | 'whatsapp'
+        | 'telegram'
+        | 'line'
+        | 'discord'
+        | 'twitch'
+        | 'vimeo'
+        | 'imdb'
+        | 'tumblr'
+        | 'flickr'
+        | 'giphy'
+        | 'medium'
+        | 'spotify'
+        | 'soundcloud'
+        | 'tripadvisor'
+        | 'yelp'
+        | 'producthunt'
+        | 'reddit'
+        | 'crunchbase'
+        | 'appstore'
+        | 'playstore';
 
       /**
        * URL of the social media page
@@ -4107,6 +6001,22 @@ export namespace BrandRetrieveByTickerResponse {
        */
       ticker?: string;
     }
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
   }
 }
 
@@ -4120,6 +6030,12 @@ export interface BrandRetrieveNaicsResponse {
    * Domain found for the brand
    */
   domain?: string;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandRetrieveNaicsResponse.KeyMetadata;
 
   /**
    * Status of the response, e.g., 'ok'
@@ -4149,9 +6065,32 @@ export namespace BrandRetrieveNaicsResponse {
      */
     name: string;
   }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandRetrieveSimplifiedResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveSimplifiedResponse.CacheMetadata;
+
   /**
    * Simplified brand information
    */
@@ -4163,12 +6102,36 @@ export interface BrandRetrieveSimplifiedResponse {
   code?: number;
 
   /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandRetrieveSimplifiedResponse.KeyMetadata;
+
+  /**
    * Status of the response, e.g., 'ok'
    */
   status?: string;
 }
 
 export namespace BrandRetrieveSimplifiedResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Simplified brand information
    */
@@ -4261,6 +6224,13 @@ export namespace BrandRetrieveSimplifiedResponse {
        * Name of the color
        */
       name?: string;
+
+      /**
+       * Where the color was observed: 'site' colors come from the website's own theme
+       * signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+       * logo image pixels.
+       */
+      source?: 'site' | 'logo';
     }
 
     export interface Logo {
@@ -4326,9 +6296,32 @@ export namespace BrandRetrieveSimplifiedResponse {
       }
     }
   }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandScreenshotResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandScreenshotResponse.CacheMetadata;
+
   /**
    * HTTP status code
    */
@@ -4340,7 +6333,19 @@ export interface BrandScreenshotResponse {
   domain?: string;
 
   /**
-   * Public URL of the uploaded screenshot image
+   * Height in pixels of the returned screenshot image
+   */
+  height?: number;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandScreenshotResponse.KeyMetadata;
+
+  /**
+   * Public image URL for standard requests, or an in-memory data URL when ZDR is
+   * enabled.
    */
   screenshot?: string;
 
@@ -4353,9 +6358,57 @@ export interface BrandScreenshotResponse {
    * Status of the response, e.g., 'ok'
    */
   status?: string;
+
+  /**
+   * Width in pixels of the returned screenshot image
+   */
+  width?: number;
+}
+
+export namespace BrandScreenshotResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandStyleguideResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandStyleguideResponse.CacheMetadata;
+
   /**
    * HTTP status code
    */
@@ -4365,6 +6418,12 @@ export interface BrandStyleguideResponse {
    * The normalized domain that was processed
    */
   domain?: string;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandStyleguideResponse.KeyMetadata;
 
   /**
    * Status of the response, e.g., 'ok'
@@ -4378,6 +6437,40 @@ export interface BrandStyleguideResponse {
 }
 
 export namespace BrandStyleguideResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
+
   /**
    * Comprehensive styleguide data extracted from the website
    */
@@ -4396,6 +6489,13 @@ export namespace BrandStyleguideResponse {
      * Spacing system used on the website
      */
     elementSpacing: Styleguide.ElementSpacing;
+
+    /**
+     * Font assets keyed by family name as it appears in fontFamily/fontFallbacks
+     * (non-generic names only). Clients match typography.fontFamily / fontWeight or
+     * button styles to pick a file URL from files.
+     */
+    fontLinks: { [key: string]: Styleguide.FontLinks };
 
     /**
      * The primary color mode of the website design
@@ -4692,6 +6792,29 @@ export namespace BrandStyleguideResponse {
       xs: string;
     }
 
+    export interface FontLinks {
+      /**
+       * Upright font files keyed by weight string (e.g. "400" for regular, "500",
+       * "700"). Values are absolute URLs.
+       */
+      files: { [key: string]: string };
+
+      type: 'google' | 'custom';
+
+      /**
+       * Google Fonts category when type is google (e.g. sans-serif, serif, monospace,
+       * display, handwriting). Omitted for custom fonts when unknown.
+       */
+      category?: string;
+
+      /**
+       * Present when type is custom: human-readable name derived from the fontLinks key
+       * (strip build/hash suffixes, split camelCase / PascalCase, normalize separators).
+       * Google entries omit this.
+       */
+      displayName?: string;
+    }
+
     /**
      * Shadow styles used on the website
      */
@@ -4840,69 +6963,455 @@ export namespace BrandStyleguideResponse {
 
 export interface BrandWebScrapeHTMLResponse {
   /**
-   * Raw HTML content of the page
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandWebScrapeHTMLResponse.CacheMetadata;
+
+  /**
+   * The scraped content of the page. For normal pages this is the raw HTML. When the
+   * page is a sitemap or feed served behind an XSL stylesheet (which browsers render
+   * into HTML), this is the underlying XML instead — see the `type` field.
    */
   html: string;
 
   /**
+   * Metadata extracted from the scraped page HTML.
+   */
+  metadata: BrandWebScrapeHTMLResponse.Metadata;
+
+  /**
    * Indicates success
    */
   success: true;
 
   /**
+   * Detected content type of the returned `html` field. Sitemaps and feeds are
+   * surfaced as `xml`; ordinary pages are `html`. Excel workbooks are surfaced as
+   * `xlsx`/`xls` with the extracted sheets as HTML tables; PowerPoint presentations
+   * are surfaced as `pptx`/`ppt` with the extracted slides as HTML.
+   */
+  type:
+    | 'html'
+    | 'xml'
+    | 'json'
+    | 'text'
+    | 'csv'
+    | 'markdown'
+    | 'svg'
+    | 'pdf'
+    | 'docx'
+    | 'doc'
+    | 'xlsx'
+    | 'xls'
+    | 'pptx'
+    | 'ppt';
+
+  /**
    * The URL that was scraped
    */
   url: string;
+
+  /**
+   * One verified outcome per requested browser action, in request order.
+   */
+  actionsApplied?: Array<BrandWebScrapeHTMLResponse.ActionsApplied>;
+
+  /**
+   * True when an action was applied but the returned content could not be refreshed
+   * afterward.
+   */
+  actionsHtmlStale?: boolean;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandWebScrapeHTMLResponse.KeyMetadata;
+}
+
+export namespace BrandWebScrapeHTMLResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
+  /**
+   * Metadata extracted from the scraped page HTML.
+   */
+  export interface Metadata {
+    /**
+     * Final URL scraped after redirects or scraper fallback, when known. Falls back to
+     * sourceUrl when unavailable.
+     */
+    finalUrl: string;
+
+    /**
+     * Original URL requested by the caller.
+     */
+    sourceUrl: string;
+
+    /**
+     * Additional non-social meta tags not promoted to top-level metadata fields.
+     */
+    additionalMeta?: { [key: string]: string | Array<string> };
+
+    /**
+     * Resolved alternate links from link rel=alternate tags.
+     */
+    alternates?: Array<Metadata.Alternate>;
+
+    /**
+     * Author metadata, when present.
+     */
+    author?: string;
+
+    /**
+     * Resolved canonical URL, when present.
+     */
+    canonicalUrl?: string;
+
+    /**
+     * Best description extracted from standard, Open Graph, or Twitter metadata.
+     */
+    description?: string;
+
+    /**
+     * Resolved favicon URL, when present.
+     */
+    favicon?: string;
+
+    /**
+     * Page headings (h1–h6) in document order, extracted from the unfiltered document.
+     * Capped at the first 500 headings. Omitted when the page has none.
+     */
+    headings?: Array<Metadata.Heading>;
+
+    /**
+     * Primary resolved preview image from Open Graph, Twitter, or image metadata.
+     */
+    image?: string;
+
+    /**
+     * JSON-LD structured data blocks parsed from the page.
+     */
+    jsonLd?: Array<{ [key: string]: unknown }>;
+
+    /**
+     * Keywords extracted from the page's keywords meta tag.
+     */
+    keywords?: Array<string>;
+
+    /**
+     * Language extracted from html lang or language meta tags.
+     */
+    language?: string;
+
+    /**
+     * Modified timestamp/date from page metadata, when present.
+     */
+    modifiedTime?: string;
+
+    /**
+     * Open Graph metadata with the og: prefix removed and keys camel-cased.
+     */
+    openGraph?: { [key: string]: string | Array<string> };
+
+    /**
+     * Published timestamp/date from page metadata, when present.
+     */
+    publishedTime?: string;
+
+    /**
+     * Robots meta directive, when present.
+     */
+    robots?: string;
+
+    /**
+     * Site or application name from page metadata.
+     */
+    siteName?: string;
+
+    /**
+     * Best title extracted from the page.
+     */
+    title?: string;
+
+    /**
+     * Twitter card metadata with the twitter: prefix removed and keys camel-cased.
+     */
+    twitter?: { [key: string]: string | Array<string> };
+  }
+
+  export namespace Metadata {
+    export interface Alternate {
+      /**
+       * Resolved alternate URL.
+       */
+      href: string;
+
+      /**
+       * Language or locale for the alternate URL, when present.
+       */
+      hreflang?: string;
+
+      /**
+       * Alternate resource title, when present.
+       */
+      title?: string;
+
+      /**
+       * Alternate resource MIME type, when present.
+       */
+      type?: string;
+    }
+
+    export interface Heading {
+      /**
+       * Heading level, 1–6 (from h1–h6).
+       */
+      level: number;
+
+      /**
+       * Heading text with whitespace collapsed, truncated to 1000 characters.
+       */
+      text: string;
+    }
+  }
+
+  export interface ActionsApplied {
+    instruction: string;
+
+    /**
+     * Applied means the requested page state was visibly verified. Failed means it was
+     * not verified. Skipped means it was not attempted.
+     */
+    status: 'applied' | 'failed' | 'skipped';
+
+    /**
+     * Visible page evidence used to verify an applied action.
+     */
+    completionEvidence?: string;
+
+    durationMs?: number;
+
+    error?: string;
+
+    method?: string;
+
+    targetDescription?: string;
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandWebScrapeImagesResponse {
   /**
-   * Array of scraped images
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandWebScrapeImagesResponse.CacheMetadata;
+
+  /**
+   * Images found on the page.
    */
   images: Array<BrandWebScrapeImagesResponse.Image>;
 
   /**
-   * Indicates success
+   * Always true on success.
    */
   success: true;
 
   /**
-   * The URL that was scraped
+   * Page URL that was scraped.
    */
   url: string;
+
+  /**
+   * One verified outcome per requested browser action, in request order.
+   */
+  actionsApplied?: Array<BrandWebScrapeImagesResponse.ActionsApplied>;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandWebScrapeImagesResponse.KeyMetadata;
 }
 
 export namespace BrandWebScrapeImagesResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   export interface Image {
     /**
-     * Alt text of the image, or null if not present
+     * Image alt text, or null when unavailable.
      */
     alt: string | null;
 
     /**
-     * The HTML element the image was found in
+     * Where the image was found.
      */
     element: 'img' | 'svg' | 'link' | 'source' | 'video' | 'css' | 'object' | 'meta' | 'background';
 
     /**
-     * The image source - can be a URL, inline HTML (for SVGs), or a base64 data URI
+     * Original image value: URL, inline SVG or HTML, or base64 data URI.
      */
     src: string;
 
     /**
-     * The type/format of the src value
+     * Format of src.
      */
     type: 'url' | 'html' | 'base64';
+
+    /**
+     * Requested metadata for images that could be processed.
+     */
+    enrichment?: Image.Enrichment;
+  }
+
+  export namespace Image {
+    /**
+     * Requested metadata for images that could be processed.
+     */
+    export interface Enrichment {
+      /**
+       * Image height in pixels, when measured.
+       */
+      height?: number;
+
+      /**
+       * Detected MIME type, when hosted.
+       */
+      mimetype?: string;
+
+      /**
+       * Visual asset category, when classified.
+       */
+      type?: 'photography' | 'illustration' | 'logo' | 'wordmark' | 'icon' | 'pattern' | 'graphic' | 'other';
+
+      /**
+       * Brand.dev CDN URL, when hosted.
+       */
+      url?: string;
+
+      /**
+       * Image width in pixels, when measured.
+       */
+      width?: number;
+    }
+  }
+
+  export interface ActionsApplied {
+    instruction: string;
+
+    /**
+     * Applied means the requested page state was visibly verified. Failed means it was
+     * not verified. Skipped means it was not attempted.
+     */
+    status: 'applied' | 'failed' | 'skipped';
+
+    /**
+     * Visible page evidence used to verify an applied action.
+     */
+    completionEvidence?: string;
+
+    durationMs?: number;
+
+    error?: string;
+
+    method?: string;
+
+    targetDescription?: string;
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
   }
 }
 
 export interface BrandWebScrapeMdResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandWebScrapeMdResponse.CacheMetadata;
+
+  /**
+   * UTF-8 byte length of the returned Markdown. Use 0 to identify an empty result
+   * and compare small values against your workload's minimum useful-content
+   * threshold.
+   */
+  contentLength: number;
+
   /**
    * Page content converted to GitHub Flavored Markdown
    */
   markdown: string;
 
   /**
+   * Metadata extracted from the scraped page HTML.
+   */
+  metadata: BrandWebScrapeMdResponse.Metadata;
+
+  /**
    * Indicates success
    */
   success: true;
@@ -4911,6 +7420,232 @@ export interface BrandWebScrapeMdResponse {
    * The URL that was scraped
    */
   url: string;
+
+  /**
+   * One verified outcome per requested browser action, in request order.
+   */
+  actionsApplied?: Array<BrandWebScrapeMdResponse.ActionsApplied>;
+
+  /**
+   * True when an action was applied but the returned content could not be refreshed
+   * afterward.
+   */
+  actionsHtmlStale?: boolean;
+
+  /**
+   * Only present when includeHTML=true: the page HTML the Markdown was converted
+   * from — the same body the Scrape HTML endpoint returns for the equivalent
+   * request.
+   */
+  html?: string;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandWebScrapeMdResponse.KeyMetadata;
+}
+
+export namespace BrandWebScrapeMdResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
+  /**
+   * Metadata extracted from the scraped page HTML.
+   */
+  export interface Metadata {
+    /**
+     * Final URL scraped after redirects or scraper fallback, when known. Falls back to
+     * sourceUrl when unavailable.
+     */
+    finalUrl: string;
+
+    /**
+     * Original URL requested by the caller.
+     */
+    sourceUrl: string;
+
+    /**
+     * Additional non-social meta tags not promoted to top-level metadata fields.
+     */
+    additionalMeta?: { [key: string]: string | Array<string> };
+
+    /**
+     * Resolved alternate links from link rel=alternate tags.
+     */
+    alternates?: Array<Metadata.Alternate>;
+
+    /**
+     * Author metadata, when present.
+     */
+    author?: string;
+
+    /**
+     * Resolved canonical URL, when present.
+     */
+    canonicalUrl?: string;
+
+    /**
+     * Best description extracted from standard, Open Graph, or Twitter metadata.
+     */
+    description?: string;
+
+    /**
+     * Resolved favicon URL, when present.
+     */
+    favicon?: string;
+
+    /**
+     * Page headings (h1–h6) in document order, extracted from the unfiltered document.
+     * Capped at the first 500 headings. Omitted when the page has none.
+     */
+    headings?: Array<Metadata.Heading>;
+
+    /**
+     * Primary resolved preview image from Open Graph, Twitter, or image metadata.
+     */
+    image?: string;
+
+    /**
+     * JSON-LD structured data blocks parsed from the page.
+     */
+    jsonLd?: Array<{ [key: string]: unknown }>;
+
+    /**
+     * Keywords extracted from the page's keywords meta tag.
+     */
+    keywords?: Array<string>;
+
+    /**
+     * Language extracted from html lang or language meta tags.
+     */
+    language?: string;
+
+    /**
+     * Modified timestamp/date from page metadata, when present.
+     */
+    modifiedTime?: string;
+
+    /**
+     * Open Graph metadata with the og: prefix removed and keys camel-cased.
+     */
+    openGraph?: { [key: string]: string | Array<string> };
+
+    /**
+     * Published timestamp/date from page metadata, when present.
+     */
+    publishedTime?: string;
+
+    /**
+     * Robots meta directive, when present.
+     */
+    robots?: string;
+
+    /**
+     * Site or application name from page metadata.
+     */
+    siteName?: string;
+
+    /**
+     * Best title extracted from the page.
+     */
+    title?: string;
+
+    /**
+     * Twitter card metadata with the twitter: prefix removed and keys camel-cased.
+     */
+    twitter?: { [key: string]: string | Array<string> };
+  }
+
+  export namespace Metadata {
+    export interface Alternate {
+      /**
+       * Resolved alternate URL.
+       */
+      href: string;
+
+      /**
+       * Language or locale for the alternate URL, when present.
+       */
+      hreflang?: string;
+
+      /**
+       * Alternate resource title, when present.
+       */
+      title?: string;
+
+      /**
+       * Alternate resource MIME type, when present.
+       */
+      type?: string;
+    }
+
+    export interface Heading {
+      /**
+       * Heading level, 1–6 (from h1–h6).
+       */
+      level: number;
+
+      /**
+       * Heading text with whitespace collapsed, truncated to 1000 characters.
+       */
+      text: string;
+    }
+  }
+
+  export interface ActionsApplied {
+    instruction: string;
+
+    /**
+     * Applied means the requested page state was visibly verified. Failed means it was
+     * not verified. Skipped means it was not attempted.
+     */
+    status: 'applied' | 'failed' | 'skipped';
+
+    /**
+     * Visible page evidence used to verify an applied action.
+     */
+    completionEvidence?: string;
+
+    durationMs?: number;
+
+    error?: string;
+
+    method?: string;
+
+    targetDescription?: string;
+  }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandWebScrapeSitemapResponse {
@@ -4930,9 +7665,16 @@ export interface BrandWebScrapeSitemapResponse {
   success: true;
 
   /**
-   * Array of discovered page URLs from the sitemap (max 500)
+   * Discovered page URLs from the sitemap, up to `maxLinks`. When `search` is set
+   * these are only the matching pages, most relevant first.
    */
   urls: Array<string>;
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  key_metadata?: BrandWebScrapeSitemapResponse.KeyMetadata;
 }
 
 export namespace BrandWebScrapeSitemapResponse {
@@ -4960,6 +7702,22 @@ export namespace BrandWebScrapeSitemapResponse {
      */
     sitemapsSkipped: number;
   }
+
+  /**
+   * Metadata about the API key used for the request. Included in every response
+   * whenever a valid API key is provided, even when the response status is not 200.
+   */
+  export interface KeyMetadata {
+    /**
+     * The number of credits consumed by this request.
+     */
+    credits_consumed: number;
+
+    /**
+     * The number of credits remaining for your organization after this request.
+     */
+    credits_remaining: number;
+  }
 }
 
 export interface BrandRetrieveParams {
@@ -4967,68 +7725,141 @@ export interface BrandRetrieveParams {
    * Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
    * Cannot be used with name or ticker parameters.
    */
-  domain: string;
+  domain?: string;
 
   /**
-   * Optional parameter to force the language of the retrieved brand data. Works with
-   * all three lookup methods.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu'
+    | null;
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number | null;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
@@ -5036,6 +7867,102 @@ export interface BrandRetrieveParams {
    * less comprehensive data. Works with all three lookup methods.
    */
   maxSpeed?: boolean;
+
+  /**
+   * Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
+   * domain or ticker parameters.
+   */
+  name?: string;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Stock ticker symbol to retrieve brand data for (e.g., 'AAPL'). Cannot be used
+   * with domain or name parameters.
+   */
+  ticker?: string;
+
+  /**
+   * Stock exchange code.
+   */
+  ticker_exchange?:
+    | 'AMEX'
+    | 'AMS'
+    | 'AQS'
+    | 'ASX'
+    | 'ATH'
+    | 'BER'
+    | 'BME'
+    | 'BRU'
+    | 'BSE'
+    | 'BUD'
+    | 'BUE'
+    | 'BVC'
+    | 'CBOE'
+    | 'CNQ'
+    | 'CPH'
+    | 'DFM'
+    | 'DOH'
+    | 'DUB'
+    | 'DUS'
+    | 'DXE'
+    | 'EGX'
+    | 'FSX'
+    | 'HAM'
+    | 'HEL'
+    | 'HKSE'
+    | 'HOSE'
+    | 'ICE'
+    | 'IOB'
+    | 'IST'
+    | 'JKT'
+    | 'JNB'
+    | 'JPX'
+    | 'KLS'
+    | 'KOE'
+    | 'KSC'
+    | 'KUW'
+    | 'LIS'
+    | 'LSE'
+    | 'MCX'
+    | 'MEX'
+    | 'MIL'
+    | 'MUN'
+    | 'NASDAQ'
+    | 'NEO'
+    | 'NSE'
+    | 'NYSE'
+    | 'NZE'
+    | 'OSL'
+    | 'OTC'
+    | 'PAR'
+    | 'PNK'
+    | 'PRA'
+    | 'RIS'
+    | 'SAO'
+    | 'SAU'
+    | 'SES'
+    | 'SET'
+    | 'SGO'
+    | 'SHH'
+    | 'SHZ'
+    | 'SIX'
+    | 'STO'
+    | 'STU'
+    | 'TAI'
+    | 'TAL'
+    | 'TLV'
+    | 'TSX'
+    | 'TSXV'
+    | 'TWO'
+    | 'VIE'
+    | 'WSE'
+    | 'XETRA';
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -5052,8 +7979,21 @@ export interface BrandAIProductParams {
   url: string;
 
   /**
-   * Optional timeout in milliseconds for the request. Maximum allowed value is
-   * 300000ms (5 minutes).
+   * Return a cached result if a prior scrape for the same parameters exists and is
+   * younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+   * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+   */
+  maxAgeMs?: number;
+
+  /**
+   * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
    */
   timeoutMS?: number;
 }
@@ -5068,13 +8008,26 @@ export declare namespace BrandAIProductsParams {
     domain: string;
 
     /**
+     * Return a cached result if a prior scrape for the same parameters exists and is
+     * younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+     * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+     */
+    maxAgeMs?: number;
+
+    /**
      * Maximum number of products to extract.
      */
     maxProducts?: number;
 
     /**
-     * Optional timeout in milliseconds for the request. Maximum allowed value is
-     * 300000ms (5 minutes).
+     * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+     */
+    tags?: Array<string>;
+
+    /**
+     * Optional timeout in milliseconds for the request. If the request takes longer
+     * than this value, it will be aborted with a 408 status code. Maximum allowed
+     * value is 300000ms (5 minutes).
      */
     timeoutMS?: number;
   }
@@ -5087,13 +8040,26 @@ export declare namespace BrandAIProductsParams {
     directUrl: string;
 
     /**
+     * Return a cached result if a prior scrape for the same parameters exists and is
+     * younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+     * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+     */
+    maxAgeMs?: number;
+
+    /**
      * Maximum number of products to extract.
      */
     maxProducts?: number;
 
     /**
-     * Optional timeout in milliseconds for the request. Maximum allowed value is
-     * 300000ms (5 minutes).
+     * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+     */
+    tags?: Array<string>;
+
+    /**
+     * Optional timeout in milliseconds for the request. If the request takes longer
+     * than this value, it will be aborted with a 408 status code. Maximum allowed
+     * value is 300000ms (5 minutes).
      */
     timeoutMS?: number;
   }
@@ -5114,6 +8080,11 @@ export interface BrandAIQueryParams {
    * Optional object specifying which pages to analyze
    */
   specific_pages?: BrandAIQueryParams.SpecificPages;
+
+  /**
+   * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -5211,10 +8182,33 @@ export namespace BrandAIQueryParams {
 
 export interface BrandFontsParams {
   /**
-   * Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
-   * domain will be automatically normalized and validated.
+   * A specific URL to fetch fonts from directly, bypassing domain resolution (e.g.,
+   * 'https://example.com/design-system'). When provided, fonts are extracted from
+   * this exact URL. You must provide either 'domain' or 'directUrl', but not both.
    */
-  domain: string;
+  directUrl?: string;
+
+  /**
+   * Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
+   * domain will be automatically normalized and validated. You must provide either
+   * 'domain' or 'directUrl', but not both.
+   */
+  domain?: string;
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number | null;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -5236,314 +8230,379 @@ export interface BrandIdentifyFromTransactionParams {
   city?: string;
 
   /**
-   * Optional country code (GL parameter) to specify the country. This affects the
-   * geographic location used for search queries.
+   * Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+   * search.
    */
   country_gl?:
-    | 'ad'
-    | 'ae'
     | 'af'
-    | 'ag'
-    | 'ai'
     | 'al'
-    | 'am'
-    | 'an'
-    | 'ao'
-    | 'aq'
-    | 'ar'
+    | 'dz'
     | 'as'
-    | 'at'
-    | 'au'
+    | 'ad'
+    | 'ao'
+    | 'ai'
+    | 'aq'
+    | 'ag'
+    | 'ar'
+    | 'am'
     | 'aw'
+    | 'au'
+    | 'at'
     | 'az'
-    | 'ba'
-    | 'bb'
-    | 'bd'
-    | 'be'
-    | 'bf'
-    | 'bg'
+    | 'bs'
     | 'bh'
-    | 'bi'
+    | 'bd'
+    | 'bb'
+    | 'by'
+    | 'be'
+    | 'bz'
     | 'bj'
     | 'bm'
-    | 'bn'
-    | 'bo'
-    | 'br'
-    | 'bs'
     | 'bt'
-    | 'bv'
+    | 'bo'
+    | 'ba'
     | 'bw'
-    | 'by'
-    | 'bz'
-    | 'ca'
-    | 'cc'
-    | 'cd'
-    | 'cf'
-    | 'cg'
-    | 'ch'
-    | 'ci'
-    | 'ck'
-    | 'cl'
+    | 'bv'
+    | 'br'
+    | 'io'
+    | 'bn'
+    | 'bg'
+    | 'bf'
+    | 'bi'
+    | 'kh'
     | 'cm'
-    | 'cn'
-    | 'co'
-    | 'cr'
-    | 'cu'
+    | 'ca'
     | 'cv'
+    | 'ky'
+    | 'cf'
+    | 'td'
+    | 'cl'
+    | 'cn'
     | 'cx'
+    | 'cc'
+    | 'co'
+    | 'km'
+    | 'cg'
+    | 'cd'
+    | 'ck'
+    | 'cr'
+    | 'ci'
+    | 'hr'
+    | 'cu'
     | 'cy'
     | 'cz'
-    | 'de'
-    | 'dj'
     | 'dk'
+    | 'dj'
     | 'dm'
     | 'do'
-    | 'dz'
     | 'ec'
-    | 'ee'
     | 'eg'
-    | 'eh'
+    | 'sv'
+    | 'gq'
     | 'er'
-    | 'es'
+    | 'ee'
     | 'et'
-    | 'fi'
-    | 'fj'
     | 'fk'
-    | 'fm'
     | 'fo'
+    | 'fj'
+    | 'fi'
     | 'fr'
-    | 'ga'
-    | 'gb'
-    | 'gd'
-    | 'ge'
     | 'gf'
+    | 'pf'
+    | 'tf'
+    | 'ga'
+    | 'gm'
+    | 'ge'
+    | 'de'
     | 'gh'
     | 'gi'
-    | 'gl'
-    | 'gm'
-    | 'gn'
-    | 'gp'
-    | 'gq'
     | 'gr'
-    | 'gs'
-    | 'gt'
+    | 'gl'
+    | 'gd'
+    | 'gp'
     | 'gu'
+    | 'gt'
+    | 'gn'
     | 'gw'
     | 'gy'
-    | 'hk'
-    | 'hm'
-    | 'hn'
-    | 'hr'
     | 'ht'
+    | 'hm'
+    | 'va'
+    | 'hn'
+    | 'hk'
     | 'hu'
+    | 'is'
+    | 'in'
     | 'id'
+    | 'ir'
+    | 'iq'
     | 'ie'
     | 'il'
-    | 'in'
-    | 'io'
-    | 'iq'
-    | 'ir'
-    | 'is'
     | 'it'
     | 'jm'
-    | 'jo'
     | 'jp'
+    | 'jo'
+    | 'kz'
     | 'ke'
-    | 'kg'
-    | 'kh'
     | 'ki'
-    | 'km'
-    | 'kn'
     | 'kp'
     | 'kr'
     | 'kw'
-    | 'ky'
-    | 'kz'
+    | 'kg'
     | 'la'
+    | 'lv'
     | 'lb'
-    | 'lc'
-    | 'li'
-    | 'lk'
-    | 'lr'
     | 'ls'
+    | 'lr'
+    | 'ly'
+    | 'li'
     | 'lt'
     | 'lu'
-    | 'lv'
-    | 'ly'
-    | 'ma'
-    | 'mc'
-    | 'md'
-    | 'mg'
-    | 'mh'
-    | 'mk'
-    | 'ml'
-    | 'mm'
-    | 'mn'
     | 'mo'
-    | 'mp'
+    | 'mk'
+    | 'mg'
+    | 'mw'
+    | 'my'
+    | 'mv'
+    | 'ml'
+    | 'mt'
+    | 'mh'
     | 'mq'
     | 'mr'
-    | 'ms'
-    | 'mt'
     | 'mu'
-    | 'mv'
-    | 'mw'
+    | 'yt'
     | 'mx'
-    | 'my'
+    | 'fm'
+    | 'md'
+    | 'mc'
+    | 'mn'
+    | 'ms'
+    | 'ma'
     | 'mz'
+    | 'mm'
     | 'na'
-    | 'nc'
-    | 'ne'
-    | 'nf'
-    | 'ng'
-    | 'ni'
-    | 'nl'
-    | 'no'
-    | 'np'
     | 'nr'
-    | 'nu'
+    | 'np'
+    | 'nl'
+    | 'an'
+    | 'nc'
     | 'nz'
+    | 'ni'
+    | 'ne'
+    | 'ng'
+    | 'nu'
+    | 'nf'
+    | 'mp'
+    | 'no'
     | 'om'
-    | 'pa'
-    | 'pe'
-    | 'pf'
-    | 'pg'
-    | 'ph'
     | 'pk'
-    | 'pl'
-    | 'pm'
-    | 'pn'
-    | 'pr'
-    | 'ps'
-    | 'pt'
     | 'pw'
+    | 'ps'
+    | 'pa'
+    | 'pg'
     | 'py'
+    | 'pe'
+    | 'ph'
+    | 'pn'
+    | 'pl'
+    | 'pt'
+    | 'pr'
     | 'qa'
     | 're'
     | 'ro'
-    | 'rs'
     | 'ru'
     | 'rw'
-    | 'sa'
-    | 'sb'
-    | 'sc'
-    | 'sd'
-    | 'se'
-    | 'sg'
     | 'sh'
-    | 'si'
-    | 'sj'
-    | 'sk'
-    | 'sl'
+    | 'kn'
+    | 'lc'
+    | 'pm'
+    | 'vc'
+    | 'ws'
     | 'sm'
-    | 'sn'
-    | 'so'
-    | 'sr'
     | 'st'
-    | 'sv'
-    | 'sy'
+    | 'sa'
+    | 'sn'
+    | 'rs'
+    | 'sc'
+    | 'sl'
+    | 'sg'
+    | 'sk'
+    | 'si'
+    | 'sb'
+    | 'so'
+    | 'za'
+    | 'gs'
+    | 'es'
+    | 'lk'
+    | 'sd'
+    | 'sr'
+    | 'sj'
     | 'sz'
-    | 'tc'
-    | 'td'
-    | 'tf'
-    | 'tg'
-    | 'th'
-    | 'tj'
-    | 'tk'
-    | 'tl'
-    | 'tm'
-    | 'tn'
-    | 'to'
-    | 'tr'
-    | 'tt'
-    | 'tv'
+    | 'se'
+    | 'ch'
+    | 'sy'
     | 'tw'
+    | 'tj'
     | 'tz'
-    | 'ua'
+    | 'th'
+    | 'tl'
+    | 'tg'
+    | 'tk'
+    | 'to'
+    | 'tt'
+    | 'tn'
+    | 'tr'
+    | 'tm'
+    | 'tc'
+    | 'tv'
     | 'ug'
-    | 'um'
+    | 'ua'
+    | 'ae'
+    | 'gb'
     | 'us'
+    | 'um'
     | 'uy'
     | 'uz'
-    | 'va'
-    | 'vc'
+    | 'vu'
     | 've'
+    | 'vn'
     | 'vg'
     | 'vi'
-    | 'vn'
-    | 'vu'
     | 'wf'
-    | 'ws'
+    | 'eh'
     | 'ye'
-    | 'yt'
-    | 'za'
     | 'zm'
     | 'zw';
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu'
+    | null;
 
   /**
    * When set to true, the API will perform an additional verification steps to
    * ensure the identified brand matches the transaction with high confidence.
-   * Defaults to false.
    */
   high_confidence_only?: boolean;
 
@@ -5558,12 +8617,19 @@ export interface BrandIdentifyFromTransactionParams {
    * Optional Merchant Category Code (MCC) to help identify the business
    * category/industry.
    */
-  mcc?: string;
+  mcc?: string | number;
 
   /**
    * Optional phone number from the transaction to help verify brand match.
    */
-  phone?: number;
+  phone?: string | number;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -5578,6 +8644,11 @@ export interface BrandPrefetchParams {
    * Domain name to prefetch brand data for
    */
   domain: string;
+
+  /**
+   * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -5596,6 +8667,11 @@ export interface BrandPrefetchByEmailParams {
   email: string;
 
   /**
+   * Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
    * Optional timeout in milliseconds for the request. If the request takes longer
    * than this value, it will be aborted with a 408 status code. Maximum allowed
    * value is 300000ms (5 minutes).
@@ -5612,64 +8688,138 @@ export interface BrandRetrieveByEmailParams {
   email: string;
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu'
+    | null;
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number | null;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
@@ -5677,6 +8827,13 @@ export interface BrandRetrieveByEmailParams {
    * less comprehensive data.
    */
   maxSpeed?: boolean;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -5695,64 +8852,138 @@ export interface BrandRetrieveByIsinParams {
   isin: string;
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu'
+    | null;
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number | null;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
@@ -5760,6 +8991,13 @@ export interface BrandRetrieveByIsinParams {
    * less comprehensive data.
    */
   maxSpeed?: boolean;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -5777,309 +9015,383 @@ export interface BrandRetrieveByNameParams {
   name: string;
 
   /**
-   * Optional country code (GL parameter) to specify the country. This affects the
-   * geographic location used for search queries.
+   * Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+   * search.
    */
   country_gl?:
-    | 'ad'
-    | 'ae'
     | 'af'
-    | 'ag'
-    | 'ai'
     | 'al'
-    | 'am'
-    | 'an'
-    | 'ao'
-    | 'aq'
-    | 'ar'
+    | 'dz'
     | 'as'
-    | 'at'
-    | 'au'
+    | 'ad'
+    | 'ao'
+    | 'ai'
+    | 'aq'
+    | 'ag'
+    | 'ar'
+    | 'am'
     | 'aw'
+    | 'au'
+    | 'at'
     | 'az'
-    | 'ba'
-    | 'bb'
-    | 'bd'
-    | 'be'
-    | 'bf'
-    | 'bg'
+    | 'bs'
     | 'bh'
-    | 'bi'
+    | 'bd'
+    | 'bb'
+    | 'by'
+    | 'be'
+    | 'bz'
     | 'bj'
     | 'bm'
-    | 'bn'
-    | 'bo'
-    | 'br'
-    | 'bs'
     | 'bt'
-    | 'bv'
+    | 'bo'
+    | 'ba'
     | 'bw'
-    | 'by'
-    | 'bz'
-    | 'ca'
-    | 'cc'
-    | 'cd'
-    | 'cf'
-    | 'cg'
-    | 'ch'
-    | 'ci'
-    | 'ck'
-    | 'cl'
+    | 'bv'
+    | 'br'
+    | 'io'
+    | 'bn'
+    | 'bg'
+    | 'bf'
+    | 'bi'
+    | 'kh'
     | 'cm'
-    | 'cn'
-    | 'co'
-    | 'cr'
-    | 'cu'
+    | 'ca'
     | 'cv'
+    | 'ky'
+    | 'cf'
+    | 'td'
+    | 'cl'
+    | 'cn'
     | 'cx'
+    | 'cc'
+    | 'co'
+    | 'km'
+    | 'cg'
+    | 'cd'
+    | 'ck'
+    | 'cr'
+    | 'ci'
+    | 'hr'
+    | 'cu'
     | 'cy'
     | 'cz'
-    | 'de'
-    | 'dj'
     | 'dk'
+    | 'dj'
     | 'dm'
     | 'do'
-    | 'dz'
     | 'ec'
-    | 'ee'
     | 'eg'
-    | 'eh'
+    | 'sv'
+    | 'gq'
     | 'er'
-    | 'es'
+    | 'ee'
     | 'et'
-    | 'fi'
-    | 'fj'
     | 'fk'
-    | 'fm'
     | 'fo'
+    | 'fj'
+    | 'fi'
     | 'fr'
-    | 'ga'
-    | 'gb'
-    | 'gd'
-    | 'ge'
     | 'gf'
+    | 'pf'
+    | 'tf'
+    | 'ga'
+    | 'gm'
+    | 'ge'
+    | 'de'
     | 'gh'
     | 'gi'
-    | 'gl'
-    | 'gm'
-    | 'gn'
-    | 'gp'
-    | 'gq'
     | 'gr'
-    | 'gs'
-    | 'gt'
+    | 'gl'
+    | 'gd'
+    | 'gp'
     | 'gu'
+    | 'gt'
+    | 'gn'
     | 'gw'
     | 'gy'
-    | 'hk'
-    | 'hm'
-    | 'hn'
-    | 'hr'
     | 'ht'
+    | 'hm'
+    | 'va'
+    | 'hn'
+    | 'hk'
     | 'hu'
+    | 'is'
+    | 'in'
     | 'id'
+    | 'ir'
+    | 'iq'
     | 'ie'
     | 'il'
-    | 'in'
-    | 'io'
-    | 'iq'
-    | 'ir'
-    | 'is'
     | 'it'
     | 'jm'
-    | 'jo'
     | 'jp'
+    | 'jo'
+    | 'kz'
     | 'ke'
-    | 'kg'
-    | 'kh'
     | 'ki'
-    | 'km'
-    | 'kn'
     | 'kp'
     | 'kr'
     | 'kw'
-    | 'ky'
-    | 'kz'
+    | 'kg'
     | 'la'
+    | 'lv'
     | 'lb'
-    | 'lc'
-    | 'li'
-    | 'lk'
-    | 'lr'
     | 'ls'
+    | 'lr'
+    | 'ly'
+    | 'li'
     | 'lt'
     | 'lu'
-    | 'lv'
-    | 'ly'
-    | 'ma'
-    | 'mc'
-    | 'md'
-    | 'mg'
-    | 'mh'
-    | 'mk'
-    | 'ml'
-    | 'mm'
-    | 'mn'
     | 'mo'
-    | 'mp'
+    | 'mk'
+    | 'mg'
+    | 'mw'
+    | 'my'
+    | 'mv'
+    | 'ml'
+    | 'mt'
+    | 'mh'
     | 'mq'
     | 'mr'
-    | 'ms'
-    | 'mt'
     | 'mu'
-    | 'mv'
-    | 'mw'
+    | 'yt'
     | 'mx'
-    | 'my'
+    | 'fm'
+    | 'md'
+    | 'mc'
+    | 'mn'
+    | 'ms'
+    | 'ma'
     | 'mz'
+    | 'mm'
     | 'na'
-    | 'nc'
-    | 'ne'
-    | 'nf'
-    | 'ng'
-    | 'ni'
-    | 'nl'
-    | 'no'
-    | 'np'
     | 'nr'
-    | 'nu'
+    | 'np'
+    | 'nl'
+    | 'an'
+    | 'nc'
     | 'nz'
+    | 'ni'
+    | 'ne'
+    | 'ng'
+    | 'nu'
+    | 'nf'
+    | 'mp'
+    | 'no'
     | 'om'
-    | 'pa'
-    | 'pe'
-    | 'pf'
-    | 'pg'
-    | 'ph'
     | 'pk'
-    | 'pl'
-    | 'pm'
-    | 'pn'
-    | 'pr'
-    | 'ps'
-    | 'pt'
     | 'pw'
+    | 'ps'
+    | 'pa'
+    | 'pg'
     | 'py'
+    | 'pe'
+    | 'ph'
+    | 'pn'
+    | 'pl'
+    | 'pt'
+    | 'pr'
     | 'qa'
     | 're'
     | 'ro'
-    | 'rs'
     | 'ru'
     | 'rw'
-    | 'sa'
-    | 'sb'
-    | 'sc'
-    | 'sd'
-    | 'se'
-    | 'sg'
     | 'sh'
-    | 'si'
-    | 'sj'
-    | 'sk'
-    | 'sl'
+    | 'kn'
+    | 'lc'
+    | 'pm'
+    | 'vc'
+    | 'ws'
     | 'sm'
-    | 'sn'
-    | 'so'
-    | 'sr'
     | 'st'
-    | 'sv'
-    | 'sy'
+    | 'sa'
+    | 'sn'
+    | 'rs'
+    | 'sc'
+    | 'sl'
+    | 'sg'
+    | 'sk'
+    | 'si'
+    | 'sb'
+    | 'so'
+    | 'za'
+    | 'gs'
+    | 'es'
+    | 'lk'
+    | 'sd'
+    | 'sr'
+    | 'sj'
     | 'sz'
-    | 'tc'
-    | 'td'
-    | 'tf'
-    | 'tg'
-    | 'th'
-    | 'tj'
-    | 'tk'
-    | 'tl'
-    | 'tm'
-    | 'tn'
-    | 'to'
-    | 'tr'
-    | 'tt'
-    | 'tv'
+    | 'se'
+    | 'ch'
+    | 'sy'
     | 'tw'
+    | 'tj'
     | 'tz'
-    | 'ua'
+    | 'th'
+    | 'tl'
+    | 'tg'
+    | 'tk'
+    | 'to'
+    | 'tt'
+    | 'tn'
+    | 'tr'
+    | 'tm'
+    | 'tc'
+    | 'tv'
     | 'ug'
-    | 'um'
+    | 'ua'
+    | 'ae'
+    | 'gb'
     | 'us'
+    | 'um'
     | 'uy'
     | 'uz'
-    | 'va'
-    | 'vc'
+    | 'vu'
     | 've'
+    | 'vn'
     | 'vg'
     | 'vi'
-    | 'vn'
-    | 'vu'
     | 'wf'
-    | 'ws'
+    | 'eh'
     | 'ye'
-    | 'yt'
-    | 'za'
     | 'zm'
     | 'zw';
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu'
+    | null;
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number | null;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
@@ -6087,6 +9399,13 @@ export interface BrandRetrieveByNameParams {
    * less comprehensive data.
    */
   maxSpeed?: boolean;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -6104,64 +9423,138 @@ export interface BrandRetrieveByTickerParams {
   ticker: string;
 
   /**
-   * Optional parameter to force the language of the retrieved brand data.
+   * Language to force for the retrieved brand data.
    */
   force_language?:
+    | 'afrikaans'
     | 'albanian'
+    | 'amharic'
     | 'arabic'
+    | 'armenian'
+    | 'assamese'
+    | 'aymara'
     | 'azeri'
+    | 'basque'
+    | 'belarusian'
     | 'bengali'
+    | 'bosnian'
     | 'bulgarian'
+    | 'burmese'
     | 'cantonese'
+    | 'catalan'
     | 'cebuano'
+    | 'chinese'
+    | 'corsican'
     | 'croatian'
     | 'czech'
     | 'danish'
     | 'dutch'
     | 'english'
+    | 'esperanto'
     | 'estonian'
     | 'farsi'
+    | 'fijian'
     | 'finnish'
     | 'french'
+    | 'galician'
+    | 'georgian'
     | 'german'
+    | 'greek'
+    | 'guarani'
+    | 'gujarati'
+    | 'haitian-creole'
     | 'hausa'
     | 'hawaiian'
+    | 'hebrew'
     | 'hindi'
+    | 'hmong'
     | 'hungarian'
     | 'icelandic'
+    | 'igbo'
     | 'indonesian'
+    | 'irish'
     | 'italian'
+    | 'japanese'
+    | 'javanese'
+    | 'kannada'
     | 'kazakh'
+    | 'khmer'
+    | 'kinyarwanda'
     | 'korean'
+    | 'kurdish'
     | 'kyrgyz'
+    | 'lao'
     | 'latin'
     | 'latvian'
+    | 'lingala'
     | 'lithuanian'
+    | 'luxembourgish'
     | 'macedonian'
+    | 'malagasy'
+    | 'malay'
+    | 'malayalam'
+    | 'maltese'
+    | 'maori'
+    | 'marathi'
     | 'mongolian'
     | 'nepali'
     | 'norwegian'
+    | 'odia'
+    | 'oromo'
     | 'pashto'
     | 'pidgin'
     | 'polish'
     | 'portuguese'
+    | 'punjabi'
+    | 'quechua'
     | 'romanian'
     | 'russian'
+    | 'samoan'
+    | 'scottish-gaelic'
     | 'serbian'
+    | 'sesotho'
+    | 'shona'
+    | 'sindhi'
+    | 'sinhala'
     | 'slovak'
     | 'slovene'
     | 'somali'
     | 'spanish'
+    | 'sundanese'
     | 'swahili'
     | 'swedish'
     | 'tagalog'
+    | 'tajik'
+    | 'tamil'
+    | 'tatar'
+    | 'telugu'
     | 'thai'
+    | 'tibetan'
+    | 'tigrinya'
+    | 'tongan'
+    | 'tswana'
     | 'turkish'
+    | 'turkmen'
     | 'ukrainian'
     | 'urdu'
+    | 'uyghur'
     | 'uzbek'
     | 'vietnamese'
-    | 'welsh';
+    | 'welsh'
+    | 'wolof'
+    | 'xhosa'
+    | 'yiddish'
+    | 'yoruba'
+    | 'zulu'
+    | null;
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number | null;
 
   /**
    * Optional parameter to optimize the API call for maximum speed. When set to true,
@@ -6171,7 +9564,14 @@ export interface BrandRetrieveByTickerParams {
   maxSpeed?: boolean;
 
   /**
-   * Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Stock exchange code.
    */
   ticker_exchange?:
     | 'AMEX'
@@ -6257,9 +9657,9 @@ export interface BrandRetrieveByTickerParams {
 
 export interface BrandRetrieveNaicsParams {
   /**
-   * Brand domain or title to retrieve NAICS code for. If a valid domain is provided
-   * in `input`, it will be used for classification, otherwise, we will search for
-   * the brand using the provided title.
+   * Brand domain or title to retrieve NAICS code for. If a valid domain is provided,
+   * it will be used for classification, otherwise, we will search for the brand
+   * using the provided title.
    */
   input: string;
 
@@ -6273,6 +9673,13 @@ export interface BrandRetrieveNaicsParams {
    * Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
    */
   minResults?: number;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -6289,6 +9696,26 @@ export interface BrandRetrieveSimplifiedParams {
   domain: string;
 
   /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number | null;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Optional theme preference used when selecting brand assets.
+   */
+  theme?: 'light' | 'dark';
+
+  /**
    * Optional timeout in milliseconds for the request. If the request takes longer
    * than this value, it will be aborted with a 408 status code. Maximum allowed
    * value is 300000ms (5 minutes).
@@ -6298,10 +9725,243 @@ export interface BrandRetrieveSimplifiedParams {
 
 export interface BrandScreenshotParams {
   /**
-   * Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
-   * domain will be automatically normalized and validated.
+   * Optional parameter for comprehensive popup cleanup. If 'true', the browser
+   * dismisses detected cookie/consent UI and clears other detected obstructive
+   * popups and overlays before capture. If 'false' or not provided, this parameter
+   * requests no cleanup; handleCookiePopup can still request cookie/consent handling
+   * independently.
    */
-  domain: string;
+  clearPopups?: boolean;
+
+  /**
+   * Optional parameter to choose the site's visual theme in the screenshot. Use
+   * 'light' or 'dark' when the site offers both appearances.
+   */
+  colorScheme?: 'light' | 'dark';
+
+  /**
+   * Fetch the target page through a residential proxy in this country (ISO 3166-1
+   * alpha-2).
+   */
+  country?:
+    | 'ad'
+    | 'ae'
+    | 'af'
+    | 'ag'
+    | 'ai'
+    | 'al'
+    | 'am'
+    | 'ao'
+    | 'ar'
+    | 'at'
+    | 'au'
+    | 'aw'
+    | 'az'
+    | 'ba'
+    | 'bb'
+    | 'bd'
+    | 'be'
+    | 'bf'
+    | 'bg'
+    | 'bh'
+    | 'bi'
+    | 'bj'
+    | 'bm'
+    | 'bn'
+    | 'bo'
+    | 'bq'
+    | 'br'
+    | 'bs'
+    | 'bw'
+    | 'by'
+    | 'bz'
+    | 'ca'
+    | 'cd'
+    | 'cf'
+    | 'cg'
+    | 'ch'
+    | 'ci'
+    | 'cl'
+    | 'cm'
+    | 'cn'
+    | 'co'
+    | 'cr'
+    | 'cv'
+    | 'cw'
+    | 'cy'
+    | 'cz'
+    | 'de'
+    | 'dj'
+    | 'dk'
+    | 'dm'
+    | 'do'
+    | 'dz'
+    | 'ec'
+    | 'ee'
+    | 'eg'
+    | 'es'
+    | 'et'
+    | 'fi'
+    | 'fj'
+    | 'fr'
+    | 'ga'
+    | 'gb'
+    | 'gd'
+    | 'ge'
+    | 'gf'
+    | 'gg'
+    | 'gh'
+    | 'gm'
+    | 'gn'
+    | 'gp'
+    | 'gq'
+    | 'gr'
+    | 'gt'
+    | 'gu'
+    | 'gw'
+    | 'gy'
+    | 'hk'
+    | 'hn'
+    | 'hr'
+    | 'ht'
+    | 'hu'
+    | 'id'
+    | 'ie'
+    | 'il'
+    | 'im'
+    | 'in'
+    | 'iq'
+    | 'ir'
+    | 'is'
+    | 'it'
+    | 'je'
+    | 'jm'
+    | 'jo'
+    | 'jp'
+    | 'ke'
+    | 'kg'
+    | 'kh'
+    | 'kn'
+    | 'kr'
+    | 'kw'
+    | 'ky'
+    | 'kz'
+    | 'la'
+    | 'lb'
+    | 'lc'
+    | 'lk'
+    | 'lr'
+    | 'ls'
+    | 'lt'
+    | 'lu'
+    | 'lv'
+    | 'ly'
+    | 'ma'
+    | 'mc'
+    | 'md'
+    | 'me'
+    | 'mf'
+    | 'mg'
+    | 'mk'
+    | 'ml'
+    | 'mm'
+    | 'mn'
+    | 'mo'
+    | 'mq'
+    | 'mr'
+    | 'mt'
+    | 'mu'
+    | 'mv'
+    | 'mw'
+    | 'mx'
+    | 'my'
+    | 'mz'
+    | 'na'
+    | 'nc'
+    | 'ne'
+    | 'ng'
+    | 'ni'
+    | 'nl'
+    | 'no'
+    | 'np'
+    | 'nz'
+    | 'om'
+    | 'pa'
+    | 'pe'
+    | 'pf'
+    | 'pg'
+    | 'ph'
+    | 'pk'
+    | 'pl'
+    | 'pr'
+    | 'ps'
+    | 'pt'
+    | 'py'
+    | 'qa'
+    | 're'
+    | 'ro'
+    | 'rs'
+    | 'ru'
+    | 'rw'
+    | 'sa'
+    | 'sc'
+    | 'sd'
+    | 'se'
+    | 'sg'
+    | 'si'
+    | 'sk'
+    | 'sl'
+    | 'sm'
+    | 'sn'
+    | 'so'
+    | 'sr'
+    | 'ss'
+    | 'st'
+    | 'sv'
+    | 'sx'
+    | 'sy'
+    | 'sz'
+    | 'tc'
+    | 'td'
+    | 'tg'
+    | 'th'
+    | 'tj'
+    | 'tl'
+    | 'tm'
+    | 'tn'
+    | 'tr'
+    | 'tt'
+    | 'tw'
+    | 'tz'
+    | 'ua'
+    | 'ug'
+    | 'us'
+    | 'uy'
+    | 'uz'
+    | 'vc'
+    | 've'
+    | 'vg'
+    | 'vi'
+    | 'vn'
+    | 'ye'
+    | 'yt'
+    | 'za'
+    | 'zm'
+    | 'zw';
+
+  /**
+   * A specific URL to screenshot directly, bypassing domain resolution (e.g.,
+   * 'https://example.com/pricing'). When provided, the screenshot is taken of this
+   * exact URL. You must provide either 'domain' or 'directUrl', but not both.
+   */
+  directUrl?: string;
+
+  /**
+   * Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
+   * domain will be automatically normalized and validated. You must provide either
+   * 'domain' or 'directUrl', but not both.
+   */
+  domain?: string;
 
   /**
    * Optional parameter to determine screenshot type. If 'true', takes a full page
@@ -6311,33 +9971,126 @@ export interface BrandScreenshotParams {
   fullScreenshot?: 'true' | 'false';
 
   /**
+   * Optional parameter to control cookie/consent popup handling. If 'true', we
+   * dismiss cookie banner before capture. If 'false' or not provided, captures the
+   * page without that step.
+   */
+  handleCookiePopup?: boolean;
+
+  /**
+   * Return a cached screenshot if a prior screenshot for the same parameters exists
+   * and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+   * omitted. Max is 30 days (2592000000 ms). Set to 0 to always capture fresh.
+   */
+  maxAgeMs?: number | null;
+
+  /**
    * Optional parameter to specify which page type to screenshot. If provided, the
    * system will scrape the domain's links and use heuristics to find the most
    * appropriate URL for the specified page type (30 supported languages). If not
-   * provided, screenshots the main domain landing page.
+   * provided, screenshots the main domain landing page. Only applicable when using
+   * 'domain', not 'directUrl'.
    */
   page?: 'login' | 'signup' | 'blog' | 'careers' | 'pricing' | 'terms' | 'privacy' | 'contact';
 
   /**
-   * Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
-   * faster capture with basic quality. If 'quality', optimizes for higher quality
-   * with longer wait times. Defaults to 'quality' if not provided.
+   * Optional vertical scroll offset in pixels for capturing a long page in
+   * viewport-sized chunks. When provided, the full page is captured once and the
+   * returned image is the viewport-sized slice that begins at this Y offset (e.g.
+   * request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page
+   * top to bottom). The final slice may be shorter than the viewport height. Takes
+   * precedence over fullScreenshot. Max: 100000.
    */
-  prioritize?: 'speed' | 'quality';
+  scrollOffset?: number | null;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+
+  /**
+   * Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
+   */
+  viewport?: BrandScreenshotParams.Viewport;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load before taking
+   * the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
+   * omitted.
+   */
+  waitForMs?: number | null;
+
+  /**
+   * Set to enabled to bypass shared caches and omit request and response content
+   * from retained usage logs. Requires zero data retention to be enabled for your
+   * organization (contact support@context.dev), otherwise the request fails with
+   * ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+   */
+  zdr?: 'enabled' | 'disabled';
+}
+
+export namespace BrandScreenshotParams {
+  /**
+   * Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
+   */
+  export interface Viewport {
+    /**
+     * Viewport height in pixels.
+     */
+    height?: number;
+
+    /**
+     * Viewport width in pixels.
+     */
+    width?: number;
+  }
 }
 
 export interface BrandStyleguideParams {
   /**
+   * Optional browser color scheme to emulate for websites that respond to
+   * prefers-color-scheme. This value is part of the styleguide cache key.
+   */
+  colorScheme?: 'light' | 'dark';
+
+  /**
    * A specific URL to fetch the styleguide from directly, bypassing domain
-   * resolution (e.g., 'https://example.com/design-system').
+   * resolution (e.g., 'https://example.com/design-system'). When provided, the
+   * styleguide is extracted from this exact URL. You must provide either 'domain' or
+   * 'directUrl', but not both.
    */
   directUrl?: string;
 
   /**
    * Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
-   * domain will be automatically normalized and validated.
+   * domain will be automatically normalized and validated. You must provide either
+   * 'domain' or 'directUrl', but not both.
    */
   domain?: string;
+
+  /**
+   * Maximum age in milliseconds for cached brand data before the API performs a hard
+   * refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+   * are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+   * year.
+   */
+  maxAgeMs?: number | null;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
 
   /**
    * Optional timeout in milliseconds for the request. If the request takes longer
@@ -6352,21 +10105,785 @@ export interface BrandWebScrapeHTMLParams {
    * Full URL to scrape (must include http:// or https:// protocol)
    */
   url: string;
+
+  /**
+   * Optional browser actions executed in array order after the page loads and before
+   * content is captured. Requires a paid plan. Send a JSON array in the query
+   * parameter. Maximum: 5 actions.
+   */
+  actions?: Array<
+    | BrandWebScrapeHTMLParams.WebScrapeWaitAction
+    | BrandWebScrapeHTMLParams.WebScrapePerformAction
+    | BrandWebScrapeHTMLParams.WebScrapeScrollAction
+  > | null;
+
+  /**
+   * Fetch the target page through a residential proxy in this country (ISO 3166-1
+   * alpha-2).
+   */
+  country?:
+    | 'ad'
+    | 'ae'
+    | 'af'
+    | 'ag'
+    | 'ai'
+    | 'al'
+    | 'am'
+    | 'ao'
+    | 'ar'
+    | 'at'
+    | 'au'
+    | 'aw'
+    | 'az'
+    | 'ba'
+    | 'bb'
+    | 'bd'
+    | 'be'
+    | 'bf'
+    | 'bg'
+    | 'bh'
+    | 'bi'
+    | 'bj'
+    | 'bm'
+    | 'bn'
+    | 'bo'
+    | 'bq'
+    | 'br'
+    | 'bs'
+    | 'bw'
+    | 'by'
+    | 'bz'
+    | 'ca'
+    | 'cd'
+    | 'cf'
+    | 'cg'
+    | 'ch'
+    | 'ci'
+    | 'cl'
+    | 'cm'
+    | 'cn'
+    | 'co'
+    | 'cr'
+    | 'cv'
+    | 'cw'
+    | 'cy'
+    | 'cz'
+    | 'de'
+    | 'dj'
+    | 'dk'
+    | 'dm'
+    | 'do'
+    | 'dz'
+    | 'ec'
+    | 'ee'
+    | 'eg'
+    | 'es'
+    | 'et'
+    | 'fi'
+    | 'fj'
+    | 'fr'
+    | 'ga'
+    | 'gb'
+    | 'gd'
+    | 'ge'
+    | 'gf'
+    | 'gg'
+    | 'gh'
+    | 'gm'
+    | 'gn'
+    | 'gp'
+    | 'gq'
+    | 'gr'
+    | 'gt'
+    | 'gu'
+    | 'gw'
+    | 'gy'
+    | 'hk'
+    | 'hn'
+    | 'hr'
+    | 'ht'
+    | 'hu'
+    | 'id'
+    | 'ie'
+    | 'il'
+    | 'im'
+    | 'in'
+    | 'iq'
+    | 'ir'
+    | 'is'
+    | 'it'
+    | 'je'
+    | 'jm'
+    | 'jo'
+    | 'jp'
+    | 'ke'
+    | 'kg'
+    | 'kh'
+    | 'kn'
+    | 'kr'
+    | 'kw'
+    | 'ky'
+    | 'kz'
+    | 'la'
+    | 'lb'
+    | 'lc'
+    | 'lk'
+    | 'lr'
+    | 'ls'
+    | 'lt'
+    | 'lu'
+    | 'lv'
+    | 'ly'
+    | 'ma'
+    | 'mc'
+    | 'md'
+    | 'me'
+    | 'mf'
+    | 'mg'
+    | 'mk'
+    | 'ml'
+    | 'mm'
+    | 'mn'
+    | 'mo'
+    | 'mq'
+    | 'mr'
+    | 'mt'
+    | 'mu'
+    | 'mv'
+    | 'mw'
+    | 'mx'
+    | 'my'
+    | 'mz'
+    | 'na'
+    | 'nc'
+    | 'ne'
+    | 'ng'
+    | 'ni'
+    | 'nl'
+    | 'no'
+    | 'np'
+    | 'nz'
+    | 'om'
+    | 'pa'
+    | 'pe'
+    | 'pf'
+    | 'pg'
+    | 'ph'
+    | 'pk'
+    | 'pl'
+    | 'pr'
+    | 'ps'
+    | 'pt'
+    | 'py'
+    | 'qa'
+    | 're'
+    | 'ro'
+    | 'rs'
+    | 'ru'
+    | 'rw'
+    | 'sa'
+    | 'sc'
+    | 'sd'
+    | 'se'
+    | 'sg'
+    | 'si'
+    | 'sk'
+    | 'sl'
+    | 'sm'
+    | 'sn'
+    | 'so'
+    | 'sr'
+    | 'ss'
+    | 'st'
+    | 'sv'
+    | 'sx'
+    | 'sy'
+    | 'sz'
+    | 'tc'
+    | 'td'
+    | 'tg'
+    | 'th'
+    | 'tj'
+    | 'tl'
+    | 'tm'
+    | 'tn'
+    | 'tr'
+    | 'tt'
+    | 'tw'
+    | 'tz'
+    | 'ua'
+    | 'ug'
+    | 'us'
+    | 'uy'
+    | 'uz'
+    | 'vc'
+    | 've'
+    | 'vg'
+    | 'vi'
+    | 'vn'
+    | 'ye'
+    | 'yt'
+    | 'za'
+    | 'zm'
+    | 'zw';
+
+  /**
+   * CSS selectors to remove from the result. Applied after includeSelectors.
+   * Exclusion takes precedence: an element matching both is removed. Examples:
+   * "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+   */
+  excludeSelectors?: Array<string> | null;
+
+  /**
+   * Optional outbound HTTP headers forwarded only to the target URL, sent as
+   * deep-object query params such as headers[X-Custom]=value. When provided, caching
+   * is bypassed: the result is neither read from nor written to cache.
+   */
+  headers?: { [key: string]: string };
+
+  /**
+   * When true, iframes are rendered inline into the returned HTML.
+   */
+  includeFrames?: boolean;
+
+  /**
+   * CSS selectors. When provided, only matching subtrees (and their descendants) are
+   * kept and everything else is dropped. When omitted, the entire document is kept.
+   * Examples: "article.main", "#content", "[role=main]".
+   */
+  includeSelectors?: Array<string> | null;
+
+  /**
+   * Return a cached result if a prior scrape for the same parameters exists and is
+   * younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+   * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+   */
+  maxAgeMs?: number | null;
+
+  /**
+   * PDF parsing controls. Use start/end to limit text extraction and embedded-image
+   * detection/OCR to an inclusive 1-based page range.
+   */
+  pdf?: BrandWebScrapeHTMLParams.Pdf;
+
+  /**
+   * When true, waits briefly for CSS and transition animations to settle before
+   * extracting HTML. Defaults to false. This adds a bit of latency in exchange for
+   * more stable output on animated pages.
+   */
+  settleAnimations?: boolean;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+
+  /**
+   * When true, return only the page's main content in the HTML response, excluding
+   * headers, footers, sidebars, and navigation when detectable.
+   */
+  useMainContentOnly?: boolean;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
+   * 30000 (30 seconds).
+   */
+  waitForMs?: number | null;
+
+  /**
+   * Set to enabled to bypass shared caches and omit request and response content
+   * from retained usage logs. Requires zero data retention to be enabled for your
+   * organization (contact support@context.dev), otherwise the request fails with
+   * ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+   */
+  zdr?: 'enabled' | 'disabled';
+}
+
+export namespace BrandWebScrapeHTMLParams {
+  /**
+   * Pause for a fixed number of milliseconds before continuing to the next action.
+   */
+  export interface WebScrapeWaitAction {
+    do: 'wait';
+
+    timeMs: number;
+  }
+
+  /**
+   * Resolve and perform one natural-language browser action.
+   */
+  export interface WebScrapePerformAction {
+    action: string;
+
+    do: 'perform';
+  }
+
+  /**
+   * Scroll the page or a selected scrollable container, waiting adaptively for
+   * content and dimensions to settle after each iteration.
+   */
+  export interface WebScrapeScrollAction {
+    do: 'scroll';
+
+    /**
+     * Pixels per scroll, one visible viewport, or the current scroll boundary.
+     * Defaults to viewport.
+     */
+    amount?: number | 'viewport' | 'max';
+
+    /**
+     * CSS selector for the first matching scroll container. Defaults to the page.
+     */
+    container?: string;
+
+    /**
+     * Direction to scroll. Defaults to down.
+     */
+    direction?: 'up' | 'down' | 'left' | 'right';
+
+    /**
+     * Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+     * changing. Defaults to 1.
+     */
+    maxScrolls?: number;
+  }
+
+  /**
+   * PDF parsing controls. Use start/end to limit text extraction and embedded-image
+   * detection/OCR to an inclusive 1-based page range.
+   */
+  export interface Pdf {
+    /**
+     * Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
+     * Must be greater than or equal to start when both are provided.
+     */
+    end?: number;
+
+    /**
+     * When true, OCR the selected PDF pages that have no usable text layer (scans),
+     * replacing each recovered page's text with the OCR result while pages with a real
+     * text layer keep it. Billed at 1 credit per page OCR actually recovered, on top
+     * of the base request cost. When false, no OCR runs.
+     */
+    ocr?: boolean;
+
+    /**
+     * When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+     * a 400 PDF_SKIPPED is returned.
+     */
+    shouldParse?: boolean;
+
+    /**
+     * First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+     */
+    start?: number;
+  }
 }
 
 export interface BrandWebScrapeImagesParams {
   /**
-   * Full URL to scrape images from (must include http:// or https:// protocol)
+   * Page URL to inspect. Must include http:// or https://.
    */
   url: string;
+
+  /**
+   * Optional browser actions executed in array order after the page loads and before
+   * content is captured. Requires a paid plan. Send a JSON array in the query
+   * parameter. Maximum: 5 actions.
+   */
+  actions?: Array<
+    | BrandWebScrapeImagesParams.WebScrapeWaitAction
+    | BrandWebScrapeImagesParams.WebScrapePerformAction
+    | BrandWebScrapeImagesParams.WebScrapeScrollAction
+  > | null;
+
+  /**
+   * When true, visually duplicate images are removed: every image is loaded and
+   * perceptually hashed, and only the highest-resolution copy of each duplicate
+   * group is kept. Images that cannot be downloaded or hashed are kept. Default:
+   * false.
+   */
+  dedupe?: boolean;
+
+  /**
+   * Optional per-image processing, sent as deep-object query params such as
+   * enrichment[resolution]=true.
+   */
+  enrichment?: BrandWebScrapeImagesParams.Enrichment | null;
+
+  /**
+   * Optional outbound HTTP headers forwarded only to the target URL, sent as
+   * deep-object query params such as headers[X-Custom]=value. When provided, caching
+   * is bypassed: the result is neither read from nor written to cache.
+   */
+  headers?: { [key: string]: string };
+
+  /**
+   * Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
+   * day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
+   */
+  maxAgeMs?: number | null;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load before
+   * collecting images. Min: 0. Max: 30000 (30 seconds).
+   */
+  waitForMs?: number | null;
+}
+
+export namespace BrandWebScrapeImagesParams {
+  /**
+   * Pause for a fixed number of milliseconds before continuing to the next action.
+   */
+  export interface WebScrapeWaitAction {
+    do: 'wait';
+
+    timeMs: number;
+  }
+
+  /**
+   * Resolve and perform one natural-language browser action.
+   */
+  export interface WebScrapePerformAction {
+    action: string;
+
+    do: 'perform';
+  }
+
+  /**
+   * Scroll the page or a selected scrollable container, waiting adaptively for
+   * content and dimensions to settle after each iteration.
+   */
+  export interface WebScrapeScrollAction {
+    do: 'scroll';
+
+    /**
+     * Pixels per scroll, one visible viewport, or the current scroll boundary.
+     * Defaults to viewport.
+     */
+    amount?: number | 'viewport' | 'max';
+
+    /**
+     * CSS selector for the first matching scroll container. Defaults to the page.
+     */
+    container?: string;
+
+    /**
+     * Direction to scroll. Defaults to down.
+     */
+    direction?: 'up' | 'down' | 'left' | 'right';
+
+    /**
+     * Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+     * changing. Defaults to 1.
+     */
+    maxScrolls?: number;
+  }
+
+  /**
+   * Optional per-image processing, sent as deep-object query params such as
+   * enrichment[resolution]=true.
+   */
+  export interface Enrichment {
+    /**
+     * Classify each image by visual asset type.
+     */
+    classification?: boolean;
+
+    /**
+     * Host materializable images on the Brand.dev CDN and return their URL and MIME
+     * type.
+     */
+    hostedUrl?: boolean;
+
+    /**
+     * Per-image enrichment timeout in milliseconds. Default: 30000. Maximum: 60000.
+     */
+    maxTimePerMs?: number;
+
+    /**
+     * Measure image width and height when possible.
+     */
+    resolution?: boolean;
+  }
 }
 
 export interface BrandWebScrapeMdParams {
   /**
-   * Full URL to scrape and convert to markdown (must include http:// or https://
+   * Full URL to scrape into LLM usable Markdown (must include http:// or https://
    * protocol)
    */
   url: string;
+
+  /**
+   * Optional browser actions executed in array order after the page loads and before
+   * content is captured. Requires a paid plan. Send a JSON array in the query
+   * parameter. Maximum: 5 actions.
+   */
+  actions?: Array<
+    | BrandWebScrapeMdParams.WebScrapeWaitAction
+    | BrandWebScrapeMdParams.WebScrapePerformAction
+    | BrandWebScrapeMdParams.WebScrapeScrollAction
+  > | null;
+
+  /**
+   * Fetch the target page through a residential proxy in this country (ISO 3166-1
+   * alpha-2).
+   */
+  country?:
+    | 'ad'
+    | 'ae'
+    | 'af'
+    | 'ag'
+    | 'ai'
+    | 'al'
+    | 'am'
+    | 'ao'
+    | 'ar'
+    | 'at'
+    | 'au'
+    | 'aw'
+    | 'az'
+    | 'ba'
+    | 'bb'
+    | 'bd'
+    | 'be'
+    | 'bf'
+    | 'bg'
+    | 'bh'
+    | 'bi'
+    | 'bj'
+    | 'bm'
+    | 'bn'
+    | 'bo'
+    | 'bq'
+    | 'br'
+    | 'bs'
+    | 'bw'
+    | 'by'
+    | 'bz'
+    | 'ca'
+    | 'cd'
+    | 'cf'
+    | 'cg'
+    | 'ch'
+    | 'ci'
+    | 'cl'
+    | 'cm'
+    | 'cn'
+    | 'co'
+    | 'cr'
+    | 'cv'
+    | 'cw'
+    | 'cy'
+    | 'cz'
+    | 'de'
+    | 'dj'
+    | 'dk'
+    | 'dm'
+    | 'do'
+    | 'dz'
+    | 'ec'
+    | 'ee'
+    | 'eg'
+    | 'es'
+    | 'et'
+    | 'fi'
+    | 'fj'
+    | 'fr'
+    | 'ga'
+    | 'gb'
+    | 'gd'
+    | 'ge'
+    | 'gf'
+    | 'gg'
+    | 'gh'
+    | 'gm'
+    | 'gn'
+    | 'gp'
+    | 'gq'
+    | 'gr'
+    | 'gt'
+    | 'gu'
+    | 'gw'
+    | 'gy'
+    | 'hk'
+    | 'hn'
+    | 'hr'
+    | 'ht'
+    | 'hu'
+    | 'id'
+    | 'ie'
+    | 'il'
+    | 'im'
+    | 'in'
+    | 'iq'
+    | 'ir'
+    | 'is'
+    | 'it'
+    | 'je'
+    | 'jm'
+    | 'jo'
+    | 'jp'
+    | 'ke'
+    | 'kg'
+    | 'kh'
+    | 'kn'
+    | 'kr'
+    | 'kw'
+    | 'ky'
+    | 'kz'
+    | 'la'
+    | 'lb'
+    | 'lc'
+    | 'lk'
+    | 'lr'
+    | 'ls'
+    | 'lt'
+    | 'lu'
+    | 'lv'
+    | 'ly'
+    | 'ma'
+    | 'mc'
+    | 'md'
+    | 'me'
+    | 'mf'
+    | 'mg'
+    | 'mk'
+    | 'ml'
+    | 'mm'
+    | 'mn'
+    | 'mo'
+    | 'mq'
+    | 'mr'
+    | 'mt'
+    | 'mu'
+    | 'mv'
+    | 'mw'
+    | 'mx'
+    | 'my'
+    | 'mz'
+    | 'na'
+    | 'nc'
+    | 'ne'
+    | 'ng'
+    | 'ni'
+    | 'nl'
+    | 'no'
+    | 'np'
+    | 'nz'
+    | 'om'
+    | 'pa'
+    | 'pe'
+    | 'pf'
+    | 'pg'
+    | 'ph'
+    | 'pk'
+    | 'pl'
+    | 'pr'
+    | 'ps'
+    | 'pt'
+    | 'py'
+    | 'qa'
+    | 're'
+    | 'ro'
+    | 'rs'
+    | 'ru'
+    | 'rw'
+    | 'sa'
+    | 'sc'
+    | 'sd'
+    | 'se'
+    | 'sg'
+    | 'si'
+    | 'sk'
+    | 'sl'
+    | 'sm'
+    | 'sn'
+    | 'so'
+    | 'sr'
+    | 'ss'
+    | 'st'
+    | 'sv'
+    | 'sx'
+    | 'sy'
+    | 'sz'
+    | 'tc'
+    | 'td'
+    | 'tg'
+    | 'th'
+    | 'tj'
+    | 'tl'
+    | 'tm'
+    | 'tn'
+    | 'tr'
+    | 'tt'
+    | 'tw'
+    | 'tz'
+    | 'ua'
+    | 'ug'
+    | 'us'
+    | 'uy'
+    | 'uz'
+    | 'vc'
+    | 've'
+    | 'vg'
+    | 'vi'
+    | 'vn'
+    | 'ye'
+    | 'yt'
+    | 'za'
+    | 'zm'
+    | 'zw';
+
+  /**
+   * CSS selectors to remove before conversion to Markdown. Applied after
+   * includeSelectors. Exclusion takes precedence: an element matching both is
+   * removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+   */
+  excludeSelectors?: Array<string> | null;
+
+  /**
+   * Optional outbound HTTP headers forwarded only to the target URL, sent as
+   * deep-object query params such as headers[X-Custom]=value. When provided, caching
+   * is bypassed: the result is neither read from nor written to cache.
+   */
+  headers?: { [key: string]: string };
+
+  /**
+   * When true, the contents of iframes are rendered to Markdown.
+   */
+  includeFrames?: boolean;
+
+  /**
+   * When true, the response also includes an `html` field with the page HTML the
+   * Markdown was converted from — the same body the Scrape HTML endpoint returns for
+   * the equivalent request.
+   */
+  includeHTML?: boolean;
 
   /**
    * Include image references in Markdown output
@@ -6379,29 +10896,212 @@ export interface BrandWebScrapeMdParams {
   includeLinks?: boolean;
 
   /**
+   * CSS selectors. When provided, only matching HTML subtrees (and their
+   * descendants) are kept before conversion to Markdown. When omitted, the entire
+   * document is kept. Examples: "article.main", "#content", "[role=main]".
+   */
+  includeSelectors?: Array<string> | null;
+
+  /**
+   * Return a cached result if a prior scrape for the same parameters exists and is
+   * younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+   * omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+   */
+  maxAgeMs?: number | null;
+
+  /**
+   * PDF parsing controls. Use start/end to limit text extraction and embedded-image
+   * detection/OCR to an inclusive 1-based page range.
+   */
+  pdf?: BrandWebScrapeMdParams.Pdf;
+
+  /**
+   * When true, waits briefly for CSS and transition animations to settle before
+   * converting to Markdown. Defaults to false. This adds a bit of latency in
+   * exchange for more stable output on animated pages.
+   */
+  settleAnimations?: boolean;
+
+  /**
    * Shorten base64-encoded image data in the Markdown output
    */
   shortenBase64Images?: boolean;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
 
   /**
    * Extract only the main content of the page, excluding headers, footers, sidebars,
    * and navigation
    */
   useMainContentOnly?: boolean;
+
+  /**
+   * Optional browser wait time in milliseconds after initial page load before
+   * converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
+   */
+  waitForMs?: number | null;
+
+  /**
+   * Set to enabled to bypass shared caches and omit request and response content
+   * from retained usage logs. Requires zero data retention to be enabled for your
+   * organization (contact support@context.dev), otherwise the request fails with
+   * ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+   */
+  zdr?: 'enabled' | 'disabled';
+}
+
+export namespace BrandWebScrapeMdParams {
+  /**
+   * Pause for a fixed number of milliseconds before continuing to the next action.
+   */
+  export interface WebScrapeWaitAction {
+    do: 'wait';
+
+    timeMs: number;
+  }
+
+  /**
+   * Resolve and perform one natural-language browser action.
+   */
+  export interface WebScrapePerformAction {
+    action: string;
+
+    do: 'perform';
+  }
+
+  /**
+   * Scroll the page or a selected scrollable container, waiting adaptively for
+   * content and dimensions to settle after each iteration.
+   */
+  export interface WebScrapeScrollAction {
+    do: 'scroll';
+
+    /**
+     * Pixels per scroll, one visible viewport, or the current scroll boundary.
+     * Defaults to viewport.
+     */
+    amount?: number | 'viewport' | 'max';
+
+    /**
+     * CSS selector for the first matching scroll container. Defaults to the page.
+     */
+    container?: string;
+
+    /**
+     * Direction to scroll. Defaults to down.
+     */
+    direction?: 'up' | 'down' | 'left' | 'right';
+
+    /**
+     * Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+     * changing. Defaults to 1.
+     */
+    maxScrolls?: number;
+  }
+
+  /**
+   * PDF parsing controls. Use start/end to limit text extraction and embedded-image
+   * detection/OCR to an inclusive 1-based page range.
+   */
+  export interface Pdf {
+    /**
+     * Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
+     * Must be greater than or equal to start when both are provided.
+     */
+    end?: number;
+
+    /**
+     * When true, OCR the selected PDF pages that have no usable text layer (scans),
+     * replacing each recovered page's text with the OCR result while pages with a real
+     * text layer keep it. Billed at 1 credit per page OCR actually recovered, on top
+     * of the base request cost. When false, no OCR runs.
+     */
+    ocr?: boolean;
+
+    /**
+     * When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+     * a 400 PDF_SKIPPED is returned.
+     */
+    shouldParse?: boolean;
+
+    /**
+     * First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+     */
+    start?: number;
+  }
 }
 
 export interface BrandWebScrapeSitemapParams {
   /**
-   * Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be
-   * automatically normalized and validated.
+   * Domain to build a sitemap for
    */
   domain: string;
+
+  /**
+   * Optional outbound HTTP headers forwarded only to the target URL, sent as
+   * deep-object query params such as headers[X-Custom]=value. When provided, caching
+   * is bypassed: the result is neither read from nor written to cache.
+   */
+  headers?: { [key: string]: string };
 
   /**
    * Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
    * Minimum is 1, maximum is 100,000.
    */
   maxLinks?: number;
+
+  /**
+   * Optional search phrase. When provided, the crawled sitemap is filtered to the
+   * pages whose URLs are about that phrase, most relevant first, and the request
+   * costs 2 credits instead of 1.
+   */
+  search?: string;
+
+  /**
+   * Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
+   * instead of discovering the domain's sitemaps.
+   */
+  sitemapUrl?: string;
+
+  /**
+   * Optional comma-separated caller-defined tags for tracking this request. Tags are
+   * recorded on the request's usage log and can be used to filter usage on the
+   * dashboard usage page. Up to 20 tags, each 1-50 characters.
+   */
+  tags?: Array<string>;
+
+  /**
+   * Optional timeout in milliseconds for the request. If the request takes longer
+   * than this value, it will be aborted with a 408 status code. Maximum allowed
+   * value is 300000ms (5 minutes).
+   */
+  timeoutMS?: number;
+
+  /**
+   * Optional RE2-compatible regex pattern. Only URLs matching this pattern are
+   * returned and counted against maxLinks.
+   */
+  urlRegex?: string;
+
+  /**
+   * Set to enabled to bypass shared caches and omit request and response content
+   * from retained usage logs. Requires zero data retention to be enabled for your
+   * organization (contact support@context.dev), otherwise the request fails with
+   * ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+   */
+  zdr?: 'enabled' | 'disabled';
 }
 
 export declare namespace Brand {
