@@ -388,6 +388,13 @@ export class Brand extends APIResource {
 
 export interface BrandRetrieveResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveResponse.CacheMetadata;
+
+  /**
    * Detailed brand information
    */
   brand?: BrandRetrieveResponse.Brand;
@@ -410,6 +417,24 @@ export interface BrandRetrieveResponse {
 }
 
 export namespace BrandRetrieveResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -1203,6 +1228,13 @@ export namespace BrandRetrieveResponse {
 
 export interface BrandAIProductResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandAIProductResponse.CacheMetadata;
+
+  /**
    * Whether the given URL is a product detail page
    */
   is_product_page?: boolean;
@@ -1225,6 +1257,24 @@ export interface BrandAIProductResponse {
 }
 
 export namespace BrandAIProductResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Metadata about the API key used for the request. Included in every response
    * whenever a valid API key is provided, even when the response status is not 200.
@@ -1342,6 +1392,13 @@ export namespace BrandAIProductResponse {
 
 export interface BrandAIProductsResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandAIProductsResponse.CacheMetadata;
+
+  /**
    * Metadata about the API key used for the request. Included in every response
    * whenever a valid API key is provided, even when the response status is not 200.
    */
@@ -1354,6 +1411,24 @@ export interface BrandAIProductsResponse {
 }
 
 export namespace BrandAIProductsResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Metadata about the API key used for the request. Included in every response
    * whenever a valid API key is provided, even when the response status is not 200.
@@ -1527,6 +1602,13 @@ export namespace BrandAIQueryResponse {
 
 export interface BrandFontsResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandFontsResponse.CacheMetadata;
+
+  /**
    * HTTP status code, e.g., 200
    */
   code: number;
@@ -1561,6 +1643,24 @@ export interface BrandFontsResponse {
 }
 
 export namespace BrandFontsResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   export interface Font {
     /**
      * Array of fallback font families
@@ -1640,6 +1740,13 @@ export namespace BrandFontsResponse {
 
 export interface BrandIdentifyFromTransactionResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandIdentifyFromTransactionResponse.CacheMetadata;
+
+  /**
    * Detailed brand information
    */
   brand?: BrandIdentifyFromTransactionResponse.Brand;
@@ -1662,6 +1769,24 @@ export interface BrandIdentifyFromTransactionResponse {
 }
 
 export namespace BrandIdentifyFromTransactionResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -2537,6 +2662,13 @@ export namespace BrandPrefetchByEmailResponse {
 
 export interface BrandRetrieveByEmailResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveByEmailResponse.CacheMetadata;
+
+  /**
    * Detailed brand information
    */
   brand?: BrandRetrieveByEmailResponse.Brand;
@@ -2559,6 +2691,24 @@ export interface BrandRetrieveByEmailResponse {
 }
 
 export namespace BrandRetrieveByEmailResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -3352,6 +3502,13 @@ export namespace BrandRetrieveByEmailResponse {
 
 export interface BrandRetrieveByIsinResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveByIsinResponse.CacheMetadata;
+
+  /**
    * Detailed brand information
    */
   brand?: BrandRetrieveByIsinResponse.Brand;
@@ -3374,6 +3531,24 @@ export interface BrandRetrieveByIsinResponse {
 }
 
 export namespace BrandRetrieveByIsinResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -4167,6 +4342,13 @@ export namespace BrandRetrieveByIsinResponse {
 
 export interface BrandRetrieveByNameResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveByNameResponse.CacheMetadata;
+
+  /**
    * Detailed brand information
    */
   brand?: BrandRetrieveByNameResponse.Brand;
@@ -4189,6 +4371,24 @@ export interface BrandRetrieveByNameResponse {
 }
 
 export namespace BrandRetrieveByNameResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -4982,6 +5182,13 @@ export namespace BrandRetrieveByNameResponse {
 
 export interface BrandRetrieveByTickerResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveByTickerResponse.CacheMetadata;
+
+  /**
    * Detailed brand information
    */
   brand?: BrandRetrieveByTickerResponse.Brand;
@@ -5004,6 +5211,24 @@ export interface BrandRetrieveByTickerResponse {
 }
 
 export namespace BrandRetrieveByTickerResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Detailed brand information
    */
@@ -5860,6 +6085,13 @@ export namespace BrandRetrieveNaicsResponse {
 
 export interface BrandRetrieveSimplifiedResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandRetrieveSimplifiedResponse.CacheMetadata;
+
+  /**
    * Simplified brand information
    */
   brand?: BrandRetrieveSimplifiedResponse.Brand;
@@ -5882,6 +6114,24 @@ export interface BrandRetrieveSimplifiedResponse {
 }
 
 export namespace BrandRetrieveSimplifiedResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Simplified brand information
    */
@@ -6066,6 +6316,13 @@ export namespace BrandRetrieveSimplifiedResponse {
 
 export interface BrandScreenshotResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandScreenshotResponse.CacheMetadata;
+
+  /**
    * HTTP status code
    */
   code?: number;
@@ -6110,6 +6367,24 @@ export interface BrandScreenshotResponse {
 
 export namespace BrandScreenshotResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
+  /**
    * Metadata about the API key used for the request. Included in every response
    * whenever a valid API key is provided, even when the response status is not 200.
    */
@@ -6127,6 +6402,13 @@ export namespace BrandScreenshotResponse {
 }
 
 export interface BrandStyleguideResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandStyleguideResponse.CacheMetadata;
+
   /**
    * HTTP status code
    */
@@ -6155,6 +6437,24 @@ export interface BrandStyleguideResponse {
 }
 
 export namespace BrandStyleguideResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Metadata about the API key used for the request. Included in every response
    * whenever a valid API key is provided, even when the response status is not 200.
@@ -6663,6 +6963,13 @@ export namespace BrandStyleguideResponse {
 
 export interface BrandWebScrapeHTMLResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandWebScrapeHTMLResponse.CacheMetadata;
+
+  /**
    * The scraped content of the page. For normal pages this is the raw HTML. When the
    * page is a sitemap or feed served behind an XSL stylesheet (which browsers render
    * into HTML), this is the underlying XML instead — see the `type` field.
@@ -6725,6 +7032,24 @@ export interface BrandWebScrapeHTMLResponse {
 }
 
 export namespace BrandWebScrapeHTMLResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Metadata extracted from the scraped page HTML.
    */
@@ -6910,6 +7235,13 @@ export namespace BrandWebScrapeHTMLResponse {
 
 export interface BrandWebScrapeImagesResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandWebScrapeImagesResponse.CacheMetadata;
+
+  /**
    * Images found on the page.
    */
   images: Array<BrandWebScrapeImagesResponse.Image>;
@@ -6937,6 +7269,24 @@ export interface BrandWebScrapeImagesResponse {
 }
 
 export namespace BrandWebScrapeImagesResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   export interface Image {
     /**
      * Image alt text, or null when unavailable.
@@ -7038,6 +7388,13 @@ export namespace BrandWebScrapeImagesResponse {
 
 export interface BrandWebScrapeMdResponse {
   /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  cache_metadata: BrandWebScrapeMdResponse.CacheMetadata;
+
+  /**
    * UTF-8 byte length of the returned Markdown. Use 0 to identify an empty result
    * and compare small values against your workload's minimum useful-content
    * threshold.
@@ -7090,6 +7447,24 @@ export interface BrandWebScrapeMdResponse {
 }
 
 export namespace BrandWebScrapeMdResponse {
+  /**
+   * Cache outcome for this response. Composite responses are hits only when every
+   * cache-controlled fetch contributing to the output was a hit; age_ms is the
+   * oldest contributing hit.
+   */
+  export interface CacheMetadata {
+    /**
+     * Age of the cached data in milliseconds. Zero for miss and zdr responses.
+     */
+    age_ms: number;
+
+    /**
+     * Whether the response was served from cache, required fresh work, or honored
+     * zero-data-retention cache bypass.
+     */
+    status: 'hit' | 'miss' | 'zdr';
+  }
+
   /**
    * Metadata extracted from the scraped page HTML.
    */
